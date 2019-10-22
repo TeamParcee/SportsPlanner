@@ -1,0 +1,21 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="viewTimer()">
+        <ion-icon slot="icon-only" name="timer"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>{{ plan?.date }}</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="viewPlans($event)">
+        <ion-icon slot="icon-only" name="list"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+  </ion-list>
+  <ion-button fill="clear">New Activity</ion-button>
+</ion-content>

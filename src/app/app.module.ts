@@ -8,7 +8,10 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
-
+import * as firebase from 'firebase';
+import { FormBuilder } from '@angular/forms';
+import { PlanPage } from './pages/plan/plan.page';
+import { PlansPage } from './pages/plans/plans.page';
 
  // Your web app's Firebase configuration
  var firebaseConfig = {
@@ -20,6 +23,8 @@ import { AppRoutingModule } from './app-routing.module';
   messagingSenderId: "600934049396",
   appId: "1:600934049396:web:530ff61c4cd26adb185321"
 };
+
+firebase.initializeApp(firebaseConfig);
 // Initialize Firebase
 
 @NgModule({
@@ -27,6 +32,7 @@ import { AppRoutingModule } from './app-routing.module';
   entryComponents: [],
   imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule],
   providers: [
+    FormBuilder,
     StatusBar,
     SplashScreen,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }

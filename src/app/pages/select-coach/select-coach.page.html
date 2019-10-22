@@ -1,0 +1,23 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/tabs/settings"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Select Coach</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-searchbar placeholder="Find Coach" inputmode="email" type="decimal" (ionChange)="onSearchChange($event)"
+    [debounce]="250">
+    </ion-searchbar>
+    <ion-list>
+      <ion-item *ngFor="let coach of filterCoaches">
+        <ion-avatar slot="start">
+          <img [src]="coach.photoUrl">
+        </ion-avatar>
+        {{ coach.fname }} {{ coach.lname }}
+      </ion-item>
+    </ion-list>
+</ion-content>

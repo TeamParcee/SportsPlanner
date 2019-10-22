@@ -1,0 +1,26 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title color="primary">Coach Info</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+  <form>
+    <ion-list>
+      <ion-text color="primary">Which sport are you a Coach in</ion-text>
+      <ion-item>
+        <ion-select name="sport" [(ngModel)]="sport">
+          <ion-select-option value="football">Football</ion-select-option>
+          <ion-select-option value="volleyball">Volleyball</ion-select-option>
+          <ion-select-option value="basketball">Basketball</ion-select-option>
+          <ion-select-option value="soccer">Soccer</ion-select-option>
+        </ion-select>
+      </ion-item>
+      <ion-text color="primary">Password for people to add you as a Coach</ion-text>
+      <ion-item>
+        <ion-input name="password" [(ngModel)]="password" type="password"></ion-input>
+      </ion-item>
+    </ion-list>
+    <ion-button [disabled]="!sport || !password" (click)="saveCoachInfo()"  expand="full">Save</ion-button>
+  </form>
+</ion-content>

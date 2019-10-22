@@ -1,0 +1,22 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/tabs/plans"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Add Plan</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-list>
+    <ion-item>
+      <ion-label position="floating">Date</ion-label>
+      <ion-datetime [(ngModel)]="date" name="date" pickerFormat="MMM DD, YY"></ion-datetime>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating">Start Time</ion-label>
+      <ion-datetime [(ngModel)]="startTime" name="startTime" displayFormat="hh:mm A" pickerFormat="hh:mm A"></ion-datetime>
+    </ion-item>
+  </ion-list>
+  <ion-button [disabled]="!date || !startTime" expand="full" (click)="createPlan()">Create Plan</ion-button>
+</ion-content>

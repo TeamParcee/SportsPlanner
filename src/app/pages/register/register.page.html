@@ -1,0 +1,41 @@
+<ion-header no-border>
+  <ion-buttons>
+    <ion-button color="primary" routerDirection="back" routerLink="/login">
+      <ion-icon color="primary" name="arrow-back" slot="start"></ion-icon>
+      Login
+    </ion-button>
+  </ion-buttons>
+</ion-header>
+
+<ion-content padding>
+  <h2 text-center>
+    <ion-text color="primary">Sports Planner</ion-text>
+  </h2>
+  <form [formGroup]="registerForm">
+    <ion-list>
+
+      <ion-item>
+        <ion-label color="primary" position="floating">First Name</ion-label>
+        <ion-input formControlName="fname" type="text"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label color="primary" position="floating">Last Name</ion-label>
+        <ion-input formControlName="lname" type="text"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label color="primary" position="floating">Email</ion-label>
+        <ion-input formControlName="email" type="email"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label color="primary" position="floating">Password</ion-label>
+        <ion-input formControlName="password" type="password"></ion-input>
+      </ion-item>
+      <ion-item lines="none">
+        <ion-label color="primary">Are you a Head Coach</ion-label>
+        <ion-checkbox checked="false" formControlName="isHeadCoach"></ion-checkbox>
+      </ion-item>
+    </ion-list>
+
+  </form>
+  <ion-button (click)="createAccount()" expand="full">Create Account</ion-button>
+</ion-content>
