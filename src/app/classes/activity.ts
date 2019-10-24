@@ -1,7 +1,7 @@
 export class Activity{
     constructor(
         public name?:string,
-        public duratin?:number,
+        public duration?:number,
         public startTime?:string,
         public notes?:string,
         public id?:string,

@@ -52,7 +52,7 @@ export class SelectCoachPage implements OnInit {
     let value = event.detail.value.toLowerCase();
     this.filterCoaches = [];
     this.coaches.forEach(item => {
-      const shouldShow = item.fname.toLowerCase().indexOf(value) > -1;
+      const shouldShow = item.fname.toLowerCase().indexOf(value) > -1 || item.lname.toLowerCase().indexOf(value) > -1;
       if (shouldShow) {
         this.filterCoaches.push(item)
       }

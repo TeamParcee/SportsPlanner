@@ -44,10 +44,9 @@ export class PlansPage implements OnInit {
   }
   selectPlan(plan) {
     this.planService.currentPlan = plan;
-    console.log(this.planService.currentPlan.date);
-    this.navCtrl.navigateBack("/tabs/plan")
+    this.helper.closeModal();
   }
-  goBack(){
-    this.navCtrl.navigateRoot("/tabs/plan");
+  close(){
+    this.helper.closeModal();
   }
 }

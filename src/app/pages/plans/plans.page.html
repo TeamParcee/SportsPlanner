@@ -1,7 +1,9 @@
 <ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-back-button defaultHref="/tabs/plan"></ion-back-button>
+     <ion-button (click)="close()">
+       <ion-icon slot="icon-only" name="close"></ion-icon>
+     </ion-button>
     </ion-buttons>
     <ion-title>Plans</ion-title>
     <ion-buttons slot="end">

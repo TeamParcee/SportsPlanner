@@ -28,8 +28,13 @@ firebase.initializeApp(firebaseConfig);
 // Initialize Firebase
 
 @NgModule({
-  declarations: [AppComponent],
-  entryComponents: [],
+  declarations: [
+    AppComponent,
+    PlansPage,
+  ],
+  entryComponents: [
+    PlansPage
+  ],
   imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule],
   providers: [
     FormBuilder,

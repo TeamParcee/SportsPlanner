@@ -10,7 +10,7 @@ import { PlansPage } from './plans.page';
 const routes: Routes = [
   {
     path: '',
-    component: PlansPage
+    component: ""
   }
 ];
 

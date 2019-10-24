@@ -34,7 +34,7 @@ export class AddPlanPage implements OnInit {
     let date = moment(this.date).format('ll');
     let startTime = moment(this.startTime).format('LT');
 
-    this.firebaseService.addDocument("/users/" + this.user.uid + "/plans", { date: date, startTime: startTime })
+    this.firebaseService.addDocument("/plans", { date: date, startTime: startTime })
       .then(() => {
         this.navCtrl.navigateBack('/plans');
       })

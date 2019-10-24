@@ -22,7 +22,7 @@ export class LoginPage implements OnInit {
 
   login() {
     this.auth.loginUserWithEmail(this.email, this.password).then(() => {
-      this.router.navigateByUrl("/tabs/plans");
+      this.router.navigateByUrl("/tabs/plan");
     })
   }
 }
