@@ -3,6 +3,7 @@ import * as moment from 'moment';
 import { FirebaseService } from 'src/app/services/firebase.service';
 import { UserService } from 'src/app/services/user.service';
 import { NavController } from '@ionic/angular';
+import { HelperService } from 'src/app/services/helper.service';
 
 @Component({
   selector: 'app-add-plan',
@@ -15,6 +16,7 @@ export class AddPlanPage implements OnInit {
     private firebaseService: FirebaseService,
     private userService: UserService,
     private navCtrl: NavController,
+    private helper: HelperService,
   ) { }
 
   ngOnInit() {
@@ -34,9 +36,12 @@ export class AddPlanPage implements OnInit {
     let date = moment(this.date).format('ll');
     let startTime = moment(this.startTime).format('LT');
 
-    this.firebaseService.addDocument("/plans", { date: date, startTime: startTime })
+    this.firebaseService.addDocument("/plans", { date: date, startTime: startTime, coachId: this.user.uid })
       .then(() => {
-        this.navCtrl.navigateBack('/plans');
+        this.close();
       })
+  }
+  close() {
+    this.helper.closeModal();
   }
 }

@@ -7,7 +7,7 @@
     </ion-buttons>
     <ion-title>Plans</ion-title>
     <ion-buttons slot="end">
-      <ion-button routerLink="/add-plan">
+      <ion-button (click)="addPlan()">
         <ion-icon name="add"></ion-icon>
       </ion-button>
     </ion-buttons>
@@ -19,7 +19,7 @@
   <ion-list>
     <ion-item (click)="selectPlan(plan)" *ngFor="let plan of plans">
       <ion-label>
-        <h2> {{ plan.date }} {{ plan.startTime }}</h2>
+        <h2> {{ plan.date }}</h2>
       </ion-label>
     </ion-item>
   </ion-list>

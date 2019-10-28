@@ -1,0 +1,29 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="close() ">
+        <ion-icon slot="icon-only" name="close"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>Edit Activity</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-list>
+    <ion-item>
+      <ion-label position="floating">Name</ion-label>
+      <ion-input [(ngModel)]="activity.name"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating">Duration</ion-label>
+      <ion-input [(ngModel)]="activity.duration"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label>Notes</ion-label>
+      <ion-textarea [(ngModel)]="activity.notes"></ion-textarea>
+    </ion-item>
+  </ion-list>
+  <ion-button (click)="save()" expand="full">Save</ion-button>
+  <ion-button color="danger" (click)="delete()" expand="full">Delete</ion-button>
+</ion-content>

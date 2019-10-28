@@ -9,9 +9,12 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import * as firebase from 'firebase';
-import { FormBuilder } from '@angular/forms';
+import { FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { PlanPage } from './pages/plan/plan.page';
 import { PlansPage } from './pages/plans/plans.page';
+import { AddPlanPage } from './pages/add-plan/add-plan.page';
+import { EditActivityPage } from './pages/edit-activity/edit-activity.page';
+import { ViewActivityPage } from './pages/view-activity/view-activity.page';
 
  // Your web app's Firebase configuration
  var firebaseConfig = {
@@ -31,11 +34,22 @@ firebase.initializeApp(firebaseConfig);
   declarations: [
     AppComponent,
     PlansPage,
+    AddPlanPage,
+    EditActivityPage,
+    ViewActivityPage,
   ],
   entryComponents: [
-    PlansPage
+    PlansPage,
+    AddPlanPage,
+    EditActivityPage,
+    ViewActivityPage,
   ],
-  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule],
+  imports: [
+    BrowserModule, 
+    IonicModule.forRoot(), 
+    FormsModule,
+    ReactiveFormsModule,
+    AppRoutingModule],
   providers: [
     FormBuilder,
     StatusBar,

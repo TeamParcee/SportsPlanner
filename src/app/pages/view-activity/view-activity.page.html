@@ -1,0 +1,40 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="close() ">
+        <ion-icon slot="icon-only" name="close"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title> {{ activity.name }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list lines="none">
+    <ion-item-divider>
+      <ion-label>Name </ion-label>
+    </ion-item-divider>
+    <ion-item text-wrap>
+      {{ activity.name}}
+    </ion-item>
+    <ion-item-divider>
+      <ion-label>Duration </ion-label>
+    </ion-item-divider>
+    <ion-item>
+      {{ activity.duration}} mintues
+    </ion-item>
+    <ion-item-divider>
+      <ion-label>Start Time </ion-label>
+    </ion-item-divider>
+    <ion-item>
+      {{ activity.startTime}}
+    </ion-item>
+
+    <ion-item-divider>
+      <ion-label>Notes </ion-label>
+    </ion-item-divider>
+    <ion-item text-wrap>
+      {{ activity.notes }}
+    </ion-item>
+  </ion-list>
+</ion-content>

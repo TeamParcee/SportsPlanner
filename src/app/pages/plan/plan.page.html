@@ -1,12 +1,12 @@
 <ion-header>
   <ion-toolbar>
-    <ion-buttons slot="start">
+    <ion-buttons slot="end">
       <ion-button (click)="viewTimer()">
         <ion-icon slot="icon-only" name="timer"></ion-icon>
       </ion-button>
     </ion-buttons>
     <ion-title *ngIf="coach">Coach {{ coach.lname }}</ion-title>
-    <ion-buttons slot="end">
+    <ion-buttons slot="start">
       <ion-button (click)="viewPlans($event)">
         <ion-icon slot="icon-only" name="list"></ion-icon>
       </ion-button>
@@ -16,18 +16,20 @@
 
 <ion-content>
   <ion-text *ngIf="coach">
-    <h5></h5>
   </ion-text>
-  <ion-list-header>
-    Date {{ plan?.date }}
+  <ion-list-header *ngIf="plan">
+    <ion-datetime (ionChange)="updateTime()" pickerFormat="MMM DD, hh:mm A" displayFormat="DDD, MMM DD, h:mm A"
+      [(ngModel)]="date" minuteValues="5,10,15,20,35,30,35,40,45,50,55" (click)="updateTime()" fill="clear">
+      <!-- {{ (plan ) ? plan.date + " " + plan.startTime : "Select A Plan" }} -->
+    </ion-datetime>
   </ion-list-header>
   <ion-list>
     <ion-item *ngFor="let activity of activities">
-      <ion-label>
+      <ion-label (click)="viewActivity(activity)">
         {{ activity.name }}
         <p>{{ activity.duration }} Minutes - {{ activity.startTime }} </p>
       </ion-label>
-
+      <ion-button (click)="editActivity(activity)" fill="clear" color="dark" size="small" slot="end">Edit</ion-button>
     </ion-item>
   </ion-list>
   <ion-button (click)="createActivity()" fill="clear">New Activity</ion-button>

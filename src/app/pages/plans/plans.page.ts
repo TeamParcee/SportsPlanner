@@ -5,6 +5,7 @@ import { HelperService } from 'src/app/services/helper.service';
 import { PlanPage } from '../plan/plan.page';
 import { NavController } from '@ionic/angular';
 import { PlanService } from '../../services/plan.service';
+import { AddPlanPage } from '../add-plan/add-plan.page';
 
 @Component({
   selector: 'app-plans',
@@ -34,19 +35,24 @@ export class PlansPage implements OnInit {
     this.user = await this.userService.getUser();
   }
   getPlans() {
-    firebase.firestore().collection("/users/" + this.user.uid + "/plans").onSnapshot((plansSnap) => {
-      let plans = [];
-      plansSnap.forEach((plan) => {
-        plans.push(plan.data())
+    firebase.firestore().collection("plans")
+      .where("coachId", "==", this.user.coach)
+      .onSnapshot((plansSnap) => {
+        let plans = [];
+        plansSnap.forEach((plan) => {
+          plans.push(plan.data())
+        })
+        this.plans = plans;
       })
-      this.plans = plans;
-    })
   }
   selectPlan(plan) {
     this.planService.currentPlan = plan;
     this.helper.closeModal();
   }
-  close(){
+  close() {
     this.helper.closeModal();
+  }
+  addPlan() {
+    this.helper.openModal(AddPlanPage, null)
   }
 }
