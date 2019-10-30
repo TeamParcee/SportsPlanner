@@ -6,6 +6,7 @@ import { PlanPage } from '../plan/plan.page';
 import { NavController } from '@ionic/angular';
 import { PlanService } from '../../services/plan.service';
 import { AddPlanPage } from '../add-plan/add-plan.page';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-plans',
@@ -26,6 +27,7 @@ export class PlansPage implements OnInit {
 
   plans;
   user;
+  oldMonth = null;
 
   async ionViewWillEnter() {
     await this.getUser();
@@ -54,5 +56,14 @@ export class PlansPage implements OnInit {
   }
   addPlan() {
     this.helper.openModal(AddPlanPage, null)
+  }
+
+  myHeaderFn(record, recordIndex, records) {
+    let month = moment(record.date).format('MMMM');
+    if (month == this.oldMonth) {
+      return month
+    } else {
+      return null
+    }
   }
 }

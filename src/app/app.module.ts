@@ -15,6 +15,7 @@ import { PlansPage } from './pages/plans/plans.page';
 import { AddPlanPage } from './pages/add-plan/add-plan.page';
 import { EditActivityPage } from './pages/edit-activity/edit-activity.page';
 import { ViewActivityPage } from './pages/view-activity/view-activity.page';
+import { QuillModule } from 'ngx-quill'
 
  // Your web app's Firebase configuration
  var firebaseConfig = {
@@ -47,6 +48,7 @@ firebase.initializeApp(firebaseConfig);
   imports: [
     BrowserModule, 
     IonicModule.forRoot(), 
+    QuillModule.forRoot(),
     FormsModule,
     ReactiveFormsModule,
     AppRoutingModule],

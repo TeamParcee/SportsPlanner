@@ -19,10 +19,17 @@ export class EditActivityPage implements OnInit {
   }
 
   activity;
+  itemDelete;
+
   close() {
     this.helper.closeModal();
   }
+  ionViewWillLeave() {
+    if (!this.itemDelete) {
+      this.save()
+    }
 
+  }
   save() {
     this.firebaseService.setDocument("plans/" + this.activity.planId + "/activities/" + this.activity.id, this.activity)
       .then(() => {
@@ -36,6 +43,7 @@ export class EditActivityPage implements OnInit {
         if (result) {
           this.firebaseService.deleteDocument("plans/" + this.activity.planId + "/activities/" + this.activity.id)
             .then(() => {
+              this.itemDelete = true;
               this.close()
             })
         }

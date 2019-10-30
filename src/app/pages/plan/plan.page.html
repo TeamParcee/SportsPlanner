@@ -23,14 +23,22 @@
       <!-- {{ (plan ) ? plan.date + " " + plan.startTime : "Select A Plan" }} -->
     </ion-datetime>
   </ion-list-header>
-  <ion-list>
+  <ion-reorder-group (ionItemReorder)="reorderItems($event)" disabled="false">
     <ion-item *ngFor="let activity of activities">
       <ion-label (click)="viewActivity(activity)">
         {{ activity.name }}
-        <p>{{ activity.duration }} Minutes - {{ activity.startTime }} </p>
+        <p> {{ activity.duration }} minutes - {{ (activity.startTime) ? activity.startTime  : "No Start Time"}}</p>
       </ion-label>
-      <ion-button (click)="editActivity(activity)" fill="clear" color="dark" size="small" slot="end">Edit</ion-button>
+      <ion-buttons slot="end">
+        <ion-button   (click)="editActivity(activity)" >
+          <ion-icon name="create"></ion-icon>
+        </ion-button>
+        <ion-button>
+          <ion-reorder slot="end"></ion-reorder>
+        </ion-button>
+      </ion-buttons>
     </ion-item>
-  </ion-list>
+  </ion-reorder-group>
+
   <ion-button (click)="createActivity()" fill="clear">New Activity</ion-button>
 </ion-content>

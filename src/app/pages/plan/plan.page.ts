@@ -93,23 +93,16 @@ export class PlanPage implements OnInit {
           activitySnap.forEach((activity) => {
             count = count + 1;
             let a = activity.data();
-            a.start = this.getTimeOfEvent(time, minutes);
+            a.startTime = this.getTimeOfEvent(time, minutes);
             activities.push(a);
             this.orderArray.push({ order: count, id: a.id });
-            time = a.start;
+            time = a.startTime;
             minutes = a.duration;
           })
           this.activities = activities;
+          this.date = this.plan.date;
         })
-      //     .get().then((snapActivities) => {
-      //       let activities = [];
-      //       snapActivities.forEach((activity) => {
-      //         activities.push(activity.data())
-      //       })
-      //       this.activities = activities;
-      //       this.date = this.plan.date;
-      //     })
-      // } else {
+
     }
   }
 
@@ -125,11 +118,35 @@ export class PlanPage implements OnInit {
   updateTime() {
     this.firebaseService.updateDocument("/plans/" + this.plan.id, { date: moment(this.date).format('llll') });
     this.planService.currentPlan.date = moment(this.date).format('llll');
+    this.getActivities();
   }
 
   getTimeOfEvent(time, minutes) {
     let x = moment(time, "hh:mm a").add('minutes', minutes).format('LT');
     return x;
   }
-;
+  reorderItems(ev) {
+    let from = ev.detail.from;
+    let to = ev.detail.to;
+    let draggedItem = this.orderArray.splice(from, 1)[0];
+    this.orderArray.splice(to, 0, draggedItem);
+    let count = 0;
+    this.orderArray.forEach((item) => {
+      count = count + 1;
+      item.order = count;
+
+    })
+    ev.detail.complete();
+
+    this.updateOrder();
+
+  }
+
+  updateOrder() {
+
+    this.orderArray.forEach((activity) => {
+      firebase.firestore().doc("/plans/" + this.plan.id + "/activities/" + activity.id).update({ order: activity.order })
+    })
+    this.getActivities();
+  }
 }
