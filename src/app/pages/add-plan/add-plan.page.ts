@@ -33,10 +33,9 @@ export class AddPlanPage implements OnInit {
     this.user = await this.userService.getUser();
   }
   createPlan() {
-    let date = moment(this.date).format('ll');
-    let startTime = moment(this.startTime).format('LT');
-
-    this.firebaseService.addDocument("/plans", { date: date, startTime: startTime, coachId: this.user.uid })
+    let date =  moment(moment(this.date).format("MMM DD, YY") + " " + moment(this.startTime).format("LT")).format('llll');
+    let orderDate = moment(date).format()
+    this.firebaseService.addDocument("/plans", { date: date, coachId: this.user.uid, orderDate: orderDate })
       .then(() => {
         this.close();
       })

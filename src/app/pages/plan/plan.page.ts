@@ -39,7 +39,9 @@ export class PlanPage implements OnInit {
   async ionViewWillEnter() {
     await this.getUser();
     await this.getCoachFromUid(this.user.uid);
+    await this.getActivePlan();
     await this.getActivities();
+
 
 
   }
@@ -54,6 +56,7 @@ export class PlanPage implements OnInit {
   viewPlans(event) {
     this.helper.openModalPromise(PlansPage, null).then(() => {
       this.plan = this.planService.currentPlan;
+      this.setLastViewedPlan();
       this.getActivities();
     })
 
@@ -116,7 +119,7 @@ export class PlanPage implements OnInit {
     this.helper.openModalPromise(ViewActivityPage, { activity: activity })
   }
   updateTime() {
-    this.firebaseService.updateDocument("/plans/" + this.plan.id, { date: moment(this.date).format('llll') });
+    this.firebaseService.updateDocument("/plans/" + this.plan.id, { date: moment(this.date).format('llll'), orderDate: moment(this.date).format() });
     this.planService.currentPlan.date = moment(this.date).format('llll');
     this.getActivities();
   }
@@ -148,5 +151,22 @@ export class PlanPage implements OnInit {
       firebase.firestore().doc("/plans/" + this.plan.id + "/activities/" + activity.id).update({ order: activity.order })
     })
     this.getActivities();
+  }
+
+  setLastViewedPlan() {
+    this.firebaseService.setDocument("/users/" + this.user.uid + "/utilities/activeplan", { plan: this.plan.id })
+  }
+
+  async getActivePlan() {
+    firebase.firestore().doc("/users/" + this.user.uid + "/utilities/activeplan").get().then(async (activePlanSnap) => {
+      if (activePlanSnap.exists) {
+        let activePlanId = activePlanSnap.data().plan;
+        this.planService.currentPlan = await this.firebaseService.getDocument("plans/" + activePlanId);
+        this.plan = await this.firebaseService.getDocument("plans/" + activePlanId);
+        this.date = this.plan.date;
+        this.getActivities();
+      }
+    })
+
   }
 }
