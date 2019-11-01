@@ -9,6 +9,7 @@ export class PlanService {
   constructor() { }
 
   currentPlan;
+  activities;
   
   currentPlanObs = new Observable((observer)=>{
     observer.next()

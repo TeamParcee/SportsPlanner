@@ -11,6 +11,7 @@ import { EditActivityPage } from '../edit-activity/edit-activity.page';
 
 import * as moment from 'moment';
 import { ViewActivityPage } from '../view-activity/view-activity.page';
+import { TimerService } from 'src/app/services/timer.service';
 
 @Component({
   selector: 'app-plan',
@@ -25,6 +26,9 @@ export class PlanPage implements OnInit {
     private navCtrl: NavController,
     private userService: UserService,
     private firebaseService: FirebaseService,
+    private timerService: TimerService,
+
+
   ) { }
 
 
@@ -34,6 +38,11 @@ export class PlanPage implements OnInit {
   activities;
   date;
   orderArray;
+  showTimer;
+  currentActivity;
+  timerStarted;
+  timerInterval;
+  nextActivity;
 
 
   async ionViewWillEnter() {
@@ -97,12 +106,14 @@ export class PlanPage implements OnInit {
             count = count + 1;
             let a = activity.data();
             a.startTime = this.getTimeOfEvent(time, minutes);
+            a.date = this.plan.date;
             activities.push(a);
             this.orderArray.push({ order: count, id: a.id });
             time = a.startTime;
             minutes = a.duration;
           })
           this.activities = activities;
+          this.planService.activities = activities;
           this.date = this.plan.date;
         })
 
@@ -167,6 +178,27 @@ export class PlanPage implements OnInit {
         this.getActivities();
       }
     })
-
   }
+
+  
+  runTimer(){
+      this.showTimer = true;
+      if (!this.timerStarted){
+        this.timerStarted = true;
+        this.timerService.startPlan();  
+        this.timerInterval = setInterval(()=>{
+          this.nextActivity = this.timerService.nextActivity;
+          this.currentActivity = this.timerService.currentActivity;
+        }, 1000)
+      }
+        
+    }
+    stopTimer(){
+      this.timerService.stopPlan();
+      clearInterval(this.timerInterval);
+      this.showTimer = false;
+      this.timerStarted = false;
+    }
+
+
 }

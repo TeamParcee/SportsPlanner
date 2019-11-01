@@ -1,7 +1,7 @@
 <ion-header>
   <ion-toolbar>
     <ion-buttons slot="end">
-      <ion-button (click)="viewTimer()">
+      <ion-button (click)="runTimer()">
         <ion-icon slot="icon-only" name="timer"></ion-icon>
       </ion-button>
     </ion-buttons>
@@ -16,6 +16,26 @@
 
 <ion-content>
 
+    <ion-row *ngIf="showTimer">
+        <ion-col>
+          <ion-card>
+            <ion-card-header>
+              <ion-card-subtitle> {{ currentActivity?.name }}</ion-card-subtitle>
+              <ion-card-title> {{ (currentActivity?.time) ? currentActivity?.time : "Getting Activity..." }}</ion-card-title>
+            </ion-card-header>
+            <ion-card-content>
+              <ion-label>
+                <p>Next Activity: <b>{{ nextActivity?.name }} </b></p>
+                <p> Start Time: <b>{{ nextActivity?.startTime }}</b></p>
+  
+              </ion-label>
+  
+            </ion-card-content>
+  
+          </ion-card>
+        </ion-col>
+      </ion-row>
+      
   <ion-list-header *ngIf="plan">
     <ion-datetime (ionChange)="updateTime()" pickerFormat="MMM DD, hh:mm A" displayFormat="DDD, MMM DD, h:mm A"
       [(ngModel)]="date" minuteValues="5,10,15,20,35,30,35,40,45,50,55" (click)="updateTime()" fill="clear">
