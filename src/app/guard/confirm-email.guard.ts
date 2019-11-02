@@ -1,19 +1,32 @@
 import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree, CanActivate } from '@angular/router';
+import { ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree, CanActivate, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import * as firebase from 'firebase';
+import { NavController } from '@ionic/angular';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ConfirmEmailGuard implements CanActivate {
   
-  canActivate(){
-    return true
+  constructor(
+    private navCtrl: NavController,
+    private router: Router,
+  ){}
+  async canActivate(){
+    console.log("email", await this.getEmailVerified())
+    if(await this.getEmailVerified()){
+      return true
+    } else {
+      this.router.navigateByUrl("confirm-email")
+    }
   }
 
-  getUsers(){
+  getEmailVerified(){
     return new Promise((resolve)=>{
+      firebase.auth().onAuthStateChanged((user)=>{
+        return resolve(user.emailVerified)
+      })
     })
   }
 }

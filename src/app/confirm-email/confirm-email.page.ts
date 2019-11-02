@@ -1,5 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from '../services/user.service';
+import { HelperService } from '../services/helper.service';
+import { AuthService } from '../services/auth.service';
+import { AlertInput } from '@ionic/core';
+import { NavController } from '@ionic/angular';
+import * as firebase from 'firebase';
 
 @Component({
   selector: 'app-confirm-email',
@@ -10,15 +15,78 @@ export class ConfirmEmailPage implements OnInit {
 
   constructor(
     private userService: UserService,
-
+    private helper: HelperService,
+    private authService: AuthService,
+    private navCtrl: NavController,
   ) { }
 
   user;
+  emailInterval;
   ngOnInit() {
   }
 
+  async ionViewWillEnter(){
+   await this.getUser();
+   firebase.auth().onAuthStateChanged((user)=>{
+     if(!user.emailVerified){
+      firebase.auth().currentUser.sendEmailVerification();
+     }
+     this.checkEmailVerified(user);
+   })
+ 
+   
+  }
+
+  ionViewDidLeave(){
+    clearInterval(this.emailInterval);
+  }
   async getUser(){
     this.user = await this.userService.getUser();
     console.log(this.user);
+  }
+
+
+  getNewEmail(){
+    let inputAlert: AlertInput[] = [{
+      name: "email",
+      placeholder: "New Email",
+      type: "email"
+    }]
+
+    this.helper.inputAlert("Change Email", "Please enter your email address", inputAlert).then((result)=>{
+      console.log(result)
+    })
+  }
+  changeEmail(email){
+    this.authService.changeEmail(email)
+  }
+
+  signout(){
+    this.helper.confirmationAlert("Sign Out", "Are you sure you want to signout?", {denyText: "Cancel", confirmText: "Sign Out"})
+    .then((result)=>{
+      if(result){
+        this.authService.signout().then(()=>{
+          this.navCtrl.navigateBack("/login")
+        })
+      }
+    })
+  }
+
+  resendVerification(){
+    firebase.auth().currentUser.sendEmailVerification().then(()=>{
+      this.helper.okAlert("Email Verification", "An email verification email has been sent to " + this.user.email)
+    })
+  }
+
+  checkEmailVerified(user){
+    this.emailInterval = setInterval(()=>{
+      console.log("checking email verified");
+      if(user.emailVerified){
+        console.log("xxxxxxxxx");
+        this.navCtrl.navigateForward("tabs/plan")
+      } else {
+        console.log("email not verified")
+      }
+    }, 1000)
   }
 }

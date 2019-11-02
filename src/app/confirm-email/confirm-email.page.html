@@ -1,9 +1,14 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>confirm-email</ion-title>
+    <ion-title>Confirm Email</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content padding>
 
+  <h5>A confirmation email has been sent to {{ user?.email }}</h5>
+  <h5>Once you confirm your email, sign out and sign back in</h5>
+ <ion-button (click)="changeEmail()" expand="full">Change Email</ion-button>
+ <ion-button (click)="resendVerification()" expand="full">Resend Email Verficiation</ion-button>
+ <ion-button (click)="signout()"  expand="full">Sign Out</ion-button>
 </ion-content>
