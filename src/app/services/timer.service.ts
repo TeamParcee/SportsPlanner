@@ -50,14 +50,16 @@ export class TimerService {
       var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
       var seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-      
+
       let time = "";
-      time += (days) ? days + " days ": "";
-      time += (hours) ? hours + " hours ": "";
-      time += (minutes) ? minutes + " mins ": "";
-      time += (seconds) ? seconds + " secs ": "";
+      time += (days) ? days + " days " : "";
+      time += (hours) ? hours + " hours " : "";
+      time += (minutes) ? minutes + " mins " : "";
+      time += (seconds) ? seconds + " secs " : "";
+
 
       if (distance < 0) {
+        
         this.activeTime = "Time Past";
         if (this.showAlert) {
           // this.startVibration();

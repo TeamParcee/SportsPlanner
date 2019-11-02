@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
 import { FirebaseService } from 'src/app/services/firebase.service';
 import { User } from '../../classes/user';
+import { NavController } from '@ionic/angular';
 
 @Component({
   selector: 'app-register',
@@ -15,6 +16,7 @@ export class RegisterPage implements OnInit {
   constructor(
     private fb: FormBuilder,
     private router: Router,
+    private navCtrl: NavController,
     private authService: AuthService,
     private firebaseService: FirebaseService,
   ) {
@@ -40,10 +42,10 @@ export class RegisterPage implements OnInit {
       user.coach = coach;
       user.uid = firebaseUser.uid;
       this.firebaseService.setDocument("/users/" + firebaseUser.uid, { ...user }).then(() => {
-        this.router.navigateByUrl("/coach-info")
-      })
+        this.navCtrl.navigateForward("/confirm-email");
     })
-  }
+  })
+}
 
   
 }

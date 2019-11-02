@@ -106,7 +106,7 @@ export class PlanPage implements OnInit {
             count = count + 1;
             let a = activity.data();
             a.startTime = this.getTimeOfEvent(time, minutes);
-            a.date = this.plan.date;
+            a.date = moment(this.date).format("MMM DD, YYYY ") + a.startTime;
             activities.push(a);
             this.orderArray.push({ order: count, id: a.id });
             time = a.startTime;
@@ -163,6 +163,7 @@ export class PlanPage implements OnInit {
     this.orderArray.forEach((activity) => {
       firebase.firestore().doc("/plans/" + this.plan.id + "/activities/" + activity.id).update({ order: activity.order })
     })
+    this.stopTimer
     this.getActivities();
   }
 

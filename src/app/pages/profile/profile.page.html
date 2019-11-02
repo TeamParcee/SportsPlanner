@@ -6,4 +6,21 @@
 
 <ion-content>
 
+  <ion-list *ngIf="user">
+    <ion-item>
+      <ion-label position="floating">First Name</ion-label>
+      <ion-input [(ngModel)]="user.fname"></ion-input>
+      <ion-note (click)="saveFname()" *ngIf="user.fname != originalUser.fname" color="success" slot="end">save</ion-note>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating">Last Name</ion-label>
+      <ion-input [(ngModel)]="user.lname"></ion-input>
+      <ion-note (click)="saveLname()" *ngIf="user.lname != originalUser.lname"  color="success" slot="end">save</ion-note>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating">Email</ion-label>
+      <ion-input [(ngModel)]="user.email"></ion-input>
+      <ion-note (click)="saveEmail()" *ngIf="user.email != originalUser.email"  color="success" slot="end">save</ion-note>
+    </ion-item>
+  </ion-list>
 </ion-content>

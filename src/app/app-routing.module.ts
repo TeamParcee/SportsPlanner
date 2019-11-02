@@ -20,6 +20,7 @@ const routes: Routes = [
   { path: 'plans', loadChildren: './pages/plans/plans.module#PlansPageModule', canActivate: [AuthGuard] },
   { path: 'add-plan', loadChildren: './pages/add-plan/add-plan.module#AddPlanPageModule', canActivate: [AuthGuard] },
   { path: 'edit-activity', loadChildren: './pages/edit-activity/edit-activity.module#EditActivityPageModule' },  { path: 'view-activity', loadChildren: './pages/view-activity/view-activity.module#ViewActivityPageModule' },
+  { path: 'confirm-email', loadChildren: './confirm-email/confirm-email.module#ConfirmEmailPageModule' },
 
 
 ];
