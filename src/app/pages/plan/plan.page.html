@@ -44,7 +44,7 @@
 
   <ion-list-header *ngIf="plan">
     <ion-datetime (ionChange)="updateTime()" pickerFormat="MMM DD, hh:mm A" displayFormat="DDD, MMM DD, h:mm A"
-      [(ngModel)]="date" minuteValues="5,10,15,20,35,30,35,40,45,50,55" (click)="updateTime()" fill="clear">
+      [(ngModel)]="date" minuteValues="5,10,15,20,25,30,35,40,45,50,55" (click)="updateTime()" fill="clear">
       <!-- {{ (plan ) ? plan.date + " " + plan.startTime : "Select A Plan" }} -->
     </ion-datetime>
   </ion-list-header>

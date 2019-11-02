@@ -133,6 +133,7 @@ export class PlanPage implements OnInit {
     this.stopTimer();
     this.firebaseService.updateDocument("/plans/" + this.plan.id, { date: moment(this.date).format('llll'), orderDate: moment(this.date).format() });
     this.planService.currentPlan.date = moment(this.date).format('llll');
+    this.plan.date = moment(this.date).format('llll');
     this.getActivities();
   }
 
@@ -192,8 +193,8 @@ export class PlanPage implements OnInit {
         this.currentActivity = this.timerService.currentActivity;
       }, 1000)
     }
-
   }
+  
   stopTimer() {
     this.timerService.stopPlan();
     clearInterval(this.timerInterval);

@@ -43,7 +43,6 @@ export class TimerService {
 
       let now = new Date().getTime();
       let countDownDate = new Date(datetime).getTime();
-      console.log(now, countDownDate);
       let distance = countDownDate - now;
 
       var days = Math.floor(distance / (1000 * 60 * 60 * 24));
@@ -55,8 +54,8 @@ export class TimerService {
       let time = "";
       time += (days) ? days + " days ": "";
       time += (hours) ? hours + " hours ": "";
-      time += (minutes) ? minutes + " minutes ": "";
-      time += (seconds) ? seconds + " seconds ": "";
+      time += (minutes) ? minutes + " mins ": "";
+      time += (seconds) ? seconds + " secs ": "";
 
       if (distance < 0) {
         this.activeTime = "Time Past";
@@ -93,7 +92,6 @@ export class TimerService {
     this.length = this.planService.activities.length;
     if (this.length > this.count) {
       this.getTimerCount(this.planService.activities[this.count], this.planService.activities[this.count - 1]);
-
     } else {
       this.activeActivity = null;
       clearInterval(this.timerInterval);
