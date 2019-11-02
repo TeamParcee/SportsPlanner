@@ -42,10 +42,13 @@ export class PlansPage implements OnInit {
     firebase.firestore().collection("plans")
       .where("coachId", "==", this.user.coach)
       .orderBy("orderDate")
-      .onSnapshot((plansSnap) => {
+      .onSnapshot(async(plansSnap) => {
         let plans = [];
-        plansSnap.forEach((plan) => {
-          plans.push(plan.data())
+        plansSnap.forEach(async (plan) => {
+          // let activities = await plan.ref.collection("/activities").get(); 
+          let p = { ...plan.data() }
+          // p.activities = activities.size;
+          plans.push(p);
         })
         this.plans = plans;
       })
@@ -62,18 +65,15 @@ export class PlansPage implements OnInit {
   }
 
   myHeaderFn(record, recordIndex, records: []) {
- 
+
     let month = moment(record.date).format('MMMM');
-    
+
     if (recordIndex == 0) {
       return month;
     }
-    
+
     let lastRecord: any = records[(recordIndex - 1)];
     let lastMonth = moment(lastRecord.date).format('MMMM');
-    
-    
-  
     if (month != lastMonth) {
       return month
     } else {
@@ -92,4 +92,5 @@ export class PlansPage implements OnInit {
         }
       })
   }
+
 }

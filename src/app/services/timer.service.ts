@@ -31,7 +31,7 @@ export class TimerService {
   currentActivity;
 
 
-  
+
   getTimerCount(activity, currentActivity) {
 
     if (!currentActivity) {
@@ -40,7 +40,7 @@ export class TimerService {
     }
     this.timerInterval = setInterval(() => {
       let datetime = activity.date;
-     
+
       let now = new Date().getTime();
       let countDownDate = new Date(datetime).getTime();
       console.log(now, countDownDate);
@@ -50,7 +50,14 @@ export class TimerService {
       var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
       var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
       var seconds = Math.floor((distance % (1000 * 60)) / 1000);
-      let time = hours + ":" + minutes + ":" + seconds;
+
+      
+      let time = "";
+      time += (days) ? days + " days ": "";
+      time += (hours) ? hours + " hours ": "";
+      time += (minutes) ? minutes + " minutes ": "";
+      time += (seconds) ? seconds + " seconds ": "";
+
       if (distance < 0) {
         this.activeTime = "Time Past";
         if (this.showAlert) {
@@ -80,7 +87,7 @@ export class TimerService {
   }
 
   async startPlan() {
-    let user:any = await this.userService.getUser();
+    let user: any = await this.userService.getUser();
 
     this.firebaseService.setDocument("users/" + user.uid + "/utilities/activeActivity", { active: true });
     this.length = this.planService.activities.length;
@@ -95,7 +102,7 @@ export class TimerService {
   }
 
   async   stopPlan() {
-    let user:any = await this.userService.getUser();
+    let user: any = await this.userService.getUser();
     this.firebaseService.setDocument("users/" + user.uid + "/utilities/activeActivity", { active: false })
     this.activeActivity = null;
     clearInterval(this.timerInterval);

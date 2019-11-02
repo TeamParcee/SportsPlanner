@@ -19,9 +19,10 @@
     <ion-item-divider *virtualHeader="let header">
       {{ header }}
     </ion-item-divider>
-    <ion-item  *virtualItem="let plan">
+    <ion-item *virtualItem="let plan">
       <ion-label (click)="selectPlan(plan)">
         {{ plan.date }}
+        <p>Activities: {{ plan.activities }}</p>
       </ion-label>
       <ion-buttons slot="end">
         <ion-button (click)="delete(plan)">
@@ -30,5 +31,7 @@
       </ion-buttons>
     </ion-item>
   </ion-virtual-scroll>
+
+
 
 </ion-content>
