@@ -82,7 +82,6 @@ export class ConfirmEmailPage implements OnInit {
     this.emailInterval = setInterval(()=>{
       console.log("checking email verified");
       if(user.emailVerified){
-        console.log("xxxxxxxxx");
         this.navCtrl.navigateForward("tabs/plan")
       } else {
         console.log("email not verified")
