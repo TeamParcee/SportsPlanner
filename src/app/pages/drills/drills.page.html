@@ -1,7 +1,7 @@
 <ion-header>
   <ion-toolbar>
     <ion-title>Drills</ion-title>
-    <ion-buttons slot="end">
+    <ion-buttons *ngIf="isHeadCoach" slot="end">
       <ion-button routerLink="/add-drill">
         <ion-icon name="add" slot="icon-only"></ion-icon>
       </ion-button>
@@ -10,5 +10,35 @@
 </ion-header>
 
 <ion-content>
+  <ion-grid>
+    <ion-row>
+      <ion-col>
+        <ion-button (click)="getDrillsPrivate() " [fill]="(drillView == 'private' ? 'solid' : 'clear')" expand="full">
+          Your Coaches Drills</ion-button>
+      </ion-col>
+      <ion-col>
+        <ion-button (click)="getDrillsPublic() " [fill]="(drillView == 'public' ? 'solid' : 'clear')" expand="full">
+          Public Drills</ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  <ion-searchbar placeholder="Find Drill" (ionChange)="onSearchChange($event)" [debounce]="250">
+  </ion-searchbar>
 
+
+  <ion-list>
+    <ion-item *ngFor="let drill of filterDrills">
+      <ion-label (click)="viewDrill(drill)">
+        {{ drill.name }}
+        <p>
+          Coach: {{ drill.coach.fname + " " + drill.coach.lname }}
+        </p>
+      </ion-label>
+      <ion-buttons>
+        <ion-button *ngIf="drill.coach.uid == user.uid" (click)="editDrill(drill) ">
+          <ion-icon name="create"></ion-icon>
+        </ion-button>
+      </ion-buttons>
+    </ion-item>
+  </ion-list>
 </ion-content>

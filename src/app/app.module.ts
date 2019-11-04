@@ -16,6 +16,8 @@ import { AddPlanPage } from './pages/add-plan/add-plan.page';
 import { EditActivityPage } from './pages/edit-activity/edit-activity.page';
 import { ViewActivityPage } from './pages/view-activity/view-activity.page';
 import { QuillModule } from 'ngx-quill'
+import { ViewDrillPage } from './pages/view-drill/view-drill.page';
+import { EditDrillPage } from './pages/edit-drill/edit-drill.page';
 
  // Your web app's Firebase configuration
  var firebaseConfig = {
@@ -38,12 +40,16 @@ firebase.initializeApp(firebaseConfig);
     AddPlanPage,
     EditActivityPage,
     ViewActivityPage,
+    ViewDrillPage,
+    EditDrillPage,
   ],
   entryComponents: [
     PlansPage,
     AddPlanPage,
     EditActivityPage,
     ViewActivityPage,
+    ViewDrillPage,
+    EditDrillPage,
   ],
   imports: [
     BrowserModule, 

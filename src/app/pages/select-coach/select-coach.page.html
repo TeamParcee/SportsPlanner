@@ -11,13 +11,17 @@
 
   <ion-searchbar placeholder="Find Coach" inputmode="email" type="decimal" (ionChange)="onSearchChange($event)"
     [debounce]="250">
-    </ion-searchbar>
-    <ion-list>
-      <ion-item (click)="checkPassword(coach)" *ngFor="let coach of filterCoaches">
-        <ion-avatar slot="start">
-          <img [src]="coach.photoUrl">
-        </ion-avatar>
+  </ion-searchbar>
+  <ion-list>
+    <ion-item (click)="checkPassword(coach)" *ngFor="let coach of filterCoaches">
+      <ion-avatar slot="start">
+        <img [src]="coach.photoUrl">
+      </ion-avatar>
+
+      <ion-label>
         {{ coach.fname }} {{ coach.lname }}
-      </ion-item>
-    </ion-list>
+        <p>Sport: {{ coach.sport }} </p>
+      </ion-label>
+    </ion-item>
+  </ion-list>
 </ion-content>

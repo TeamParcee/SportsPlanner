@@ -6,7 +6,7 @@
       </ion-button>
     </ion-buttons>
     <ion-title>Plans</ion-title>
-    <ion-buttons slot="end">
+    <ion-buttons *ngIf="isHeadCoach" slot="end">
       <ion-button (click)="addPlan()">
         <ion-icon name="add"></ion-icon>
       </ion-button>
@@ -24,7 +24,7 @@
         {{ plan.date }}
         <p>Activities: {{ plan.activities }}</p>
       </ion-label>
-      <ion-buttons slot="end">
+      <ion-buttons *ngIf="isHeadCoach" slot="end">
         <ion-button (click)="delete(plan)">
           <ion-icon name="trash" color="danger"></ion-icon>
         </ion-button>

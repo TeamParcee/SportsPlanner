@@ -1,0 +1,21 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="close()">
+        <ion-icon name="close" slot="icon-only"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>View Drill</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+
+  <ion-list lines="none" *ngIf="drill">
+    <ion-item >
+      {{ drill.name }}
+    </ion-item>
+    <iframe  width="100%" height="315" [src]="trustedVideoUrl" frameborder="0"
+    allowfullscreen></iframe>
+  </ion-list>
+</ion-content>

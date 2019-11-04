@@ -49,6 +49,7 @@ export class SelectCoachPage implements OnInit {
   updateCoach(coach) {
     this.firebaseService.updateDocument("/users/" + this.user.uid, {coach: coach.uid})
     .then(()=>{
+      this.firebaseService.deleteDocument("/users/" + this.user.uid + "/utilities/activeplan")
       this.helper.okAlert("Coach Updated", "Your coach has been updated to Coach " + coach.lname)
     })
   }

@@ -2,16 +2,15 @@ import { Component, OnInit } from '@angular/core';
 import { HelperService } from 'src/app/services/helper.service';
 import { UserService } from 'src/app/services/user.service';
 import { FirebaseService } from 'src/app/services/firebase.service';
-import { DomSanitizer } from '@angular/platform-browser';
 import { NavController } from '@ionic/angular';
-import { ViewDrillPage } from '../view-drill/view-drill.page';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
-  selector: 'app-add-drill',
-  templateUrl: './add-drill.page.html',
-  styleUrls: ['./add-drill.page.scss'],
+  selector: 'app-edit-drill',
+  templateUrl: './edit-drill.page.html',
+  styleUrls: ['./edit-drill.page.scss'],
 })
-export class AddDrillPage implements OnInit {
+export class EditDrillPage implements OnInit {
 
   constructor(
     private helper: HelperService,
@@ -21,7 +20,7 @@ export class AddDrillPage implements OnInit {
     private navCtrl: NavController,
   ) { }
 
-  drill: { coach?, video?, sport?} = {};
+  drill;
   user;
   videoPreview;
   trustedVideoUrl
@@ -31,21 +30,21 @@ export class AddDrillPage implements OnInit {
   }
   async ionViewWillEnter() {
     await this.getUser();
+    this.checkUrl(this.drill.video)
   }
 
   async getUser() {
     this.user = await this.userService.getUser();
   }
-  addDrill() {
-    this.drill.coach = this.user.coach;
-    this.drill.sport = this.user.sport;
-    this.firebaseService.addDocument("/drills", this.drill).then(() => {
-      this.navCtrl.navigateBack("/tabs/drills")
+  saveDrill() {
+    this.drill.coach = this.drill.coach.uid;
+    this.firebaseService.updateDocument("/drills/" + this.drill.id, this.drill).then(() => {
+      this.close();
     })
   }
 
   getSafeUrl(url) {
-    
+
     this.trustedVideoUrl = this.domSanitizer.bypassSecurityTrustResourceUrl(url);
   }
 
@@ -74,4 +73,18 @@ export class AddDrillPage implements OnInit {
     return ID;
   }
 
+  close() {
+    this.helper.closeModal();
+  }
+
+  delete() {
+    this.helper.confirmationAlert("Delete Drill", "Are you sure you want to delete this Drill?", { denyText: "Cancel", confirmText: "Delete" })
+      .then((result) => {
+        if (result) {
+          this.firebaseService.deleteDocument("/drills/" + this.drill.id).then(() => {
+            this.close();
+          })
+        }
+      })
+  }
 }

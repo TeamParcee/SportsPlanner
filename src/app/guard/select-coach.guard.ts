@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree, CanLoad, CanActivate } from '@angular/router';
+import { ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree, CanLoad, CanActivate, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { AuthGuard } from './auth.guard';
 import { UserService } from '../services/user.service';
@@ -13,6 +13,7 @@ export class SelectCoachGuard implements  CanActivate{
 constructor(
   private userService: UserService,
   private navCtrl: NavController,
+  private router: Router,
 ){
 
 }
@@ -21,7 +22,7 @@ async canActivate(){
   if(user.coach){
     return true;
   } else {
-    this.navCtrl.navigateForward("/select-coach")
+    this.navCtrl.navigateRoot("/select-coach")
   }
 }
 

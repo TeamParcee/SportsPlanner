@@ -8,7 +8,7 @@
 
     <ion-title *ngIf="coach">Coach {{ coach.lname }}</ion-title>
 
-    <ion-buttons slot="end">
+    <ion-buttons *ngIf="isHeadCoach" slot="end">
       <ion-button *ngIf="!showTimer" (click)="runTimer()">
         <ion-icon slot="icon-only" name="timer"></ion-icon>
       </ion-button>
@@ -43,19 +43,20 @@
   </ion-row>
 
   <ion-list-header *ngIf="plan">
-    <ion-datetime (ionChange)="updateTime()" pickerFormat="MMM DD, hh:mm A" displayFormat="DDD, MMM DD, h:mm A"
-      [(ngModel)]="date" minuteValues="5,10,15,20,25,30,35,40,45,50,55" (click)="updateTime()" fill="clear">
+    <ion-datetime [disabled]="!isHeadCoach" (ionChange)="updateTime()" pickerFormat="MMM DD, hh:mm A"
+      displayFormat="DDD, MMM DD, h:mm A" [(ngModel)]="date" minuteValues="5,10,15,20,25,30,35,40,45,50,55"
+      (click)="updateTime()" fill="clear">
       <!-- {{ (plan ) ? plan.date + " " + plan.startTime : "Select A Plan" }} -->
     </ion-datetime>
   </ion-list-header>
-  <ion-reorder-group (ionItemReorder)="reorderItems($event)" disabled="false">
+  <ion-reorder-group *ngIf="plan" (ionItemReorder)="reorderItems($event)" disabled="false">
     <ion-item *ngFor="let activity of activities">
       <ion-label (click)="viewActivity(activity)">
         {{ activity.name }}
         <p> {{ activity.duration }} minutes - {{ (activity.startTime) ? activity.startTime  : "No Start Time"}}</p>
       </ion-label>
-      <ion-buttons slot="end">
-        <ion-button (click)="editActivity(activity)">
+      <ion-buttons *ngIf="isHeadCoach" slot="end">
+        <ion-button *ngIf="isHeadCoach" (click)="editActivity(activity)">
           <ion-icon name="create"></ion-icon>
         </ion-button>
         <ion-button>
@@ -65,5 +66,5 @@
     </ion-item>
   </ion-reorder-group>
 
-  <ion-button *ngIf="plan" (click)="createActivity()" fill="clear">New Activity</ion-button>
+  <ion-button *ngIf="plan && isHeadCoach" (click)="createActivity()" fill="clear">New Activity</ion-button>
 </ion-content>

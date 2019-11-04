@@ -33,7 +33,7 @@ export class CoachInfoPage implements OnInit {
 
     this.firebaseService.updateDocument("/users/" + this.user.uid, { coachPassword: this.password, sport: this.sport })
       .then(() => {
-        this.router.navigateByUrl("/tabs/plans")
+        this.router.navigateByUrl("/tabs/plan")
       })
   }
 }

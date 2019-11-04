@@ -14,7 +14,6 @@ export class ConfirmEmailGuard implements CanActivate {
     private router: Router,
   ){}
   async canActivate(){
-    console.log("email", await this.getEmailVerified())
     if(await this.getEmailVerified()){
       return true
     } else {

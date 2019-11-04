@@ -49,6 +49,25 @@ export class ProfilePage implements OnInit {
       this.firebaseService.updateDocument("/users/" + this.user.uid, { email: this.user.email });
       this.navCtrl.navigateBack("/confirm-email")
     })
-
   }
+
+  savePic() {
+      this.firebaseService.updateDocument("/users/" + this.user.uid, { photoUrl: this.user.photoUrl });
+      this.originalUser.photoUrl = this.user.photoUrl;
+  }
+
+  updatePic(event) {
+    console.log(event)
+  }
+
+  // readURL(input) {
+  //   if (input.target.files && input.target.files[0]) {
+  //     var reader = new FileReader();
+
+  //     reader.onload = (e) => {
+  //       this.user.photoUrl = e.target.result;
+  //     }
+  //     reader.readAsDataURL(input.target.files[0]);
+  //   }
+  // }
 }

@@ -6,21 +6,46 @@
 
 <ion-content>
 
+
+  <ion-card padding style=" margin: auto" *ngIf="user">
+
+    <ion-card-header>
+      <ion-card-subtitle>
+        <label *ngIf="user.photoUrl == originalUser.photoUrl"  for="pic">Edit</label>
+        <ion-text (click)="savePic()"  *ngIf="user.photoUrl != originalUser.photoUrl" color="success">
+          Save
+        </ion-text>
+      </ion-card-subtitle>
+    </ion-card-header>
+
+    <ion-card-content>
+      <img  [src]="user.photoUrl" />
+
+    </ion-card-content>
+
+
+  </ion-card>
+
+  <input (change)="readURL($event)" accept="image/*" style="display: none;" id="pic" type="file" />
+
   <ion-list *ngIf="user">
-    <ion-item>
+    <ion-item *ngIf="user">
       <ion-label position="floating">First Name</ion-label>
       <ion-input [(ngModel)]="user.fname"></ion-input>
-      <ion-note (click)="saveFname()" *ngIf="user.fname != originalUser.fname" color="success" slot="end">save</ion-note>
+      <ion-note (click)="saveFname()" *ngIf="user.fname != originalUser.fname" color="success" slot="end">save
+      </ion-note>
     </ion-item>
-    <ion-item>
+    <ion-item *ngIf="user">
       <ion-label position="floating">Last Name</ion-label>
       <ion-input [(ngModel)]="user.lname"></ion-input>
-      <ion-note (click)="saveLname()" *ngIf="user.lname != originalUser.lname"  color="success" slot="end">save</ion-note>
+      <ion-note (click)="saveLname()" *ngIf="user.lname != originalUser.lname" color="success" slot="end">save
+      </ion-note>
     </ion-item>
-    <ion-item>
+    <ion-item *ngIf="user">
       <ion-label position="floating">Email</ion-label>
       <ion-input [(ngModel)]="user.email"></ion-input>
-      <ion-note (click)="saveEmail()" *ngIf="user.email != originalUser.email"  color="success" slot="end">save</ion-note>
+      <ion-note (click)="saveEmail()" *ngIf="user.email != originalUser.email" color="success" slot="end">save
+      </ion-note>
     </ion-item>
   </ion-list>
 </ion-content>

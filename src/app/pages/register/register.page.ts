@@ -38,7 +38,7 @@ export class RegisterPage implements OnInit {
     let form = this.registerForm.value;
     let user = new User(form.fname, form.lname, "", form.email, "../../assets/images/default-user.png", form.isHeadCoach, "", "", "");
     this.authService.createUserWitEmail(form.email, form.password).then((firebaseUser: firebase.User) => {
-      let coach = (user.isHeadCoach) ? firebaseUser.uid : undefined;
+      let coach = (user.isHeadCoach) ? firebaseUser.uid : null;
       user.coach = coach;
       user.uid = firebaseUser.uid;
       this.firebaseService.setDocument("/users/" + firebaseUser.uid, { ...user }).then(() => {

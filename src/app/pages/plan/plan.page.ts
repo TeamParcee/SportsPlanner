@@ -43,18 +43,28 @@ export class PlanPage implements OnInit {
   timerStarted;
   timerInterval;
   nextActivity;
+  isHeadCoach;
 
 
   async ionViewWillEnter() {
     await this.getUser();
-    await this.getCoachFromUid(this.user.uid);
+    await this.getCoachFromUid(this.user.coach);
     await this.getActivePlan();
     await this.getActivities();
+    await this.checkIsHeadCoach();
 
 
 
   }
 
+  checkIsHeadCoach() {
+    console.log("is Coach", this.user.coach == this.user.uid);
+    if (this.user.coach == this.user.uid) {
+      this.isHeadCoach = true;
+    } else {
+      this.isHeadCoach = false
+    }
+  }
   async getUser() {
     this.user = await this.userService.getUser();
   }
@@ -64,9 +74,11 @@ export class PlanPage implements OnInit {
 
   viewPlans(event) {
     this.helper.openModalPromise(PlansPage, null).then(() => {
-      this.plan = this.planService.currentPlan;
-      this.setLastViewedPlan();
-      this.getActivities();
+      if (this.planService.currentPlan) {
+        this.plan = this.planService.currentPlan;
+        this.setLastViewedPlan();
+        this.getActivities();
+      }
     })
 
   }
@@ -177,8 +189,10 @@ export class PlanPage implements OnInit {
         let activePlanId = activePlanSnap.data().plan;
         this.planService.currentPlan = await this.firebaseService.getDocument("plans/" + activePlanId);
         this.plan = await this.firebaseService.getDocument("plans/" + activePlanId);
-        this.date = this.plan.date;
         this.getActivities();
+      } else {
+        this.plan = false;
+        this.planService.currentPlan = null;
       }
     })
   }
@@ -195,7 +209,7 @@ export class PlanPage implements OnInit {
       }, 1000)
     }
   }
-  
+
   stopTimer() {
     this.timerService.stopPlan();
     clearInterval(this.timerInterval);

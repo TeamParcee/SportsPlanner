@@ -10,7 +10,7 @@ import { NavController } from '@ionic/angular';
 })
 export class UserService {
 
-constructor(
+  constructor(
     private helper: HelperService,
     private firebaseService: FirebaseService,
     private navCtrl: NavController,
@@ -27,8 +27,9 @@ constructor(
     return new Promise((resolve) => {
       firebase.auth().onAuthStateChanged(async (firebaseUser) => {
         this.firebaseUser = firebaseUser;
-        let user = await this.firebaseService.getDocument("/users/" + firebaseUser.uid);
-        return resolve(user)
+        firebase.firestore().doc("/users/" + firebaseUser.uid).onSnapshot((user) => {
+          return resolve(user.data())
+        })
       })
 
     })
@@ -49,7 +50,7 @@ constructor(
     })
   }
 
- 
+
 
 
   createUserData(name, photoURL, uid, email) {
@@ -65,7 +66,7 @@ constructor(
     })
 
   }
-  
+
 
   getUserFromUid(uid) {
     return new Promise((resolve) => {

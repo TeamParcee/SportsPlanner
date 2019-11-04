@@ -30,19 +30,27 @@ export class PlansPage implements OnInit {
   plans;
   user;
   oldMonth = "false";
-
+  isHeadCoach;
   async ionViewWillEnter() {
     await this.getUser();
+    await this.checkIsHeadCoach();
     this.getPlans();
   }
   async getUser() {
     this.user = await this.userService.getUser();
   }
+
+  checkIsHeadCoach() {
+    if (this.user.coach == this.user.uid) {
+      this.isHeadCoach = true;
+    }
+  }
+
   getPlans() {
     firebase.firestore().collection("plans")
       .where("coachId", "==", this.user.coach)
       .orderBy("orderDate")
-      .onSnapshot(async(plansSnap) => {
+      .onSnapshot(async (plansSnap) => {
         let plans = [];
         plansSnap.forEach(async (plan) => {
           // let activities = await plan.ref.collection("/activities").get(); 
@@ -55,6 +63,8 @@ export class PlansPage implements OnInit {
   }
   selectPlan(plan) {
     this.planService.currentPlan = plan;
+    this.firebaseService.setDocument("/users/" + this.user.uid + "/utilities/activeplan", { plan: plan.id })
+
     this.helper.closeModal();
   }
   close() {
