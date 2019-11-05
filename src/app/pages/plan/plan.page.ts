@@ -58,7 +58,6 @@ export class PlanPage implements OnInit {
   }
 
   checkIsHeadCoach() {
-    console.log("is Coach", this.user.coach == this.user.uid);
     if (this.user.coach == this.user.uid) {
       this.isHeadCoach = true;
     } else {

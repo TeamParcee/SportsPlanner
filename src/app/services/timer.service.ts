@@ -3,6 +3,8 @@ import { HelperService } from './helper.service';
 import { FirebaseService } from './firebase.service';
 import { UserService } from './user.service';
 import { PlanService } from './plan.service';
+import { NativeAudio } from '@ionic-native/native-audio/ngx';
+import { Media, MediaObject } from '@ionic-native/media/ngx';
 
 @Injectable({
   providedIn: 'root'
@@ -14,6 +16,8 @@ export class TimerService {
     private firebaseService: FirebaseService,
     private helper: HelperService,
     private planService: PlanService,
+    private nativeAudio: NativeAudio,
+    private media: Media,
   ) { }
 
 
@@ -29,7 +33,7 @@ export class TimerService {
   user;
   stopAlert = false;
   currentActivity;
-
+  file: MediaObject = this.media.create('https://www.soundhelix.com/examples/mp3/SoundHelix-Song-14.mp3');
 
 
   getTimerCount(activity, currentActivity) {
@@ -62,9 +66,9 @@ export class TimerService {
         
         this.activeTime = "Time Past";
         if (this.showAlert) {
-          // this.startVibration();
+          this.startVibration();
           this.helper.stopTimerAlert(activity).then(() => {
-            // this.stopVibration();
+            this.stopVibration();
             this.showAlert = true;
           })
         }
@@ -96,6 +100,11 @@ export class TimerService {
       this.getTimerCount(this.planService.activities[this.count], this.planService.activities[this.count - 1]);
     } else {
       this.activeActivity = null;
+      this.currentActivity = { name: "All Activities Have Ended", time: null};
+      this.nextActivity = {
+        name: "XXX",
+        startTime: "XXXX",
+      }
       clearInterval(this.timerInterval);
       this.count = 0
     }
@@ -107,5 +116,15 @@ export class TimerService {
     this.activeActivity = null;
     clearInterval(this.timerInterval);
     this.count = 0
+  }
+
+  startVibration(){
+   
+    this.file.play();
+    
+  }
+
+  stopVibration(){
+    this.file.stop();
   }
 }

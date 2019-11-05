@@ -1,37 +1,42 @@
 <ion-header>
   <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="tabs/plan"></ion-back-button>
+    </ion-buttons>
     <ion-title>Profile</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="signOut()">
+        <ion-icon slot="icon-only" name="log-out"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
 
 
-  <ion-card padding style=" margin: auto;;" *ngIf="user">
+  <ion-card style=" width: 200px; margin: auto;" *ngIf="user">
 
-    <ion-card-header>
-      <ion-card-subtitle *ngIf="user && originalUser">
-        <label *ngIf="user.photoUrl == originalUser.photoUrl"  for="pic">Edit</label>
-        <ion-text (click)="savePic()"  *ngIf="user.photoUrl != originalUser.photoUrl" color="success">
+
+
+    <ion-card-content style="display: grid;">
+      <div style="margin: auto; ">
+        <img id="image" style="width: 100px;" [src]="user.photoUrl" />
+        <ion-text (click)="savePic()" *ngIf="user.photoUrl != originalUser.photoUrl" color="success">
           Save
         </ion-text>
-      </ion-card-subtitle>
-    </ion-card-header>
-
-    <ion-card-content>
-      <div>
-          <img  id="image" [src]="user.photoUrl" />
-
+        <label *ngIf="user.photoUrl == originalUser.photoUrl" for="pic" (click)="savePic()" color="success">
+          Edit
+        </label>
       </div>
-   
+
 
     </ion-card-content>
-
 
   </ion-card>
 
   <input (change)="readURL($event)" accept="image/*" style="display: none;" id="pic" type="file" />
-  <ion-list *ngIf="user && originalUser">
+  <ion-list margin-top *ngIf="user && originalUser">
     <ion-item *ngIf="user">
       <ion-label position="floating">First Name</ion-label>
       <ion-input [(ngModel)]="user.fname"></ion-input>
@@ -50,5 +55,14 @@
       <ion-note (click)="saveEmail()" *ngIf="user.email != originalUser.email" color="success" slot="end">save
       </ion-note>
     </ion-item>
+    <ion-item margin-top lines="none" *ngIf="coach">
+      <ion-avatar slot="start">
+        <img [src]="coach.photoUrl">
+      </ion-avatar>
+      <ion-label>
+        Coach {{ coach.fname + " " + coach.lname }}
+      </ion-label>
+    </ion-item>
+    <ion-button routerLink="/select-coach" fill="clear">Change Coach</ion-button>
   </ion-list>
 </ion-content>

@@ -19,17 +19,20 @@ export class ProfilePage implements OnInit {
     private firebaseService: FirebaseService,
     private authService: AuthService,
     private navCtrl: NavController,
+    private auth: AuthService,
 
   ) { }
 
   user;
   originalUser;
+  coach;
 
   ngOnInit() {
   }
 
   async ionViewWillEnter() {
     await this.getUser();
+    await this.getCoachFromUid(this.user.coach);
   }
   async getUser() {
     this.user = await this.userService.getUser();
@@ -52,8 +55,8 @@ export class ProfilePage implements OnInit {
   }
 
   savePic() {
-      this.firebaseService.updateDocument("/users/" + this.user.uid, { photoUrl: this.user.photoUrl });
-      this.originalUser.photoUrl = this.user.photoUrl;
+    this.firebaseService.updateDocument("/users/" + this.user.uid, { photoUrl: this.user.photoUrl });
+    this.originalUser.photoUrl = this.user.photoUrl;
   }
 
   updatePic(event) {
@@ -64,10 +67,28 @@ export class ProfilePage implements OnInit {
     if (input.target.files && input.target.files[0]) {
       var reader = new FileReader();
 
-      reader.onload = (e:any) => {
+      reader.onload = (e: any) => {
         this.user.photoUrl = e.target.result;
       }
       reader.readAsDataURL(input.target.files[0]);
     }
   }
+
+
+  signOut() {
+    this.helper.confirmationAlert("Sign Out", "Are you sure you want to Sign Out?", { denyText: "Cancel", confirmText: "Sign Out" })
+      .then((result) => {
+        if (result) {
+          this.auth.signout().then(() => {
+            this.navCtrl.navigateBack("/login")
+          })
+        }
+      })
+  }
+  getCoachFromUid(uid) {
+    this.firebaseService.getDocument("/users/" + uid).then((user) => {
+      this.coach = user;
+    })
+  }
+
 }

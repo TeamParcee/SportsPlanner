@@ -18,7 +18,8 @@ import { ViewActivityPage } from './pages/view-activity/view-activity.page';
 import { QuillModule } from 'ngx-quill'
 import { ViewDrillPage } from './pages/view-drill/view-drill.page';
 import { EditDrillPage } from './pages/edit-drill/edit-drill.page';
-
+import { NativeAudio } from '@ionic-native/native-audio/ngx';
+import { Media, MediaObject } from '@ionic-native/media/ngx';
  // Your web app's Firebase configuration
  var firebaseConfig = {
   apiKey: "AIzaSyDTFlAGMfPtxMzp3c6jWa96ZnBijIAYG5I",
@@ -61,7 +62,9 @@ firebase.initializeApp(firebaseConfig);
   providers: [
     FormBuilder,
     StatusBar,
+    NativeAudio,
     SplashScreen,
+    Media,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
   bootstrap: [AppComponent]

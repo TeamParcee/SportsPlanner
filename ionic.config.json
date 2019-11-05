@@ -1,5 +1,7 @@
 {
   "name": "SportsPlanner",
-  "integrations": {},
+  "integrations": {
+    "cordova": {}
+  },
   "type": "angular"
 }
