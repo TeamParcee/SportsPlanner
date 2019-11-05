@@ -60,14 +60,14 @@ export class ProfilePage implements OnInit {
     console.log(event)
   }
 
-  // readURL(input) {
-  //   if (input.target.files && input.target.files[0]) {
-  //     var reader = new FileReader();
+  readURL(input) {
+    if (input.target.files && input.target.files[0]) {
+      var reader = new FileReader();
 
-  //     reader.onload = (e) => {
-  //       this.user.photoUrl = e.target.result;
-  //     }
-  //     reader.readAsDataURL(input.target.files[0]);
-  //   }
-  // }
+      reader.onload = (e:any) => {
+        this.user.photoUrl = e.target.result;
+      }
+      reader.readAsDataURL(input.target.files[0]);
+    }
+  }
 }

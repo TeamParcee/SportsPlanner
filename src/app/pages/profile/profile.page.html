@@ -7,10 +7,10 @@
 <ion-content>
 
 
-  <ion-card padding style=" margin: auto" *ngIf="user">
+  <ion-card padding style=" margin: auto;;" *ngIf="user">
 
     <ion-card-header>
-      <ion-card-subtitle>
+      <ion-card-subtitle *ngIf="user && originalUser">
         <label *ngIf="user.photoUrl == originalUser.photoUrl"  for="pic">Edit</label>
         <ion-text (click)="savePic()"  *ngIf="user.photoUrl != originalUser.photoUrl" color="success">
           Save
@@ -19,7 +19,11 @@
     </ion-card-header>
 
     <ion-card-content>
-      <img  [src]="user.photoUrl" />
+      <div>
+          <img  id="image" [src]="user.photoUrl" />
+
+      </div>
+   
 
     </ion-card-content>
 
@@ -27,8 +31,7 @@
   </ion-card>
 
   <input (change)="readURL($event)" accept="image/*" style="display: none;" id="pic" type="file" />
-
-  <ion-list *ngIf="user">
+  <ion-list *ngIf="user && originalUser">
     <ion-item *ngIf="user">
       <ion-label position="floating">First Name</ion-label>
       <ion-input [(ngModel)]="user.fname"></ion-input>
