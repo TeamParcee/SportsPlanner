@@ -25,7 +25,7 @@ export class ConfirmEmailPage implements OnInit {
   ngOnInit() {
   }
 
-  
+
 
   async getUser() {
     this.user = await this.userService.getUser();
@@ -40,12 +40,14 @@ export class ConfirmEmailPage implements OnInit {
       type: "email"
     }]
 
-    this.helper.inputAlert("Change Email", "Please enter your email address", inputAlert).then((result) => {
-      console.log(result)
+    this.helper.inputAlert("Change Email", "Please enter your email address", inputAlert).then((result: any) => {
+      this.changeEmail(result.email)
     })
   }
   changeEmail(email) {
-    this.authService.changeEmail(email)
+    this.authService.changeEmail(email).then(() => {
+      this.resendVerification();
+    })
   }
 
   signout() {
@@ -66,5 +68,5 @@ export class ConfirmEmailPage implements OnInit {
   }
 
 
-  
+
 }

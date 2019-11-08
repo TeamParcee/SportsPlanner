@@ -68,7 +68,7 @@
       </ion-label>
     </ion-item>
     <ion-button routerLink="/select-coach" fill="clear">Change Coach</ion-button>
-    <ion-item *ngIf="user">
+    <ion-item *ngIf="user.uid == user.coach">
       <ion-label position="floating">Sport</ion-label>
       <ion-select okText="Save" name="sport" (ionChange)="saveSport()" [(ngModel)]="user.sport">
           <ion-select-option value="football">Football</ion-select-option>
@@ -78,8 +78,8 @@
         </ion-select>
     </ion-item>
    
-    <ion-item *ngIf="user">
-      <ion-label position="floating">Coach Password</ion-label>
+    <ion-item *ngIf="user.uid == user.coach">
+      <ion-label  position="floating">Coach Password</ion-label>
       <ion-input [(ngModel)]="user.coachPassword"></ion-input>
       <ion-note (click)="saveCoachPassword()" *ngIf="user.coachPassword != originalUser.coachPassword" color="success" slot="end">save
       </ion-note>

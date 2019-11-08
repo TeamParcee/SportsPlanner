@@ -21,7 +21,7 @@
 
   <ion-row *ngIf="showTimer">
     <ion-col>
-      <ion-card>
+      <ion-card   (click)="viewCurrentActivity(currentActivity)">
         <ion-card-header>
           <ion-card-subtitle> {{ (currentActivity?.name) ? currentActivity?.name : "Getting Next Activity..." }}
           </ion-card-subtitle>
@@ -52,7 +52,7 @@
     </ion-datetime>
   </ion-list-header>
   <ion-reorder-group *ngIf="plan" (ionItemReorder)="reorderItems($event)" disabled="false">
-    <ion-item *ngFor="let activity of activities">
+    <ion-item [ngClass]="activity.startTime == currentActivity?.startTime ? 'activeEvent' : ''" *ngFor="let activity of activities">
       <ion-label (click)="viewActivity(activity)">
         {{ activity.name }}
         <p> {{ activity.duration }} minutes - {{ (activity.startTime) ? activity.startTime  : "No Start Time"}}</p>
@@ -70,7 +70,7 @@
 
   <ion-button *ngIf="plan && isHeadCoach" (click)="createActivity()" fill="clear">New Activity</ion-button>
 
-  <ion-fab *ngIf="isHeadCoach && plan" vertical="bottom" horizontal="end" slot="fixed">
+  <ion-fab  vertical="bottom" horizontal="end" slot="fixed">
     <ion-fab-button [color]="(!showTimer) ? 'primary' : 'secondary'" (click)="(!showTimer) ? runTimer() : stopTimer()">
       <ion-icon name="timer"></ion-icon>
     </ion-fab-button>

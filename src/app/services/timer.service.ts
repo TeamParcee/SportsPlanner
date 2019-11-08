@@ -83,7 +83,9 @@ export class TimerService {
         this.currentActivity = {
           time: time,
           name: currentActivity.name,
-          startTime: currentActivity.startTime
+          startTime: currentActivity.startTime,
+          notes: currentActivity.notes,
+          duration: currentActivity.duration
         }
         this.nextActivity = {
           name: activity.name,
@@ -105,7 +107,7 @@ export class TimerService {
       this.currentActivity = { name: "All Activities Have Ended", time: null};
       this.nextActivity = {
         name: "XXX",
-        startTime: "XXXX",
+        startTime: "XXX",
       }
       clearInterval(this.timerInterval);
       this.count = 0
@@ -113,6 +115,7 @@ export class TimerService {
   }
 
   async   stopPlan() {
+    this.showAlert = false;
     let user: any = await this.userService.getUser();
     this.firebaseService.setDocument("users/" + user.uid + "/utilities/activeActivity", { active: false })
     this.activeActivity = null;

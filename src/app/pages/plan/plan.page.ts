@@ -47,7 +47,6 @@ export class PlanPage implements OnInit {
 
 
   async ionViewWillEnter() {
-    console.log("fdsafsasdf");
     await this.getUser();
     await this.getCoachFromUid(this.user.coach);
     await this.getActivePlan();
@@ -101,9 +100,9 @@ export class PlanPage implements OnInit {
 
     };
     this.firebaseService.addDocument("/plans/" + this.plan.id + "/activities", activity);
-    let plan:any = await this.firebaseService.getDocument("/plans/" + this.plan.id);
+    let plan: any = await this.firebaseService.getDocument("/plans/" + this.plan.id);
     let activitiesCount = plan.activities;
-    this.firebaseService.updateDocument("/plans/" + this.plan.id, {activities: (activitiesCount + 1)})
+    this.firebaseService.updateDocument("/plans/" + this.plan.id, { activities: (activitiesCount + 1) })
     this.getActivities();
   }
   getActivities() {
@@ -142,8 +141,15 @@ export class PlanPage implements OnInit {
       })
   }
   viewActivity(activity) {
-    this.helper.openModalPromise(ViewActivityPage, { activity: activity })
+      this.helper.openModalPromise(ViewActivityPage, { activity: activity })
   }
+
+  viewCurrentActivity(activity) {
+    if (this.currentActivity.time) {
+      this.helper.openModalPromise(ViewActivityPage, { activity: activity })
+    }
+  }
+
   updateTime() {
     this.stopTimer();
     this.firebaseService.updateDocument("/plans/" + this.plan.id, { date: moment(this.date).format('llll'), orderDate: moment(this.date).format() });
