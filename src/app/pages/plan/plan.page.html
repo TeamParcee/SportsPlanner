@@ -41,20 +41,15 @@
     </ion-col>
   </ion-row>
 
+  <ion-text *ngIf="!plan"> 
+    <p padding text-center > No Practice Plan is selected</p>
+  </ion-text>
   <ion-list-header *ngIf="plan">
     <ion-datetime [disabled]="!isHeadCoach" (ionChange)="updateTime()" pickerFormat="MMM DD, hh:mm A"
       displayFormat="DDD, MMM DD, h:mm A" [(ngModel)]="date" 
       (click)="updateTime()" fill="clear">
       <!-- {{ (plan ) ? plan.date + " " + plan.startTime : "Select A Plan" }} -->
     </ion-datetime>
-    <span margin>
-      <ion-button fill="clear" *ngIf="!showTimer" (click)="runTimer()">
-        <ion-icon slot="icon-only" name="timer"></ion-icon>
-      </ion-button>
-      <ion-button fill="clear" *ngIf="showTimer" (click)="stopTimer()">
-        <ion-icon slot="icon-only" name="timer"></ion-icon>
-      </ion-button>
-    </span>
   </ion-list-header>
   <ion-reorder-group *ngIf="plan" (ionItemReorder)="reorderItems($event)" disabled="false">
     <ion-item *ngFor="let activity of activities">
@@ -74,4 +69,10 @@
   </ion-reorder-group>
 
   <ion-button *ngIf="plan && isHeadCoach" (click)="createActivity()" fill="clear">New Activity</ion-button>
+
+  <ion-fab *ngIf="isHeadCoach && plan" vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button [color]="(!showTimer) ? 'primary' : 'secondary'" (click)="(!showTimer) ? runTimer() : stopTimer()">
+      <ion-icon name="timer"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
 </ion-content>

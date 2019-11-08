@@ -5,6 +5,7 @@ import { FirebaseService } from 'src/app/services/firebase.service';
 import * as firebase from 'firebase';
 import { AuthService } from 'src/app/services/auth.service';
 import { NavController } from '@ionic/angular';
+import { PlanService } from 'src/app/services/plan.service';
 
 @Component({
   selector: 'app-profile',
@@ -20,6 +21,7 @@ export class ProfilePage implements OnInit {
     private authService: AuthService,
     private navCtrl: NavController,
     private auth: AuthService,
+    private planService: PlanService,
 
   ) { }
 
@@ -47,6 +49,15 @@ export class ProfilePage implements OnInit {
     this.firebaseService.updateDocument("/users/" + this.user.uid, { lname: this.user.lname });
     this.originalUser.lname = this.user.lname;
   }
+  saveSport() {
+    this.firebaseService.updateDocument("/users/" + this.user.uid, { sport: this.user.sport });
+    this.originalUser.sport = this.user.sport;
+    this.firebaseService.deleteDocument("/users/" + this.user.uid + "/utilities/activeplan");
+  }
+  saveCoachPassword() {
+    this.firebaseService.updateDocument("/users/" + this.user.uid, { coachPassword: this.user.coachPassword });
+    this.originalUser.coachPassword = this.user.coachPassword;
+  }
   saveEmail() {
     this.authService.changeEmail(this.user.email).then(() => {
       this.firebaseService.updateDocument("/users/" + this.user.uid, { email: this.user.email });
@@ -60,7 +71,6 @@ export class ProfilePage implements OnInit {
   }
 
   updatePic(event) {
-    console.log(event)
   }
 
   readURL(input) {

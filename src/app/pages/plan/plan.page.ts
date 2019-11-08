@@ -47,6 +47,7 @@ export class PlanPage implements OnInit {
 
 
   async ionViewWillEnter() {
+    console.log("fdsafsasdf");
     await this.getUser();
     await this.getCoachFromUid(this.user.coach);
     await this.getActivePlan();
@@ -88,7 +89,7 @@ export class PlanPage implements OnInit {
     })
   }
 
-  createActivity() {
+  async createActivity() {
     let activity: Activity = {
       name: "New Activity",
       duration: 0,
@@ -100,6 +101,9 @@ export class PlanPage implements OnInit {
 
     };
     this.firebaseService.addDocument("/plans/" + this.plan.id + "/activities", activity);
+    let plan:any = await this.firebaseService.getDocument("/plans/" + this.plan.id);
+    let activitiesCount = plan.activities;
+    this.firebaseService.updateDocument("/plans/" + this.plan.id, {activities: (activitiesCount + 1)})
     this.getActivities();
   }
   getActivities() {
@@ -183,7 +187,7 @@ export class PlanPage implements OnInit {
   }
 
   async getActivePlan() {
-    firebase.firestore().doc("/users/" + this.user.uid + "/utilities/activeplan").get().then(async (activePlanSnap) => {
+    firebase.firestore().doc("/users/" + this.user.uid + "/utilities/activeplan").onSnapshot(async (activePlanSnap) => {
       if (activePlanSnap.exists) {
         let activePlanId = activePlanSnap.data().plan;
         this.planService.currentPlan = await this.firebaseService.getDocument("plans/" + activePlanId);

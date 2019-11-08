@@ -35,7 +35,7 @@ export class AddPlanPage implements OnInit {
   createPlan() {
     let date =  moment(moment(this.date).format("MMM DD, YY") + " " + moment(this.startTime).format("LT")).format('llll');
     let orderDate = moment(date).format()
-    this.firebaseService.addDocument("/plans", { date: date, coachId: this.user.uid, orderDate: orderDate })
+    this.firebaseService.addDocument("/plans", { date: date, coachId: this.user.uid, orderDate: orderDate, sport: this.user.sport, activities: 0 })
       .then(() => {
         this.close();
       })

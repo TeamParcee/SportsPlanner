@@ -42,8 +42,11 @@ export class EditActivityPage implements OnInit {
       .then((result) => {
         if (result) {
           this.firebaseService.deleteDocument("plans/" + this.activity.planId + "/activities/" + this.activity.id)
-            .then(() => {
+            .then(async() => {
               this.itemDelete = true;
+              let plan: any = await this.firebaseService.getDocument("/plans/" + this.activity.planId);
+              let activitiesCount = plan.activities;
+              this.firebaseService.updateDocument("/plans/" + this.activity.planId, { activities: (activitiesCount - 1) })
               this.close()
             })
         }

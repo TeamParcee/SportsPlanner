@@ -4,8 +4,9 @@ import { HelperService } from 'src/app/services/helper.service';
 import { FirebaseService } from 'src/app/services/firebase.service';
 import { CoachService } from 'src/app/services/coach.service';
 import * as firebase from 'firebase';
-import { AlertController } from '@ionic/angular';
+import { AlertController, NavController } from '@ionic/angular';
 import { AlertInput } from '@ionic/core';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-select-coach',
@@ -19,6 +20,8 @@ export class SelectCoachPage implements OnInit {
     private helper: HelperService,
     private firebaseService: FirebaseService,
     private coachService: CoachService,
+    private authService: AuthService,
+    private navCtrl: NavController,
   ) { }
 
   ngOnInit() {
@@ -50,7 +53,10 @@ export class SelectCoachPage implements OnInit {
     this.firebaseService.updateDocument("/users/" + this.user.uid, {coach: coach.uid})
     .then(()=>{
       this.firebaseService.deleteDocument("/users/" + this.user.uid + "/utilities/activeplan")
-      this.helper.okAlert("Coach Updated", "Your coach has been updated to Coach " + coach.lname)
+      this.helper.okAlert("Coach Updated", "Your coach has been updated to Coach " + coach.lname + ". Please sign back in");
+      this.authService.signout().then(()=>{
+        this.navCtrl.navigateBack("/login");
+      })
     })
   }
 

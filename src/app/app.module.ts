@@ -20,6 +20,9 @@ import { ViewDrillPage } from './pages/view-drill/view-drill.page';
 import { EditDrillPage } from './pages/edit-drill/edit-drill.page';
 import { NativeAudio } from '@ionic-native/native-audio/ngx';
 import { Media, MediaObject } from '@ionic-native/media/ngx';
+import { Vibration } from '@ionic-native/vibration/ngx';
+import { BackgroundMode } from '@ionic-native/background-mode/ngx';
+
  // Your web app's Firebase configuration
  var firebaseConfig = {
   apiKey: "AIzaSyDTFlAGMfPtxMzp3c6jWa96ZnBijIAYG5I",
@@ -63,7 +66,9 @@ firebase.initializeApp(firebaseConfig);
     FormBuilder,
     StatusBar,
     NativeAudio,
+    Vibration,
     SplashScreen,
+    BackgroundMode,
     Media,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],

@@ -5,6 +5,7 @@ import { UserService } from './user.service';
 import { PlanService } from './plan.service';
 import { NativeAudio } from '@ionic-native/native-audio/ngx';
 import { Media, MediaObject } from '@ionic-native/media/ngx';
+import { Vibration } from '@ionic-native/vibration/ngx';
 
 @Injectable({
   providedIn: 'root'
@@ -18,6 +19,7 @@ export class TimerService {
     private planService: PlanService,
     private nativeAudio: NativeAudio,
     private media: Media,
+    private vibration: Vibration,
   ) { }
 
 
@@ -40,7 +42,7 @@ export class TimerService {
 
     if (!currentActivity) {
       currentActivity = { ...activity };
-      currentActivity.name = "Time Unit First Activity"
+      currentActivity.name = "Time Until First Activity"
     }
     this.timerInterval = setInterval(() => {
       let datetime = activity.date;
@@ -119,12 +121,16 @@ export class TimerService {
   }
 
   startVibration(){
-   
+    this.vibrationInterval = setInterval(()=>{
+      this.vibration.vibrate(1000)
+    }, 1000)
+    ;
     this.file.play();
     
   }
 
   stopVibration(){
+    clearInterval(this.vibrationInterval)
     this.file.stop();
   }
 }

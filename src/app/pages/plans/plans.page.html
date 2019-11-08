@@ -5,16 +5,15 @@
         <ion-icon slot="icon-only" name="close"></ion-icon>
       </ion-button>
     </ion-buttons>
-    <ion-title>Plans</ion-title>
-    <ion-buttons *ngIf="isHeadCoach" slot="end">
-      <ion-button (click)="addPlan()">
-        <ion-icon name="add"></ion-icon>
-      </ion-button>
-    </ion-buttons>
+    <ion-title>Practice Plans</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
+    <ion-text *ngIf="!plans?.length"> 
+        <p padding text-center > You do not have any Practice Plans</p>
+      </ion-text>
+
   <ion-virtual-scroll [items]="plans" [headerFn]="myHeaderFn">
     <ion-item-divider *virtualHeader="let header">
       {{ header }}
@@ -33,5 +32,9 @@
   </ion-virtual-scroll>
 
 
-
+<ion-fab  *ngIf="isHeadCoach"  vertical="bottom" horizontal="end" slot="fixed">
+  <ion-fab-button (click)="addPlan()">
+    <ion-icon name="add"></ion-icon>
+  </ion-fab-button>
+</ion-fab>
 </ion-content>

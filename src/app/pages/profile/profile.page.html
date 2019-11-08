@@ -37,6 +37,7 @@
 
   <input (change)="readURL($event)" accept="image/*" style="display: none;" id="pic" type="file" />
   <ion-list margin-top *ngIf="user && originalUser">
+    <ion-item-divider>My Information</ion-item-divider>
     <ion-item *ngIf="user">
       <ion-label position="floating">First Name</ion-label>
       <ion-input [(ngModel)]="user.fname"></ion-input>
@@ -55,6 +56,9 @@
       <ion-note (click)="saveEmail()" *ngIf="user.email != originalUser.email" color="success" slot="end">save
       </ion-note>
     </ion-item>
+
+    <ion-item-divider>Coach Settings</ion-item-divider>
+
     <ion-item margin-top lines="none" *ngIf="coach">
       <ion-avatar slot="start">
         <img [src]="coach.photoUrl">
@@ -64,5 +68,21 @@
       </ion-label>
     </ion-item>
     <ion-button routerLink="/select-coach" fill="clear">Change Coach</ion-button>
+    <ion-item *ngIf="user">
+      <ion-label position="floating">Sport</ion-label>
+      <ion-select okText="Save" name="sport" (ionChange)="saveSport()" [(ngModel)]="user.sport">
+          <ion-select-option value="football">Football</ion-select-option>
+          <ion-select-option value="volleyball">Volleyball</ion-select-option>
+          <ion-select-option value="basketball">Basketball</ion-select-option>
+          <ion-select-option value="soccer">Soccer</ion-select-option>
+        </ion-select>
+    </ion-item>
+   
+    <ion-item *ngIf="user">
+      <ion-label position="floating">Coach Password</ion-label>
+      <ion-input [(ngModel)]="user.coachPassword"></ion-input>
+      <ion-note (click)="saveCoachPassword()" *ngIf="user.coachPassword != originalUser.coachPassword" color="success" slot="end">save
+      </ion-note>
+    </ion-item>
   </ion-list>
 </ion-content>

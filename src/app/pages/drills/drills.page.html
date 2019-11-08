@@ -1,11 +1,6 @@
 <ion-header>
   <ion-toolbar>
     <ion-title>Drills</ion-title>
-    <ion-buttons *ngIf="isHeadCoach" slot="end">
-      <ion-button routerLink="/add-drill">
-        <ion-icon name="add" slot="icon-only"></ion-icon>
-      </ion-button>
-    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
@@ -14,7 +9,7 @@
     <ion-row>
       <ion-col>
         <ion-button (click)="getDrillsPrivate() " [fill]="(drillView == 'private' ? 'solid' : 'clear')" expand="full">
-          Your Coaches Drills</ion-button>
+          {{ (isHeadCoach) ? "My Drills" : "Your Coaches Drills" }}</ion-button>
       </ion-col>
       <ion-col>
         <ion-button (click)="getDrillsPublic() " [fill]="(drillView == 'public' ? 'solid' : 'clear')" expand="full">
@@ -41,4 +36,10 @@
       </ion-buttons>
     </ion-item>
   </ion-list>
+
+  <ion-fab  *ngIf="isHeadCoach" horizontal="end" vertical="bottom" slot="fixed">
+    <ion-fab-button  routerLink="/add-drill">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
 </ion-content>

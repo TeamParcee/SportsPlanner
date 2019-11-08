@@ -49,6 +49,7 @@ export class PlansPage implements OnInit {
   getPlans() {
     firebase.firestore().collection("plans")
       .where("coachId", "==", this.user.coach)
+      .where("sport", "==", this.user.sport)
       .orderBy("orderDate")
       .onSnapshot(async (plansSnap) => {
         let plans = [];
