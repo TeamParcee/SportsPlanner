@@ -67,7 +67,12 @@ export class PlanPage implements OnInit {
   async getUser() {
     this.user = await this.userService.getUser();
   }
-  ngOnInit() {
+  async ngOnInit() {
+    await this.getUser();
+    await this.getCoachFromUid(this.user.coach);
+    await this.getActivePlan();
+    await this.getActivities();
+    await this.checkIsHeadCoach();
   }
 
 
@@ -129,6 +134,7 @@ export class PlanPage implements OnInit {
           this.activities = activities;
           this.planService.activities = activities;
           this.date = this.plan.date;
+          console.log(this.activities.length)
         })
 
     }
@@ -145,7 +151,7 @@ export class PlanPage implements OnInit {
   }
 
   viewCurrentActivity(activity) {
-    if (this.currentActivity.time) {
+    if (this.currentActivity.time && this.currentActivity.name != "Time Until First Activity") {
       this.helper.openModalPromise(ViewActivityPage, { activity: activity })
     }
   }

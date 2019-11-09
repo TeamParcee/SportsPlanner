@@ -22,6 +22,7 @@
 
 
   <ion-list>
+
     <ion-item *ngFor="let drill of filterDrills">
       <ion-label (click)="viewDrill(drill)">
         {{ drill.name }}
@@ -37,8 +38,8 @@
     </ion-item>
   </ion-list>
 
-  <ion-fab  *ngIf="isHeadCoach" horizontal="end" vertical="bottom" slot="fixed">
-    <ion-fab-button  routerLink="/add-drill">
+  <ion-fab *ngIf="isHeadCoach" horizontal="end" vertical="bottom" slot="fixed">
+    <ion-fab-button routerLink="/add-drill">
       <ion-icon name="add"></ion-icon>
     </ion-fab-button>
   </ion-fab>

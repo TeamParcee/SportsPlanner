@@ -1,0 +1,19 @@
+
+
+.header{
+    padding: 15px;
+    font-weight: 700;
+    font-size: 28px;
+}
+
+.container {
+    width: 100px;
+    overflow: hidden; 
+    white-space: nowrap;
+    ::-webkit-scrollbar {
+      display: none;
+    }
+    .scroll {
+      overflow: auto;
+    }
+  }
