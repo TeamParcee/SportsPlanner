@@ -9,13 +9,13 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content padding>
+<ion-content>
 
   <ion-list lines="none" *ngIf="drill">
-    <ion-item >
-      {{ drill.name }}
-    </ion-item>
     <iframe  width="100%" height="315" [src]="trustedVideoUrl" frameborder="0"
     allowfullscreen></iframe>
   </ion-list>
+  <ion-item >
+      {{ drill.name }}
+    </ion-item>
 </ion-content>
