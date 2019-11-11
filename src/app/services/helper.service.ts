@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AlertController, ToastController, LoadingController, PopoverController, ModalController } from '@ionic/angular';
 import { AlertInput } from '@ionic/core';
+import { componentFactoryName } from '@angular/compiler';
 
 @Injectable({
   providedIn: 'root'
@@ -42,21 +43,37 @@ export class HelperService {
         component: component,
         componentProps: componentProps
       }).then((modal) => {
-        modal.present();
+        modal.present()
         modal.onDidDismiss().then(() => {
-          return resolve();
+        return resolve();
         })
-
-
       })
     })
   }
 
+  openModalSetId(component, componentProps, id) {
+
+    return new Promise((resolve) => {
+      return this.modalCtrl.create({
+        component: component,
+        componentProps: componentProps
+      }).then((modal) => {
+        modal.present().then(()=>{
+          modal.id = id
+        })
+        modal.onDidDismiss().then(() => {
+        return resolve();
+        })
+      })
+    })
+  }
 
   closeModal() {
     this.modalCtrl.dismiss()
   }
-
+  closeModalWithId(id){
+  this.modalCtrl.dismiss(id);    
+  }
   okAlert(header: string, message: string) {
     this.alertCtrl.create({
       header: header,

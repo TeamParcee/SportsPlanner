@@ -26,6 +26,7 @@ export class ViewActivityPage implements OnInit {
     await this.getUser();
     await this.checkIsHeadCoach();
   }
+
   close() {
     this.helper.closeModal();
   }
@@ -40,6 +41,8 @@ export class ViewActivityPage implements OnInit {
     }
   }
   editActivity() {
-    this.helper.openModalPromise(EditActivityPage, { activity: this.activity })
+    this.helper.closeModal();
+    this.helper.openModal(EditActivityPage, { activity: this.activity })
+    
   }
 }
