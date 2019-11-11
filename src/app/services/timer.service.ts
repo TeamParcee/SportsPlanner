@@ -6,6 +6,7 @@ import { PlanService } from './plan.service';
 import { NativeAudio } from '@ionic-native/native-audio/ngx';
 import { Media, MediaObject } from '@ionic-native/media/ngx';
 import { Vibration } from '@ionic-native/vibration/ngx';
+import { BackgroundMode } from '@ionic-native/background-mode/ngx';
 
 @Injectable({
   providedIn: 'root'
@@ -20,6 +21,7 @@ export class TimerService {
     private nativeAudio: NativeAudio,
     private media: Media,
     private vibration: Vibration,
+    private backgroundMode: BackgroundMode,
   ) { }
 
 
@@ -96,25 +98,30 @@ export class TimerService {
   }
 
   async startPlan() {
-    let user: any = await this.userService.getUser();
+    this.backgroundMode.enable();
+    this.backgroundMode.on("activate").subscribe(async()=>{
+      console.log("background mode is activated")
+      let user: any = await this.userService.getUser();
 
-    this.firebaseService.setDocument("users/" + user.uid + "/utilities/activeActivity", { active: true });
-    this.length = this.planService.activities.length;
-    if (this.length > this.count) {
-      this.getTimerCount(this.planService.activities[this.count], this.planService.activities[this.count - 1]);
-    } else {
-      this.activeActivity = null;
-      this.currentActivity = { name: "All Activities Have Ended", time: null};
-      this.nextActivity = {
-        name: "XXX",
-        startTime: "XXX",
+      this.firebaseService.setDocument("users/" + user.uid + "/utilities/activeActivity", { active: true });
+      this.length = this.planService.activities.length;
+      if (this.length > this.count) {
+        this.getTimerCount(this.planService.activities[this.count], this.planService.activities[this.count - 1]);
+      } else {
+        this.activeActivity = null;
+        this.currentActivity = { name: "All Activities Have Ended", time: null};
+        this.nextActivity = {
+          name: "XXX",
+          startTime: "XXX",
+        }
+        clearInterval(this.timerInterval);
+        this.count = 0
       }
-      clearInterval(this.timerInterval);
-      this.count = 0
-    }
+    })
   }
 
   async   stopPlan() {
+    this.backgroundMode.disable();
     this.showAlert = false;
     let user: any = await this.userService.getUser();
     this.firebaseService.setDocument("users/" + user.uid + "/utilities/activeActivity", { active: false })
