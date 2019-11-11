@@ -99,8 +99,6 @@ export class TimerService {
 
   async startPlan() {
     this.backgroundMode.enable();
-    this.backgroundMode.on("activate").subscribe(async()=>{
-      console.log("background mode is activated")
       let user: any = await this.userService.getUser();
 
       this.firebaseService.setDocument("users/" + user.uid + "/utilities/activeActivity", { active: true });
@@ -117,7 +115,6 @@ export class TimerService {
         clearInterval(this.timerInterval);
         this.count = 0
       }
-    })
   }
 
   async   stopPlan() {

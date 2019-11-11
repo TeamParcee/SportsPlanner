@@ -134,7 +134,6 @@ export class PlanPage implements OnInit {
           this.activities = activities;
           this.planService.activities = activities;
           this.date = this.plan.date;
-          console.log(this.activities.length)
         })
 
     }
