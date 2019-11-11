@@ -1,8 +1,8 @@
 <ion-header>
   <ion-toolbar>
-    <ion-buttons slot="start">
-      <ion-back-button defaultHref="tabs/plan"></ion-back-button>
-    </ion-buttons>
+      <!-- <ion-buttons slot="start">
+        <ion-back-button defaultHref="tabs/plan"></ion-back-button>
+      </ion-buttons> -->
     <ion-title>Profile</ion-title>
     <ion-buttons slot="end">
       <ion-button (click)="signOut()">
@@ -15,7 +15,7 @@
 <ion-content>
 
 
-  <ion-card style=" width: 200px; margin: auto;" *ngIf="user">
+  <ion-card style=" width: 200px; margin: 10px auto;" *ngIf="user">
 
 
 
@@ -85,5 +85,4 @@
       </ion-note>
     </ion-item>
   </ion-list>
-  version: 0.0.0
 </ion-content>
