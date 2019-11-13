@@ -1,4 +1,4 @@
-<ion-header>
+<!-- <ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
       <ion-button (click)="close()">
@@ -7,15 +7,23 @@
     </ion-buttons>
     <ion-title>View Drill</ion-title>
   </ion-toolbar>
-</ion-header>
+</ion-header> -->
 
 <ion-content>
 
+  <ion-refresher (ionRefresh)="close()" slot="fixed" pullFactor="0.5" pullMin="100" pullMax="200">
+    <ion-header>
+      <ion-toolbar>
+        <ion-title>Drills</ion-title>
+      </ion-toolbar>
+    </ion-header>
+  </ion-refresher>
   <ion-list lines="none" *ngIf="drill">
-    <iframe  width="100%" height="315" [src]="trustedVideoUrl" frameborder="0"
-    allowfullscreen></iframe>
-  </ion-list>
-  <ion-item >
+    <iframe draggable="true" width="100%" height="315" [src]="trustedVideoUrl" frameborder="0" allowfullscreen></iframe>
+
+
+    <ion-item>
       {{ drill.name }}
     </ion-item>
+  </ion-list>
 </ion-content>

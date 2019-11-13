@@ -28,5 +28,7 @@ export class ViewDrillPage implements OnInit {
   getSafeUrl() {
     this.trustedVideoUrl = this.domSanitizer.bypassSecurityTrustResourceUrl(this.drill.video);
   }
-
+  logScrollStart(event){
+    console.log(event)
+  }
 }

@@ -6,6 +6,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 
 import { ViewDrillPage } from './view-drill.page';
+import { DrillsPageModule } from '../drills/drills.module';
 
 const routes: Routes = [
   {
