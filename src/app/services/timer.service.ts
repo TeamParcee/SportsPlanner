@@ -7,6 +7,7 @@ import { NativeAudio } from '@ionic-native/native-audio/ngx';
 import { Media, MediaObject } from '@ionic-native/media/ngx';
 import { Vibration } from '@ionic-native/vibration/ngx';
 import { BackgroundMode } from '@ionic-native/background-mode/ngx';
+import { LocalNotifications } from '@ionic-native/local-notifications/ngx';
 
 @Injectable({
   providedIn: 'root'
@@ -22,6 +23,7 @@ export class TimerService {
     private media: Media,
     private vibration: Vibration,
     private backgroundMode: BackgroundMode,
+    private localNotification: LocalNotifications,
   ) { }
 
 
@@ -37,7 +39,7 @@ export class TimerService {
   user;
   stopAlert = false;
   currentActivity;
-  file: MediaObject = this.media.create('https://www.soundhelix.com/examples/mp3/SoundHelix-Song-14.mp3');
+  file: MediaObject = this.media.create('https://firebasestorage.googleapis.com/v0/b/parceesportsplanner.appspot.com/o/iphone_alarm_morning.mp3?alt=media&token=76784c6e-1f1b-481a-a12f-7bc1cb121f6a');
 
 
   getTimerCount(activity, currentActivity) {
@@ -128,16 +130,35 @@ export class TimerService {
   }
 
   startVibration(){
+    this.stopVibration();
+    if(this.backgroundMode.isScreenOff){
+      this.backgroundMode.unlock();
+      this.showNotification();
+
+    }
     this.vibrationInterval = setInterval(()=>{
       this.vibration.vibrate(1000)
     }, 1000)
     ;
-    this.file.play();
+    this.file.play({ numberOfLoops: 2 });
+
     
   }
 
   stopVibration(){
     clearInterval(this.vibrationInterval)
     this.file.stop();
+  }
+
+  showNotification(){
+    // Schedule a single notification
+this.localNotification.schedule({
+  id: 1,
+  text: 'Sports Planner',
+  title: "Activity has finished",
+  actions: [
+    { id: 'ok', title: 'OK' },
+]
+});
   }
 }

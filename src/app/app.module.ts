@@ -22,6 +22,7 @@ import { NativeAudio } from '@ionic-native/native-audio/ngx';
 import { Media, MediaObject } from '@ionic-native/media/ngx';
 import { Vibration } from '@ionic-native/vibration/ngx';
 import { BackgroundMode } from '@ionic-native/background-mode/ngx';
+import { LocalNotifications } from '@ionic-native/local-notifications/ngx';
 
  // Your web app's Firebase configuration
  var firebaseConfig = {
@@ -69,6 +70,7 @@ firebase.initializeApp(firebaseConfig);
     Vibration,
     SplashScreen,
     BackgroundMode,
+    LocalNotifications,
     Media,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
