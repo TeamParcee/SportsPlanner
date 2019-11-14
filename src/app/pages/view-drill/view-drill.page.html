@@ -9,8 +9,9 @@
   </ion-toolbar>
 </ion-header> -->
 
-<ion-content>
 
+<ion-content>
+<ion-toolbar color="dark"></ion-toolbar>
   <ion-refresher (ionRefresh)="close()" slot="fixed" pullFactor="0.5" pullMin="100" pullMax="200">
     <ion-header>
       <ion-toolbar>
@@ -19,11 +20,11 @@
     </ion-header>
   </ion-refresher>
   <ion-list lines="none" *ngIf="drill">
-    <iframe draggable="true" width="100%" height="315" [src]="trustedVideoUrl" frameborder="0" allowfullscreen></iframe>
+  <iframe draggable="true" width="100%" height="315" [src]="trustedVideoUrl" frameborder="0" allowfullscreen></iframe>
 
 
-    <ion-item>
-      {{ drill.name }}
-    </ion-item>
+  <ion-item>
+    {{ drill.name }}
+  </ion-item>
   </ion-list>
-</ion-content>
+  </ion-content>

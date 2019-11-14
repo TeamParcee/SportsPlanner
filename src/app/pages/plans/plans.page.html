@@ -10,9 +10,9 @@
 </ion-header>
 
 <ion-content>
-    <ion-text *ngIf="!plans?.length"> 
-        <p padding text-center > You do not have any Practice Plans</p>
-      </ion-text>
+  <ion-text *ngIf="!plans?.length">
+    <p padding text-center> You do not have any Practice Plans</p>
+  </ion-text>
 
   <ion-virtual-scroll [items]="plans" [headerFn]="myHeaderFn">
     <ion-item-divider *virtualHeader="let header">
@@ -32,9 +32,10 @@
   </ion-virtual-scroll>
 
 
-<ion-fab  *ngIf="isHeadCoach"  vertical="bottom" horizontal="end" slot="fixed">
-  <ion-fab-button (click)="addPlan()">
-    <ion-icon name="add"></ion-icon>
-  </ion-fab-button>
-</ion-fab>
+
+  <ion-fab *ngIf="isHeadCoach" vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button (click)="addPlan()">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
 </ion-content>
