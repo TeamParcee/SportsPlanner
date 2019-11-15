@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HelperService } from 'src/app/services/helper.service';
 import { DomSanitizer } from '@angular/platform-browser';
+import { StatusBar } from '@ionic-native/status-bar/ngx';
 
 @Component({
   selector: 'app-view-drill',
@@ -12,6 +13,7 @@ export class ViewDrillPage implements OnInit {
   constructor(
     private helper: HelperService,
     private domSanitizer: DomSanitizer,
+    private statusBar: StatusBar
   ) { }
 
   drill;
@@ -21,6 +23,12 @@ export class ViewDrillPage implements OnInit {
     this.getSafeUrl();
   }
 
+  ionViewWillEnter(){
+    this.statusBar.styleLightContent();
+  }
+  ionViewWillLeave(){
+    this.statusBar.styleDefault();
+  }
   close() {
     this.helper.closeModal();
   }

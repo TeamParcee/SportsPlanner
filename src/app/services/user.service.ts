@@ -21,7 +21,8 @@ export class UserService {
 
 
   firebaseUser;
-
+  photoURL;
+  cropImage;
 
   getUser = () => {
     return new Promise((resolve) => {

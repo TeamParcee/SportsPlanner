@@ -6,6 +6,7 @@ import * as firebase from 'firebase';
 import { AuthService } from 'src/app/services/auth.service';
 import { NavController } from '@ionic/angular';
 import { PlanService } from 'src/app/services/plan.service';
+import { ImageCropperPage } from '../image-cropper/image-cropper.page';
 
 @Component({
   selector: 'app-profile',
@@ -35,6 +36,7 @@ export class ProfilePage implements OnInit {
   async ionViewWillEnter() {
     await this.getUser();
     await this.getCoachFromUid(this.user.coach);
+    this.userService.photoURL = "";
   }
   async getUser() {
     this.user = await this.userService.getUser();
@@ -69,21 +71,32 @@ export class ProfilePage implements OnInit {
     this.firebaseService.updateDocument("/users/" + this.user.uid, { photoUrl: this.user.photoUrl });
     this.originalUser.photoUrl = this.user.photoUrl;
   }
+  cancelPic() {
+    this.user.photoUrl = this.originalUser.photoUrl;
 
+  }
   updatePic(event) {
   }
 
   readURL(input) {
-    if (input.target.files && input.target.files[0]) {
-      var reader = new FileReader();
+    // if (input.target.files && input.target.files[0]) {
+    //   var reader = new FileReader();
 
-      reader.onload = (e: any) => {
-        this.user.photoUrl = e.target.result;
+    //   reader.onload = (e: any) => {
+    //     this.user.photoUrl = e.target.result;
+    //     t
+    //   }
+    //   reader.readAsDataURL(input.target.files[0]);
+    // }
+    this.userService.photoURL = this.user.photoURL;        
+    let file = input.srcElement.files[0];
+    this.helper.openModalPromise(ImageCropperPage, { dataUrl: file }).then(() => {
+      if (this.userService.photoURL != "") {
+        this.user.photoUrl = this.userService.photoURL;
       }
-      reader.readAsDataURL(input.target.files[0]);
-    }
-  }
 
+    })
+  }
 
   signOut() {
     this.helper.confirmationAlert("Sign Out", "Are you sure you want to Sign Out?", { denyText: "Cancel", confirmText: "Sign Out" })

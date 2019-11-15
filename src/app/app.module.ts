@@ -23,6 +23,8 @@ import { Media, MediaObject } from '@ionic-native/media/ngx';
 import { Vibration } from '@ionic-native/vibration/ngx';
 import { BackgroundMode } from '@ionic-native/background-mode/ngx';
 import { LocalNotifications } from '@ionic-native/local-notifications/ngx';
+import { ImageCropperModule } from 'ngx-image-cropper';
+import { ImageCropperPage } from './pages/image-cropper/image-cropper.page';
 
  // Your web app's Firebase configuration
  var firebaseConfig = {
@@ -46,12 +48,14 @@ firebase.initializeApp(firebaseConfig);
     EditActivityPage,
     ViewActivityPage,
     ViewDrillPage,
+    ImageCropperPage,
     EditDrillPage,
   ],
   entryComponents: [
     PlansPage,
     AddPlanPage,
     EditActivityPage,
+    ImageCropperPage,
     ViewActivityPage,
     ViewDrillPage,
     EditDrillPage,
@@ -61,6 +65,7 @@ firebase.initializeApp(firebaseConfig);
     IonicModule.forRoot(), 
     QuillModule.forRoot(),
     FormsModule,
+    ImageCropperModule,
     ReactiveFormsModule,
     AppRoutingModule],
   providers: [

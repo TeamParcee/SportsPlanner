@@ -46,6 +46,9 @@
         <splash density="port-xxxhdpi" src="resources/android/splash/drawable-port-xxxhdpi-screen.png" />
     </platform>
     <platform name="ios">
+        <config-file parent="NSCameraUsageDescription" platform="ios" target="*-Info.plist">
+            <string>You can take photos</string>
+        </config-file>
         <edit-config file="*-Info.plist" mode="merge" target="UIBackgroundModes">
             <array>
                 <string>audio</string>

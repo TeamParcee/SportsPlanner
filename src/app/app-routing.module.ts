@@ -26,6 +26,7 @@ const routes: Routes = [
   { path: 'view-activity', loadChildren: './pages/view-activity/view-activity.module#ViewActivityPageModule' },
   { path: 'confirm-email', loadChildren: './confirm-email/confirm-email.module#ConfirmEmailPageModule', canActivate:[AuthGuard] },  { path: 'view-drill', loadChildren: './pages/view-drill/view-drill.module#ViewDrillPageModule' },
   { path: 'edit-drill', loadChildren: './pages/edit-drill/edit-drill.module#EditDrillPageModule' },
+  { path: 'image-cropper', loadChildren: './pages/image-cropper/image-cropper.module#ImageCropperPageModule' },
 
 
 
