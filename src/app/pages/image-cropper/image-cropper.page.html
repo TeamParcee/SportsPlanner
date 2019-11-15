@@ -10,9 +10,6 @@
 </ion-header>
 
 <ion-content *ngIf="dataUrl">
-  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
-    <ion-refresher-content></ion-refresher-content>
-  </ion-refresher>
   <ion-text *ngIf="failedLoad" (color)="danger">Image failed to loadd</ion-text>
   <image-cropper [imageFile]="dataUrl" [imageChangedEvent]="imageChangedEvent" [maintainAspectRatio]="true"
     [aspectRatio]="1 / 1" [resizeToWidth]="100" [resizeToHeight]="100" cropperMinWidth="100" cropperMinHeight="100"
