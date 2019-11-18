@@ -7,6 +7,13 @@
     </ion-buttons>
 
     <ion-title *ngIf="coach">Coach {{ coach.lname }} </ion-title>
+
+    <ion-buttons slot="end">
+        <ion-button (click)="viewMoreOptions($event)">
+          <ion-icon slot="icon-only" name="more"></ion-icon>
+        </ion-button>
+      </ion-buttons>
+  
   </ion-toolbar>
 
 
@@ -18,7 +25,9 @@
 
   <ion-card *ngIf="showTimer" (click)="viewCurrentActivity(currentActivity)">
     <ion-card-header>
-      <ion-card-subtitle> {{ (currentActivity?.name) ? currentActivity?.name : "Getting Next Activity..." }}
+
+      <ion-card-subtitle>
+       {{ (currentActivity?.name) ? currentActivity?.name : "Getting Next Activity..." }}   <ion-spinner *ngIf="!currentActivity"></ion-spinner>
       </ion-card-subtitle>
       <ion-card-title> {{  currentActivity?.time }}
       </ion-card-title>

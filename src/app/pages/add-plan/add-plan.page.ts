@@ -4,6 +4,7 @@ import { FirebaseService } from 'src/app/services/firebase.service';
 import { UserService } from 'src/app/services/user.service';
 import { NavController } from '@ionic/angular';
 import { HelperService } from 'src/app/services/helper.service';
+import * as firebase from 'firebase';
 
 @Component({
   selector: 'app-add-plan',
@@ -25,20 +26,50 @@ export class AddPlanPage implements OnInit {
   date;
   startTime;
   user;
+  templates;
+  template;
 
-  ionViewWillEnter() {
-    this.getUser();
+  async ionViewWillEnter() {
+    await this.getUser();
+    await this.getTemplates();
+
   }
   async getUser() {
     this.user = await this.userService.getUser();
   }
   createPlan() {
-    let date =  moment(moment(this.date).format("MMM DD, YY") + " " + moment(this.startTime).format("LT")).format('llll');
-    let orderDate = moment(date).format()
-    this.firebaseService.addDocument("/plans", { date: date, coachId: this.user.uid, orderDate: orderDate, sport: this.user.sport, activities: 0 })
-      .then(() => {
-        this.close();
+    let date = moment(moment(this.date).format("MMM DD, YY") + " " + moment(this.startTime).format("LT")).format('llll');
+    let orderDate = moment(date).format();
+    let plan = { date: date, coachId: this.user.uid, orderDate: orderDate, sport: this.user.sport, activities: 0 };
+    if (this.template == "" || !this.template || this.template == "none") {
+      this.firebaseService.addDocument("/plans", plan)
+        .then(() => {
+          this.close();
+        })
+    } else {
+
+      this.firebaseService.addDocument("/plans", plan)
+        .then((id) => {
+          firebase.firestore().collection("users/" + this.user.uid + "/templates/" + this.template + "/activities").get().then((activitiesSnap) => {
+            this.firebaseService.updateDocument("/plans/" + id, { activities: activitiesSnap.size });
+            activitiesSnap.forEach((activity) => {
+              this.firebaseService.addDocument("/plans/" + id + "/activities", { ...activity.data() })
+            })
+            this.close();
+          })
+        })
+    }
+
+  }
+
+  getTemplates() {
+    firebase.firestore().collection("/users/" + this.user.uid + "/templates/").get().then((templatesSnap) => {
+      let templates = [];
+      templatesSnap.forEach((template) => {
+        templates.push(template.data())
       })
+      this.templates = templates;
+    })
   }
   close() {
     this.helper.closeModal();

@@ -12,6 +12,7 @@ import { EditActivityPage } from '../edit-activity/edit-activity.page';
 import * as moment from 'moment';
 import { ViewActivityPage } from '../view-activity/view-activity.page';
 import { TimerService } from 'src/app/services/timer.service';
+import { PlanOptionsPage } from '../plan-options/plan-options.page';
 
 @Component({
   selector: 'app-plan',
@@ -108,9 +109,14 @@ export class PlanPage implements OnInit {
     this.firebaseService.updateDocument("/plans/" + this.plan.id, { activities: (activitiesCount + 1) })
     this.getActivities();
   }
-  getActivitiesInit() {
+  async getActivitiesInit() {
 
     if (this.plan) {
+      if (!await this.doesPlanExist()) {
+        this.plan = null;
+        this.planService.currentPlan = null;
+        return;
+      }
       firebase.firestore().collection("/plans/" + this.plan.id + "/activities")
         .orderBy("order")
         .get().then((activitySnap) => {
@@ -133,12 +139,17 @@ export class PlanPage implements OnInit {
           this.planService.activities = activities;
           this.date = this.plan.date;
         })
-
+    } else {
     }
   }
-  getActivities() {
+  async getActivities() {
 
     if (this.plan) {
+      if (!await this.doesPlanExist()) {
+        this.plan = null;
+        this.planService.currentPlan = null;
+        return;
+      }
       firebase.firestore().collection("/plans/" + this.plan.id + "/activities")
         .orderBy("order")
         .onSnapshot((activitySnap) => {
@@ -162,9 +173,17 @@ export class PlanPage implements OnInit {
           this.date = this.plan.date;
         })
 
+    } else {
     }
   }
 
+  doesPlanExist() {
+    return new Promise((resolve) => {
+      firebase.firestore().doc("/plans/" + this.plan.id).get().then((planSnap) => {
+        return resolve(planSnap.exists)
+      })
+    })
+  }
   editActivity(activity) {
     this.helper.openModalPromise(EditActivityPage, { activity: activity })
       .then(() => {
@@ -172,7 +191,7 @@ export class PlanPage implements OnInit {
       })
   }
   viewActivity(activity) {
-      this.helper.openModalPromise(ViewActivityPage, { activity: activity })
+    this.helper.openModalPromise(ViewActivityPage, { activity: activity, isTemplate: false })
   }
 
   viewCurrentActivity(activity) {
@@ -257,8 +276,8 @@ export class PlanPage implements OnInit {
     this.timerStarted = false;
   }
 
-  x(event){
-    console.log(event, "dsfasdfasdf")
+  viewMoreOptions(event) {
+    this.helper.presentPopover(event, PlanOptionsPage, null)
   }
 
 }

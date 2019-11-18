@@ -20,6 +20,14 @@
       <ion-datetime [(ngModel)]="startTime" name="startTime" displayFormat="hh:mm A" pickerFormat="hh:mm A">
       </ion-datetime>
     </ion-item>
+    <ion-item>
+      <ion-label>Template</ion-label>
+      <ion-select [(ngModel)]="template" placeholder="Select One">
+        <ion-select-option value="none">No Template</ion-select-option>
+        <ion-select-option *ngFor="let template of templates" [value]="template.id"> {{ template.name }}
+        </ion-select-option>
+      </ion-select>
+    </ion-item>
   </ion-list>
   <ion-button [disabled]="!date || !startTime" expand="full" (click)="createPlan()">Create Plan</ion-button>
 </ion-content>

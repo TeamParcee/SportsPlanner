@@ -27,6 +27,10 @@ const routes: Routes = [
   { path: 'confirm-email', loadChildren: './confirm-email/confirm-email.module#ConfirmEmailPageModule', canActivate:[AuthGuard] },  { path: 'view-drill', loadChildren: './pages/view-drill/view-drill.module#ViewDrillPageModule' },
   { path: 'edit-drill', loadChildren: './pages/edit-drill/edit-drill.module#EditDrillPageModule' },
   { path: 'image-cropper', loadChildren: './pages/image-cropper/image-cropper.module#ImageCropperPageModule' },
+  { path: 'plan-options', loadChildren: './pages/plan-options/plan-options.module#PlanOptionsPageModule' },
+  { path: 'view-templates', loadChildren: './pages/view-templates/view-templates.module#ViewTemplatesPageModule' },
+  { path: 'templates', loadChildren: './pages/templates/templates.module#TemplatesPageModule' },
+  { path: 'template', loadChildren: './pages/template/template.module#TemplatePageModule' },
 
 
 

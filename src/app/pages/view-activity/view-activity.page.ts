@@ -18,11 +18,11 @@ export class ViewActivityPage implements OnInit {
   activity;
   user;
   isHeadCoach;
-
+  isTemplate;
 
   ngOnInit() {
   }
-  async ionViewWillEnter(){
+  async ionViewWillEnter() {
     await this.getUser();
     await this.checkIsHeadCoach();
   }
@@ -42,7 +42,7 @@ export class ViewActivityPage implements OnInit {
   }
   editActivity() {
     this.helper.closeModal();
-    this.helper.openModal(EditActivityPage, { activity: this.activity })
-    
+    this.helper.openModal(EditActivityPage, { activity: this.activity, isTemplate: this.isTemplate })
+
   }
 }
