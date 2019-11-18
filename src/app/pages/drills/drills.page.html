@@ -8,11 +8,11 @@
   <ion-grid>
     <ion-row>
       <ion-col>
-        <ion-button (click)="getDrillsPrivate() " [fill]="(drillView == 'private' ? 'solid' : 'clear')" expand="full">
+        <ion-button (click)="getDrillsPrivate() " fill="clear" [ngClass]="(drillView == 'private' ? 'solid' : 'clear')" expand="full">
           {{ (isHeadCoach) ? "My Drills" : "Your Coaches Drills" }}</ion-button>
       </ion-col>
       <ion-col>
-        <ion-button (click)="getDrillsPublic() " [fill]="(drillView == 'public' ? 'solid' : 'clear')" expand="full">
+        <ion-button (click)="getDrillsPublic() " fill="clear" [ngClass]="(drillView == 'public' ? 'solid' : 'clear')" expand="full">
           Public Drills</ion-button>
       </ion-col>
     </ion-row>

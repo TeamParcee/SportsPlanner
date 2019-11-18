@@ -1,4 +1,12 @@
-img {
-    max-width: 100%; /* This rule is very important, please do not ignore this! */
-   
-  }
+#image {
+  max-width: 200px;
+  border-radius: 10px;
+  border: 2px solid white;
+  margin-top: 15px;
+    /* This rule is very important, please do not ignore this! */
+
+}
+
+ion-item-divider {
+  background: #f5f5f5 !important;
+}
