@@ -37,12 +37,12 @@ export class EditActivityPage implements OnInit {
   }
   ionViewWillLeave() {
     if (!this.itemDelete) {
-      if (this.isTemplate)
+      if (this.isTemplate) {
         this.saveTemplate()
-    } else {
-      this.save()
+      } else {
+        this.save()
+      }
     }
-
   }
   save() {
     this.firebaseService.setDocument("plans/" + this.activity.planId + "/activities/" + this.activity.id, this.activity)
@@ -75,7 +75,7 @@ export class EditActivityPage implements OnInit {
   delete() {
     this.helper.confirmationAlert("Delete Activity", "Are you sure you want to delete this activity", { denyText: "Cancel", confirmText: "Delete" })
       .then((result) => {
-        if (result) { 
+        if (result) {
           this.firebaseService.deleteDocument("plans/" + this.activity.planId + "/activities/" + this.activity.id)
             .then(async () => {
               this.itemDelete = true;
