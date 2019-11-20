@@ -75,7 +75,7 @@ export class EditActivityPage implements OnInit {
   delete() {
     this.helper.confirmationAlert("Delete Activity", "Are you sure you want to delete this activity", { denyText: "Cancel", confirmText: "Delete" })
       .then((result) => {
-        if (result) {
+        if (result) { 
           this.firebaseService.deleteDocument("plans/" + this.activity.planId + "/activities/" + this.activity.id)
             .then(async () => {
               this.itemDelete = true;

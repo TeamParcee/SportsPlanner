@@ -6,21 +6,24 @@
 
 <ion-content>
   <ion-grid>
-    <ion-row>
+    <ion-row no-padding>
       <ion-col>
-        <ion-button (click)="getDrillsPrivate() " fill="clear" [ngClass]="(drillView == 'private' ? 'solid' : 'clear')" expand="full">
+        <ion-button (click)="getDrillsPrivate() " fill="clear" [ngClass]="(drillView == 'private' ? 'solid' : 'clear')"
+          expand="full">
           {{ (isHeadCoach) ? "My Drills" : "Your Coaches Drills" }}</ion-button>
       </ion-col>
       <ion-col>
-        <ion-button (click)="getDrillsPublic() " fill="clear" [ngClass]="(drillView == 'public' ? 'solid' : 'clear')" expand="full">
+        <ion-button (click)="getDrillsPublic() " fill="clear" [ngClass]="(drillView == 'public' ? 'solid' : 'clear')"
+          expand="full">
           Public Drills</ion-button>
       </ion-col>
     </ion-row>
   </ion-grid>
+
   <ion-searchbar placeholder="Find Drill" (ionChange)="onSearchChange($event)" [debounce]="250">
   </ion-searchbar>
 
-
+  <!-- 
   <ion-list>
 
     <ion-item *ngFor="let drill of filterDrills">
@@ -36,7 +39,28 @@
         </ion-button>
       </ion-buttons>
     </ion-item>
-  </ion-list>
+  </ion-list> -->
+
+  <ion-card no-margin style="width: 100%;" *ngFor="let drill of filterDrills">
+    <ion-card-content no-padding>
+      <img (click)="viewDrill(drill)" [src]="getThumbnail(drill.youtubeId)" style="width: 100%;">
+      <ion-item lines="none">
+        <ion-avatar slot="start">
+          <img [src]="drill.coach.photoUrl">
+        </ion-avatar>
+        <ion-label text-wrap>
+          <h5> {{ drill.name }}</h5>
+          <p> Coach: {{ drill.coach.fname + " " + drill.coach.lname }} </p>
+        </ion-label>
+        <ion-buttons>
+          <ion-button *ngIf="drill.coach.uid == user.uid" (click)="editDrill(drill) ">
+            edit
+          </ion-button>
+        </ion-buttons>
+      </ion-item>
+    </ion-card-content>
+
+  </ion-card>
 
   <ion-fab *ngIf="isHeadCoach" horizontal="end" vertical="bottom" slot="fixed">
     <ion-fab-button routerLink="/add-drill">

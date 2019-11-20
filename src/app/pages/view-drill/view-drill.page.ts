@@ -23,10 +23,10 @@ export class ViewDrillPage implements OnInit {
     this.getSafeUrl();
   }
 
-  ionViewWillEnter(){
+  ionViewWillEnter() {
     this.statusBar.styleLightContent();
   }
-  ionViewWillLeave(){
+  ionViewWillLeave() {
     this.statusBar.styleDefault();
   }
   close() {
@@ -34,9 +34,11 @@ export class ViewDrillPage implements OnInit {
   }
 
   getSafeUrl() {
-    this.trustedVideoUrl = this.domSanitizer.bypassSecurityTrustResourceUrl(this.drill.video);
+    let autoplayUrl = this.drill.video + "?autoplay=1";
+    console.log(autoplayUrl);
+    this.trustedVideoUrl = this.domSanitizer.bypassSecurityTrustResourceUrl(autoplayUrl);
+    console.log(this.trustedVideoUrl)
   }
-  logScrollStart(event){
-    console.log(event)
+  logScrollStart(event) {
   }
 }

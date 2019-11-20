@@ -54,6 +54,7 @@ export class EditDrillPage implements OnInit {
       let videoId = this.getYouTubeGetID(url);
       let videoUrl = "https://www.youtube.com/embed/" + videoId;
       this.drill.video = videoUrl;
+      this.drill.youtubeId = videoId;
       this.getSafeUrl(videoUrl)
     } else {
       this.trustedVideoUrl = ""

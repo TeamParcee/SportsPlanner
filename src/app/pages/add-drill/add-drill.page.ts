@@ -21,7 +21,7 @@ export class AddDrillPage implements OnInit {
     private navCtrl: NavController,
   ) { }
 
-  drill: { coach?, video?, sport?} = {};
+  drill: { coach?, video?, sport?, youtubeId?} = {};
   user;
   videoPreview;
   trustedVideoUrl
@@ -55,6 +55,7 @@ export class AddDrillPage implements OnInit {
       let videoId = this.getYouTubeGetID(url);
       let videoUrl = "https://www.youtube.com/embed/" + videoId;
       this.drill.video = videoUrl;
+      this.drill.youtubeId = videoId;
       this.getSafeUrl(videoUrl)
     } else {
       this.trustedVideoUrl = ""

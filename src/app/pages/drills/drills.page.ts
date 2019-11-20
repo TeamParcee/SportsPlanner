@@ -51,6 +51,7 @@ export class DrillsPage implements OnInit {
           let d = { ...drill.data() }
           let coach = await this.getCoach(d.coach);
           d.coach = coach;
+          console.log(coach);
           drills.push(d)
         })
         this.drills = drills;
@@ -144,5 +145,15 @@ export class DrillsPage implements OnInit {
       }
     });
   }
+
+  getTrustedVideoUrl(url) {
+    return this.domSanitizer.bypassSecurityTrustResourceUrl(url);
+  }
+
+  getThumbnail(id) {
+    return "http://img.youtube.com/vi/" + id + "/0.jpg";
+
+  }
+
 
 }
