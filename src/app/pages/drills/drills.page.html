@@ -64,7 +64,7 @@
 
     <ion-card *ngIf="!showLoading" no-margin style="width: 100%;" >
       <ion-card-content no-padding>
-        <img (click)="viewDrill(drill)" [src]="getThumbnail(drill.youtubeId)" style="width: 100%;">
+        <img (click)="viewDrill(drill)" [src]="getThumbnail(drill.youtubeId)" style=" min-height: 300px; width: 100%;">
         <ion-item style="padding: 5px" lines="none">
           <ion-avatar slot="start">
             <img [src]="drill.coach.photoUrl">
