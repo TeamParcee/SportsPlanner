@@ -27,6 +27,7 @@ import { ImageCropperModule } from 'ngx-image-cropper';
 import { ImageCropperPage } from './pages/image-cropper/image-cropper.page';
 import { PlanOptionsPage } from './pages/plan-options/plan-options.page';
 import { TemplatePage } from './pages/template/template.page';
+import { HideHeaderDirective } from './directives/hide-header.directive';
 
  // Your web app's Firebase configuration
  var firebaseConfig = {
@@ -54,6 +55,7 @@ firebase.initializeApp(firebaseConfig);
     ImageCropperPage,
     TemplatePage,
     EditDrillPage,
+ 
   ],
   entryComponents: [
     PlansPage,

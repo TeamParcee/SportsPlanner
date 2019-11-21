@@ -27,6 +27,8 @@ export class DrillsPage implements OnInit {
   drills;
   filterDrills;
   drillView;
+  showLoading = true;
+  hideHeader = false;
 
 
   async ngOnInit() {
@@ -35,11 +37,20 @@ export class DrillsPage implements OnInit {
   }
 
   async ionViewWillEnter() {
+    this.loadingTimeout();
     await this.getUser();
     await this.getDrillsPrivate();
     await this.checkIsHeadCoach();
   }
+  async ionViewWillLeave() {
+    this.showLoading = true;
+  }
 
+  loadingTimeout() {
+    setTimeout(() => {
+      this.showLoading = false;
+    }, 1000)
+  }
   async getDrillsPrivate() {
     this.drillView = "private";
     firebase.firestore().collection("/drills")
@@ -51,7 +62,6 @@ export class DrillsPage implements OnInit {
           let d = { ...drill.data() }
           let coach = await this.getCoach(d.coach);
           d.coach = coach;
-          console.log(coach);
           drills.push(d)
         })
         this.drills = drills;
@@ -155,5 +165,8 @@ export class DrillsPage implements OnInit {
 
   }
 
-
+  onHideHeader(event) {
+    this.hideHeader = true;
+    console.log(event)
+  }
 }

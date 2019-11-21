@@ -1,10 +1,10 @@
-<ion-header>
+<ion-header >
   <ion-toolbar>
     <ion-title>Drills</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content >
   <ion-grid>
     <ion-row no-padding>
       <ion-col>
@@ -41,26 +41,52 @@
     </ion-item>
   </ion-list> -->
 
-  <ion-card no-margin style="width: 100%;" *ngFor="let drill of filterDrills">
-    <ion-card-content no-padding>
-      <img (click)="viewDrill(drill)" [src]="getThumbnail(drill.youtubeId)" style="width: 100%;">
-      <ion-item lines="none">
-        <ion-avatar slot="start">
-          <img [src]="drill.coach.photoUrl">
-        </ion-avatar>
-        <ion-label text-wrap>
-          <h5> {{ drill.name }}</h5>
-          <p> Coach: {{ drill.coach.fname + " " + drill.coach.lname }} </p>
-        </ion-label>
-        <ion-buttons>
-          <ion-button *ngIf="drill.coach.uid == user.uid" (click)="editDrill(drill) ">
-            edit
-          </ion-button>
-        </ion-buttons>
-      </ion-item>
-    </ion-card-content>
+  <span *ngFor="let drill of filterDrills">
 
-  </ion-card>
+    <ion-card *ngIf="showLoading" no-margin>
+      <ion-card-content no-padding>
+        <ion-skeleton-text style="height: 300px;"></ion-skeleton-text>
+      </ion-card-content>
+      <ion-card-header>
+        <ion-list>
+          <ion-item lines="none">
+            <ion-avatar slot="start">
+              <ion-skeleton-text></ion-skeleton-text>
+            </ion-avatar>
+            <ion-label>
+              <ion-skeleton-text></ion-skeleton-text>
+              <ion-skeleton-text></ion-skeleton-text>
+            </ion-label>
+          </ion-item>
+        </ion-list>
+      </ion-card-header>
+    </ion-card>
+
+    <ion-card *ngIf="!showLoading" no-margin style="width: 100%;" >
+      <ion-card-content no-padding>
+        <img (click)="viewDrill(drill)" [src]="getThumbnail(drill.youtubeId)" style="width: 100%;">
+        <ion-item style="padding: 5px" lines="none">
+          <ion-avatar slot="start">
+            <img [src]="drill.coach.photoUrl">
+          </ion-avatar>
+          <ion-label text-wrap>
+             {{ drill.name }}
+            <p> Coach: {{ drill.coach.fname + " " + drill.coach.lname }} </p>
+          </ion-label>
+          <ion-buttons>
+            <ion-button *ngIf="drill.coach.uid == user.uid" (click)="editDrill(drill) ">
+              <ion-icon name="more" slot="icon-only"></ion-icon>
+            </ion-button>
+          </ion-buttons>
+        </ion-item>
+      </ion-card-content>
+
+    </ion-card>
+
+  </span>
+
+
+
 
   <ion-fab *ngIf="isHeadCoach" horizontal="end" vertical="bottom" slot="fixed">
     <ion-fab-button routerLink="/add-drill">
