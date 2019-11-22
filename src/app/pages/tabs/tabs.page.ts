@@ -14,14 +14,13 @@ export class TabsPage implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.getSport()
-  }
-  ionViewWillLoad() {
     this.getSport();
+    this.getNotifications();
   }
+
   user;
   sport;
-
+  newCount;
 
   async getSport() {
     this.user = await this.userService.getUser();
@@ -42,8 +41,14 @@ export class TabsPage implements OnInit {
         }
       })
     })
+  }
 
-
-
+  async getNotifications() {
+    let user:any = await this.userService.getUser();
+    firebase.firestore().collection("/users/" + user.uid + "/notifications")
+      .where("newItem", "==", true)
+      .onSnapshot((notificationsSnap) => {
+        this.newCount = notificationsSnap.size;
+      })
   }
 }

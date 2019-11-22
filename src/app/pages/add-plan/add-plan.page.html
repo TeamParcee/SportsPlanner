@@ -5,7 +5,7 @@
         <ion-icon slot="icon-only" name="close"></ion-icon>
       </ion-button>
     </ion-buttons>
-    <ion-title>Add Plan</ion-title>
+    <ion-title>Add Practice</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -13,16 +13,18 @@
   <ion-list>
     <ion-item>
       <ion-label position="floating">Date</ion-label>
-      <ion-datetime [(ngModel)]="date" name="date" pickerFormat="MMM DD, YY"></ion-datetime>
-    </ion-item>
-    <ion-item>
-      <ion-label position="floating">Start Time</ion-label>
-      <ion-datetime [(ngModel)]="startTime" name="startTime" displayFormat="hh:mm A" pickerFormat="hh:mm A">
+      <ion-datetime placeholder="Date of your practice" [(ngModel)]="date" name="date" pickerFormat="MMM DD, YY">
       </ion-datetime>
     </ion-item>
     <ion-item>
-      <ion-label>Template</ion-label>
-      <ion-select [(ngModel)]="template" placeholder="Select One">
+      <ion-label position="floating">Start Time</ion-label>
+      <ion-datetime placeholder="Time of your practice" [(ngModel)]="startTime" name="startTime" displayFormat="hh:mm A"
+        pickerFormat="hh:mm A">
+      </ion-datetime>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating">Template</ion-label>
+      <ion-select text-wrap [(ngModel)]="template" placeholder="(Optional) Saved Practice Template">
         <ion-select-option value="none">No Template</ion-select-option>
         <ion-select-option *ngFor="let template of templates" [value]="template.id"> {{ template.name }}
         </ion-select-option>

@@ -5,6 +5,7 @@ import { UserService } from 'src/app/services/user.service';
 import { NavController } from '@ionic/angular';
 import { HelperService } from 'src/app/services/helper.service';
 import * as firebase from 'firebase';
+import { NotificationService } from 'src/app/services/notification.service';
 
 @Component({
   selector: 'app-add-plan',
@@ -18,6 +19,7 @@ export class AddPlanPage implements OnInit {
     private userService: UserService,
     private navCtrl: NavController,
     private helper: HelperService,
+    private notificationService: NotificationService,
   ) { }
 
   ngOnInit() {
@@ -44,7 +46,13 @@ export class AddPlanPage implements OnInit {
     if (this.template == "" || !this.template || this.template == "none") {
       this.firebaseService.addDocument("/plans", plan)
         .then(() => {
-          this.close();
+          firebase.firestore().collection("/users/" + this.user.uid + "/followers").get().then((followersSnap) => {
+            followersSnap.forEach((follower) => {
+              this.notificationService.newNotification(follower.data().uid, "Coach " + this.user.lname + " has added a new practice", this.user.photoUrl, "").then(() => {
+                this.close();
+              })
+            })
+          })
         })
     } else {
 
@@ -55,11 +63,16 @@ export class AddPlanPage implements OnInit {
             activitiesSnap.forEach((activity) => {
               this.firebaseService.addDocument("/plans/" + id + "/activities", { ...activity.data() })
             })
-            this.close();
+            firebase.firestore().collection("/users/" + this.user.uid + "/followers").get().then((followersSnap) => {
+              followersSnap.forEach((follower) => {
+                this.notificationService.newNotification(follower.data().uid, "Coach " + this.user.lname + " has added a new practice", this.user.photoUrl, "").then(() => {
+                  this.close();
+                })
+              })
+            })
           })
         })
     }
-
   }
 
   getTemplates() {

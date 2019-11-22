@@ -22,14 +22,18 @@ export class ConfirmEmailPage implements OnInit {
 
   user;
   emailInterval;
+  authInterval;
   ngOnInit() {
   }
 
 
-
+  async ionViewWillEnter() {
+    await this.getUser();
+    await this.resendVerification();
+    await this.checkEmailConfirmed();
+  }
   async getUser() {
     this.user = await this.userService.getUser();
-    console.log(this.user);
   }
 
 
@@ -45,9 +49,13 @@ export class ConfirmEmailPage implements OnInit {
     })
   }
   changeEmail(email) {
-    this.authService.changeEmail(email).then(() => {
-      this.resendVerification();
+    firebase.auth().currentUser.updateEmail(email).then(() => {
+      this.authService.changeEmail(email).then(() => {
+        this.resendVerification();
+        this.user.email = email;
+      })
     })
+
   }
 
   signout() {
@@ -68,5 +76,15 @@ export class ConfirmEmailPage implements OnInit {
   }
 
 
+  checkEmailConfirmed() {
+    this.authInterval = setInterval(() => {
+      firebase.auth().currentUser.reload();
+      if (firebase.auth().currentUser.emailVerified) {
+        this.navCtrl.navigateForward("/tabs/plan")
+      }
+    }, 1000)
 
+
+
+  }
 }

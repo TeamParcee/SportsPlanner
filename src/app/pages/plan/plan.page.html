@@ -2,18 +2,18 @@
   <ion-toolbar>
     <ion-buttons slot="start">
       <ion-button (click)="viewPlans($event)">
-        <ion-icon slot="icon-only" name="list"></ion-icon>
+        Plans
       </ion-button>
     </ion-buttons>
 
     <ion-title *ngIf="coach">Coach {{ coach.lname }} </ion-title>
 
-    <ion-buttons slot="end">
-        <ion-button (click)="viewMoreOptions($event)">
-          <ion-icon slot="icon-only" name="more"></ion-icon>
-        </ion-button>
-      </ion-buttons>
-  
+    <ion-buttons *ngIf="isHeadCoach" slot="end">
+      <ion-button (click)="viewMoreOptions($event)">
+        Templates
+      </ion-button>
+    </ion-buttons>
+
   </ion-toolbar>
 
 
@@ -27,7 +27,8 @@
     <ion-card-header>
 
       <ion-card-subtitle>
-       {{ (currentActivity?.name) ? currentActivity?.name : "Getting Next Activity..." }}   <ion-spinner *ngIf="!currentActivity"></ion-spinner>
+        {{ (currentActivity?.name) ? currentActivity?.name : "Getting Next Activity..." }} <ion-spinner
+          *ngIf="!currentActivity"></ion-spinner>
       </ion-card-subtitle>
       <ion-card-title> {{  currentActivity?.time }}
       </ion-card-title>
@@ -45,12 +46,16 @@
 
   </ion-card>
   <ion-text *ngIf="!plan">
-    <p padding text-center> No Practice Plan is selected</p>
+    <p padding text-center> No Practice Plan is selected <br>
+      <ion-button (click)="viewPlans($event)" fill="clear">Select One</ion-button>
+    </p>
+
   </ion-text>
 
   <ion-list-header *ngIf="plan">
-    <ion-datetime [disabled]="!isHeadCoach" (ionChange)="updateTime()" pickerFormat="MMM DD, hh:mm A"
-      displayFormat="DDD, MMM DD, h:mm A" [(ngModel)]="date" (click)="updateTime()" fill="clear">
+    <ion-datetime style="color: #000000" [disabled]="!isHeadCoach" (ionChange)="updateTime()"
+      pickerFormat="MMM DD, hh:mm A" displayFormat="DDD, MMM DD, h:mm A" [(ngModel)]="date" (click)="updateTime()"
+      fill="clear">
       <!-- {{ (plan ) ? plan.date + " " + plan.startTime : "Select A Plan" }} -->
     </ion-datetime>
   </ion-list-header>
@@ -75,9 +80,13 @@
 
   <ion-button *ngIf="plan && isHeadCoach" (click)="createActivity()" fill="clear">New Activity</ion-button>
 
-  <ion-fab *ngIf="activities" vertical="bottom" horizontal="end" slot="fixed">
-    <ion-fab-button [color]="(!showTimer) ? 'primary' : 'secondary'" (click)="(!showTimer) ? runTimer() : stopTimer()">
-      <ion-icon name="timer"></ion-icon>
-    </ion-fab-button>
-  </ion-fab>
+  <span *ngIf="activities?.length > 0">
+    <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+      <ion-fab-button [color]="(!showTimer) ? 'primary' : 'secondary'"
+        (click)="(!showTimer) ? runTimer() : stopTimer()">
+        <ion-icon name="timer"></ion-icon>
+      </ion-fab-button>
+    </ion-fab>
+  </span>
+
 </ion-content>

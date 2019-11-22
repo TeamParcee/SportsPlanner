@@ -1,12 +1,17 @@
-<ion-header >
+<ion-header>
   <ion-toolbar>
     <ion-title>Drills</ion-title>
+    <ion-buttons slot="end">
+      <ion-button routerLink="/search-drills">
+        <ion-icon slot="icon-only" name="search"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
-<ion-content >
+<ion-content>
   <ion-grid>
-    <ion-row no-padding>
+    <ion-row class="ion-no-padding">
       <ion-col>
         <ion-button (click)="getDrillsPrivate() " fill="clear" [ngClass]="(drillView == 'private' ? 'solid' : 'clear')"
           expand="full">
@@ -20,28 +25,16 @@
     </ion-row>
   </ion-grid>
 
-  <ion-searchbar placeholder="Find Drill" (ionChange)="onSearchChange($event)" [debounce]="250">
-  </ion-searchbar>
+  <!-- <ion-searchbar placeholder="Find Drill" (ionChange)="onSearchChange($event)" [debounce]="250">
+  </ion-searchbar> -->
 
-  <!-- 
-  <ion-list>
 
-    <ion-item *ngFor="let drill of filterDrills">
-      <ion-label (click)="viewDrill(drill)">
-        {{ drill.name }}
-        <p>
-          Coach: {{ drill.coach.fname + " " + drill.coach.lname }}
-        </p>
-      </ion-label>
-      <ion-buttons>
-        <ion-button *ngIf="drill.coach.uid == user.uid" (click)="editDrill(drill) ">
-          edit
-        </ion-button>
-      </ion-buttons>
-    </ion-item>
-  </ion-list> -->
 
-  <span *ngFor="let drill of filterDrills">
+
+
+  <app-private-drills *ngIf="drillView == 'private'"></app-private-drills>
+  <app-public-drills *ngIf="drillView == 'public'"></app-public-drills>
+  <!-- <span *ngFor="let drill of privateDrills">
 
     <ion-card *ngIf="showLoading" no-margin>
       <ion-card-content no-padding>
@@ -62,15 +55,15 @@
       </ion-card-header>
     </ion-card>
 
-    <ion-card *ngIf="!showLoading" no-margin style="width: 100%;" >
-      <ion-card-content no-padding>
+    <ion-card *ngIf="!showLoading" no-margin style="width: 100%;">
+      <ion-card-content class="ion-no-padding">
         <img (click)="viewDrill(drill)" [src]="getThumbnail(drill.youtubeId)" style=" min-height: 300px; width: 100%;">
         <ion-item style="padding: 5px" lines="none">
           <ion-avatar slot="start">
             <img [src]="drill.coach.photoUrl">
           </ion-avatar>
           <ion-label text-wrap>
-             {{ drill.name }}
+            {{ drill.name }}
             <p> Coach: {{ drill.coach.fname + " " + drill.coach.lname }} </p>
           </ion-label>
           <ion-buttons>
@@ -80,17 +73,61 @@
           </ion-buttons>
         </ion-item>
       </ion-card-content>
-
     </ion-card>
 
   </span>
 
+  <span *ngFor="let drill of publicDrills">
 
+      <ion-card *ngIf="showLoading" no-margin>
+        <ion-card-content no-padding>
+          <ion-skeleton-text style="height: 300px;"></ion-skeleton-text>
+        </ion-card-content>
+        <ion-card-header>
+          <ion-list>
+            <ion-item lines="none">
+              <ion-avatar slot="start">
+                <ion-skeleton-text></ion-skeleton-text>
+              </ion-avatar>
+              <ion-label>
+                <ion-skeleton-text></ion-skeleton-text>
+                <ion-skeleton-text></ion-skeleton-text>
+              </ion-label>
+            </ion-item>
+          </ion-list>
+        </ion-card-header>
+      </ion-card>
+  
+      <ion-card *ngIf="!showLoading" no-margin style="width: 100%;">
+        <ion-card-content class="ion-no-padding">
+          <img (click)="viewDrill(drill)" [src]="getThumbnail(drill.youtubeId)" style=" min-height: 300px; width: 100%;">
+          <ion-item style="padding: 5px" lines="none">
+            <ion-avatar slot="start">
+              <img [src]="drill.coach.photoUrl">
+            </ion-avatar>
+            <ion-label text-wrap>
+              {{ drill.name }}
+              <p> Coach: {{ drill.coach.fname + " " + drill.coach.lname }} </p>
+            </ion-label>
+            <ion-buttons>
+              <ion-button *ngIf="drill.coach.uid == user.uid" (click)="editDrill(drill) ">
+                <ion-icon name="more" slot="icon-only"></ion-icon>
+              </ion-button>
+            </ion-buttons>
+          </ion-item>
+        </ion-card-content>
+      </ion-card>
+  
+    </span>
 
+  <ion-infinite-scroll threshold="50px" (ionInfinite)="loadData($event)">
+    <ion-infinite-scroll-content loadingSpinner="bubbles">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
 
   <ion-fab *ngIf="isHeadCoach" horizontal="end" vertical="bottom" slot="fixed">
     <ion-fab-button routerLink="/add-drill">
       <ion-icon name="add"></ion-icon>
     </ion-fab-button>
-  </ion-fab>
+  </ion-fab> -->
 </ion-content>

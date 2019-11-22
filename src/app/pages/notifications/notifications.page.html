@@ -1,0 +1,48 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Notifications</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-text
+    *ngIf="newNotifications?.length == 0 && oldNotifications?.length == 0 || !newNotifications && !oldNotifications">
+    <p padding text-center> Notifications all clear </p>
+  </ion-text>
+
+
+  <ion-list *ngIf="newNotifications?.length != 0 && newNotifications">
+    <ion-list-header>New</ion-list-header>
+    <ion-item *ngFor="let notification of newNotifications">
+      <ion-avatar slot="start">
+        <img [src]="notification.image">
+      </ion-avatar>
+      <ion-label class="ion-text-wrap">
+        {{ notification.message }}
+        <p> {{ notification.created }}</p>
+      </ion-label>
+      <ion-button (click)="delete(notification)" color="danger" fill="clear" slot="end">
+        <ion-icon name="close"></ion-icon>
+      </ion-button>
+    </ion-item>
+  </ion-list>
+
+
+  <ion-list *ngIf="oldNotifications?.length != 0 && oldNotifications">
+    <ion-list-header>Earlier</ion-list-header>
+    <ion-item *ngFor="let notification of oldNotifications">
+      <ion-avatar slot="start">
+        <img [src]="notification.image">
+      </ion-avatar>
+      <ion-label class="ion-text-wrap">
+        {{ notification.message }}
+        <p> {{ notification.created }}</p>
+      </ion-label>
+      <ion-button (click)="delete(notification)" color="danger" fill="clear" slot="end">
+        <ion-icon name="close"></ion-icon>
+      </ion-button>
+    </ion-item>
+
+  </ion-list>
+
+</ion-content>

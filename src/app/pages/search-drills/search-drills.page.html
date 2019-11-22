@@ -1,0 +1,88 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/tabs/drills"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Search Drills</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-searchbar placeholder="Find Drill" (ionChange)="onSearchChange($event)" [debounce]="250">
+  </ion-searchbar>
+
+
+  <ion-text *ngIf="!filterDrills">
+    <p class=" ion-padding ion-text-center"> Search for a Drill<br>
+    </p>
+  </ion-text>
+
+  <ion-text *ngIf="noDrills">
+    <p class=" ion-padding ion-text-center"> No Drills found<br>
+    </p>
+  </ion-text>
+
+
+  <ion-card *ngIf="showLoading" no-margin>
+    <ion-card-content no-padding>
+      <ion-skeleton-text style="height: 300px;"></ion-skeleton-text>
+    </ion-card-content>
+    <ion-card-header>
+      <ion-list>
+        <ion-item lines="none">
+          <ion-avatar slot="start">
+            <ion-skeleton-text></ion-skeleton-text>
+          </ion-avatar>
+          <ion-label>
+            <ion-skeleton-text></ion-skeleton-text>
+            <ion-skeleton-text></ion-skeleton-text>
+          </ion-label>
+        </ion-item>
+      </ion-list>
+    </ion-card-header>
+  </ion-card>
+
+  <ion-card *ngIf="showLoading" no-margin>
+    <ion-card-content no-padding>
+      <ion-skeleton-text style="height: 300px;"></ion-skeleton-text>
+    </ion-card-content>
+    <ion-card-header>
+      <ion-list>
+        <ion-item lines="none">
+          <ion-avatar slot="start">
+            <ion-skeleton-text></ion-skeleton-text>
+          </ion-avatar>
+          <ion-label>
+            <ion-skeleton-text></ion-skeleton-text>
+            <ion-skeleton-text></ion-skeleton-text>
+          </ion-label>
+        </ion-item>
+      </ion-list>
+    </ion-card-header>
+  </ion-card>
+
+  <span *ngFor="let drill of filterDrills">
+
+    <ion-card *ngIf="!showLoading" no-margin style="width: 100%;">
+      <ion-card-content class="ion-no-padding">
+        <img (click)="viewDrill(drill)" [src]="getThumbnail(drill.youtubeId)" style=" min-height: 300px; width: 100%;">
+        <ion-item style="padding: 5px" lines="none">
+          <ion-avatar slot="start">
+            <img [src]="drill.coach.photoUrl">
+          </ion-avatar>
+          <ion-label text-wrap>
+            {{ drill.name }}
+            <p> Coach: {{ drill.coach.fname + " " + drill.coach.lname }} </p>
+          </ion-label>
+        </ion-item>
+      </ion-card-content>
+    </ion-card>
+
+  </span>
+
+  <!-- 
+  <ion-infinite-scroll threshold="50px" (ionInfinite)="getPublicVideos($event)">
+    <ion-infinite-scroll-content loadingSpinner="bubbles">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll> -->
+</ion-content>

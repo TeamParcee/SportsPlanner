@@ -10,10 +10,17 @@
       <ion-label>Drill Library</ion-label>
     </ion-tab-button>
 
+    <ion-tab-button tab="notifications">
+      <ion-badge *ngIf="newCount > 0" color="danger">{{ newCount }}</ion-badge>
+      <ion-icon name="notifications"></ion-icon>
+      <ion-label>Notiications</ion-label>
+    </ion-tab-button>
+
     <ion-tab-button tab="profile">
-        <ion-icon name="contact"></ion-icon>
-        <ion-label>Profile</ion-label>
-      </ion-tab-button>
+
+      <ion-icon name="contact"></ion-icon>
+      <ion-label>Profile</ion-label>
+    </ion-tab-button>
 
   </ion-tab-bar>
 </ion-tabs>

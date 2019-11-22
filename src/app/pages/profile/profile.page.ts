@@ -29,6 +29,7 @@ export class ProfilePage implements OnInit {
   user;
   originalUser;
   coach;
+  followers;
 
   ngOnInit() {
   }
@@ -37,6 +38,7 @@ export class ProfilePage implements OnInit {
     await this.getUser();
     await this.getCoachFromUid(this.user.coach);
     this.userService.photoURL = "";
+    await this.getFollowers();
   }
   async getUser() {
     this.user = await this.userService.getUser();
@@ -88,7 +90,7 @@ export class ProfilePage implements OnInit {
     //   }
     //   reader.readAsDataURL(input.target.files[0]);
     // }
-    this.userService.photoURL = this.user.photoURL;        
+    this.userService.photoURL = this.user.photoURL;
     let file = input.srcElement.files[0];
     this.helper.openModalPromise(ImageCropperPage, { dataUrl: file }).then(() => {
       if (this.userService.photoURL != "") {
@@ -114,4 +116,10 @@ export class ProfilePage implements OnInit {
     })
   }
 
+
+  getFollowers() {
+    firebase.firestore().collection("/users/" + this.user.coach + "/followers/").onSnapshot((followersSnap) => {
+      this.followers = followersSnap.size;
+    })
+  }
 }

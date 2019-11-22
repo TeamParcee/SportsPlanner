@@ -2,7 +2,7 @@
   <ion-toolbar>
     <ion-buttons slot="start">
       <ion-button (click)="close()">
-        <ion-icon slot="icon-only" name="close"></ion-icon>
+        Close
       </ion-button>
     </ion-buttons>
     <ion-title>Practice Plans</ion-title>
@@ -10,10 +10,17 @@
 </ion-header>
 
 <ion-content>
-  <ion-text *ngIf="!plans?.length">
-    <p padding text-center> You do not have any Practice Plans</p>
+  <ion-text *ngIf="!plans?.length && isHeadCoach">
+    <p padding text-center> You do not have any Practice Plans <br>
+      <ion-button fill="clear" (click)="addPlan()">Create One</ion-button>
+    </p>
   </ion-text>
 
+  <ion-text *ngIf="!plans?.length && !isHeadCoach">
+    <p padding text-center> Your Coach has not created any practies yet <br>
+      Check back later
+    </p>
+  </ion-text>
   <ion-virtual-scroll [items]="plans" [headerFn]="myHeaderFn">
     <ion-item-divider *virtualHeader="let header">
       {{ header }}
@@ -25,7 +32,7 @@
       </ion-label>
       <ion-buttons *ngIf="isHeadCoach" slot="end">
         <ion-button (click)="delete(plan)">
-          <ion-icon name="trash" color="danger"></ion-icon>
+          <ion-icon name="close" color="danger"></ion-icon>
         </ion-button>
       </ion-buttons>
     </ion-item>

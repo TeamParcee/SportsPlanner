@@ -23,6 +23,7 @@ export class PlanOptionsPage implements OnInit {
   ) { }
 
   user;
+  plan = this.planService.currentPlan;
   ngOnInit() {
   }
 
@@ -45,8 +46,10 @@ export class PlanOptionsPage implements OnInit {
       let originalPlanId = plan.id;
       plan.name = planName;
       this.firebaseService.addDocument("/users/" + this.user.uid + "/templates", plan).then((id) => {
+
         firebase.firestore().doc("plans/" + originalPlanId).get().then((planSnap) => {
           planSnap.ref.collection("activities").get().then((activitesSnap) => {
+            this.firebaseService.updateDocument("/users/" + this.user.uid + "/templates/" + id, { activities: activitesSnap.size })
             activitesSnap.forEach((activity) => {
               let a: any = { ...activity.data() };
               a.planId = id;

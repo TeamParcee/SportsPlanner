@@ -11,22 +11,25 @@ const routes: Routes = [
   {
     path: '',
     component: TabsPage,
-    children:[
+    children: [
       {
         path: 'plan',
-        loadChildren: '../plan/plan.module#PlanPageModule' 
+        loadChildren: '../plan/plan.module#PlanPageModule'
       },
       {
         path: 'settings',
-        loadChildren: '../settings/settings.module#SettingsPageModule' 
+        loadChildren: '../settings/settings.module#SettingsPageModule'
       },
       {
         path: 'profile',
-        loadChildren: '../profile/profile.module#ProfilePageModule' 
+        loadChildren: '../profile/profile.module#ProfilePageModule'
       },
       {
         path: 'drills',
-        loadChildren: '../drills/drills.module#DrillsPageModule' 
+        loadChildren: '../drills/drills.module#DrillsPageModule'
+      }, {
+        path: 'notifications',
+        loadChildren: '../notifications/notifications.module#NotificationsPageModule'
       },
       {
         path: '',
@@ -45,4 +48,4 @@ const routes: Routes = [
   ],
   declarations: [TabsPage]
 })
-export class TabsPageModule {}
+export class TabsPageModule { }

@@ -24,13 +24,17 @@ const routes: Routes = [
   { path: 'add-plan', loadChildren: './pages/add-plan/add-plan.module#AddPlanPageModule', canActivate: [AuthGuard, ConfirmEmailGuard, CoachInfoGuard, SelectCoachGuard] },
   { path: 'edit-activity', loadChildren: './pages/edit-activity/edit-activity.module#EditActivityPageModule' },
   { path: 'view-activity', loadChildren: './pages/view-activity/view-activity.module#ViewActivityPageModule' },
-  { path: 'confirm-email', loadChildren: './confirm-email/confirm-email.module#ConfirmEmailPageModule', canActivate:[AuthGuard] },  { path: 'view-drill', loadChildren: './pages/view-drill/view-drill.module#ViewDrillPageModule' },
+  { path: 'confirm-email', loadChildren: './confirm-email/confirm-email.module#ConfirmEmailPageModule', canActivate:[AuthGuard] },
+  { path: 'view-drill', loadChildren: './pages/view-drill/view-drill.module#ViewDrillPageModule' },
   { path: 'edit-drill', loadChildren: './pages/edit-drill/edit-drill.module#EditDrillPageModule' },
   { path: 'image-cropper', loadChildren: './pages/image-cropper/image-cropper.module#ImageCropperPageModule' },
   { path: 'plan-options', loadChildren: './pages/plan-options/plan-options.module#PlanOptionsPageModule' },
   { path: 'view-templates', loadChildren: './pages/view-templates/view-templates.module#ViewTemplatesPageModule' },
   { path: 'templates', loadChildren: './pages/templates/templates.module#TemplatesPageModule' },
   { path: 'template', loadChildren: './pages/template/template.module#TemplatePageModule' },
+  { path: 'notifications', loadChildren: './pages/notifications/notifications.module#NotificationsPageModule' },  { path: 'search-drills', loadChildren: './pages/search-drills/search-drills.module#SearchDrillsPageModule' },
+  { path: 'view-followers', loadChildren: './pages/view-followers/view-followers.module#ViewFollowersPageModule' },
+
 
 
 

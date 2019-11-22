@@ -7,6 +7,8 @@ import { IonicModule } from '@ionic/angular';
 
 import { DrillsPage } from './drills.page';
 import { HideHeaderDirective } from 'src/app/directives/hide-header.directive';
+import { PublicDrillsComponent } from './public-drills/public-drills.component';
+import { PrivateDrillsComponent } from './private-drills/private-drills.component';
 
 const routes: Routes = [
   {
@@ -22,6 +24,6 @@ const routes: Routes = [
     IonicModule,
     RouterModule.forChild(routes)
   ],
-  declarations: [DrillsPage, HideHeaderDirective]
+  declarations: [DrillsPage, HideHeaderDirective, PublicDrillsComponent, PrivateDrillsComponent]
 })
 export class DrillsPageModule {}

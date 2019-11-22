@@ -14,16 +14,18 @@
       allowfullscreen></iframe>
     <ion-item>
       <ion-label position="floating">Drill Name</ion-label>
-      <ion-input [(ngModel)]="drill.name"></ion-input>
+      <ion-input placeholder="Name your drill will show as" [(ngModel)]="drill.name"></ion-input>
     </ion-item>
     <ion-item>
       <ion-label position="floating">Video Url</ion-label>
-      <ion-input (ionChange)="checkUrl(drill.video)" [(ngModel)]="drill.video"></ion-input>
+      <ion-input placeholder="Link to Youtube video" (ionChange)="checkUrl(drill.video)" [(ngModel)]="drill.video">
+      </ion-input>
       <ion-text color="danger" *ngIf="!validUrl && drill.video">This is not a valid Youtube URL</ion-text>
     </ion-item>
-    <ion-item>
-      <ion-label>Public Drill</ion-label>
-      <ion-checkbox [(ngModel)]="drill.public"></ion-checkbox>
+    <ion-item lines="none">
+      <ion-checkbox slot="start" [(ngModel)]="drill.public">
+      </ion-checkbox>
+      <p>Is this video open for everyone on the app to view</p>
     </ion-item>
   </ion-list>
   <ion-button [disabled]="!validUrl || !drill.name" (click)="addDrill()" expand="full">Add Drill</ion-button>

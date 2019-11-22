@@ -31,7 +31,7 @@ export class SelectCoachPage implements OnInit {
   user;
   coaches;
   filterCoaches;
-  
+
   async ionViewWillEnter() {
     await this.getUser();
     this.getCoaches();
@@ -40,24 +40,25 @@ export class SelectCoachPage implements OnInit {
     this.user = await this.userService.getUser();
   }
   getCoaches() {
-    firebase.firestore().collection("/users/").where("isHeadCoach", "==", true).onSnapshot((coachSnap) => {
-      let coaches = [];
-      coachSnap.forEach((coach) => {
-        coaches.push(coach.data())
+    firebase.firestore().collection("/users/")
+      .where("isHeadCoach", "==", true).onSnapshot((coachSnap) => {
+        let coaches = [];
+        coachSnap.forEach((coach) => {
+          coaches.push(coach.data())
+        })
+        this.coaches = coaches;
+        this.filterCoaches = [...this.coaches]
       })
-      this.coaches = coaches;
-      this.filterCoaches = [...this.coaches]
-    })
   }
-  updateCoach(coach) {
-    this.firebaseService.updateDocument("/users/" + this.user.uid, {coach: coach.uid})
-    .then(()=>{
-      this.firebaseService.deleteDocument("/users/" + this.user.uid + "/utilities/activeplan")
-      this.helper.okAlert("Coach Updated", "Your coach has been updated to Coach " + coach.lname + ". Please sign back in");
-      this.authService.signout().then(()=>{
-        this.navCtrl.navigateBack("/login");
+  async updateCoach(coach) {
+    await this.coachService.deleteFollower(this.user.coach, this.user.uid);
+    this.firebaseService.updateDocument("/users/" + this.user.uid, { coach: coach.uid, sport: coach.sport })
+      .then(async () => {
+        this.firebaseService.deleteDocument("/users/" + this.user.uid + "/utilities/activeplan");
+        await this.coachService.addFollower(coach.uid, this.user.uid);
+        this.helper.okAlert("Coach Updated", "Your coach has been updated to Coach " + coach.lname);
+        this.navCtrl.navigateBack("/tabs/profile")
       })
-    })
   }
 
   onSearchChange(event) {
@@ -71,25 +72,25 @@ export class SelectCoachPage implements OnInit {
     });
   }
 
-  selectCoach(coach){
+  selectCoach(coach) {
     this.updateCoach(coach);
   }
 
-  checkPassword(coach){
+  checkPassword(coach) {
     let password = coach.coachPassword;
     let alertInput: AlertInput[] = [{
       name: "password",
       type: "password",
       placeholder: "Coach Password"
     }]
-    this.helper.inputAlert("Coach Password", "Please enter the coach's password to add him as your Coach.", alertInput)
-    .then((result:any)=>{
-      let correctPassword = result.password  == password;
-      if(correctPassword){
-        this.updateCoach(coach)
-      } else {
-        this.helper.okAlert("Incorrect Password", "Sorry, that was not the correct password for this coach")
-      }
-    })
+    this.helper.inputAlert("Coach Password", "Please enter the coach's password to add them as your Coach.", alertInput)
+      .then((result: any) => {
+        let correctPassword = result.password == password;
+        if (correctPassword) {
+          this.updateCoach(coach)
+        } else {
+          this.helper.okAlert("Incorrect Password", "Sorry, that was not the correct password for this coach")
+        }
+      })
   }
 }

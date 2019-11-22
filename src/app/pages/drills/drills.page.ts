@@ -6,6 +6,7 @@ import { HelperService } from 'src/app/services/helper.service';
 import { ViewDrillPage } from '../view-drill/view-drill.page';
 import { FirebaseService } from 'src/app/services/firebase.service';
 import { EditDrillPage } from '../edit-drill/edit-drill.page';
+import { DrillsService } from 'src/app/services/drills.service';
 
 @Component({
   selector: 'app-drills',
@@ -19,154 +20,165 @@ export class DrillsPage implements OnInit {
     private domSanitizer: DomSanitizer,
     private helper: HelperService,
     private firebaseService: FirebaseService,
+    private drillService: DrillsService,
   ) { }
 
 
   isHeadCoach;
   user;
-  drills;
-  filterDrills;
+  privateDrills;
+  publicDrills;
   drillView;
   showLoading = true;
   hideHeader = false;
-
+  query;
 
   async ngOnInit() {
-    await this.getUser();
-    this.getDrillsIntialPrivate();
+    this.drillView = "private"
   }
+
 
   async ionViewWillEnter() {
-    this.loadingTimeout();
     await this.getUser();
-    await this.getDrillsPrivate();
-    await this.checkIsHeadCoach();
-  }
-  async ionViewWillLeave() {
-    this.showLoading = true;
+    await this.checkIsHeadCoach()
   }
 
-  loadingTimeout() {
-    setTimeout(() => {
-      this.showLoading = false;
-    }, 1000)
-  }
-  async getDrillsPrivate() {
-    this.drillView = "private";
-    firebase.firestore().collection("/drills")
-      .where("sport", "==", this.user.sport)
-      .where("coach", "==", this.user.coach)
-      .onSnapshot((drillsSnap) => {
-        let drills = [];
-        drillsSnap.forEach(async (drill) => {
-          let d = { ...drill.data() }
-          let coach = await this.getCoach(d.coach);
-          d.coach = coach;
-          drills.push(d)
-        })
-        this.drills = drills;
-        this.filterDrills = drills;
-      })
-  }
-
-
-  async getDrillsPublic() {
-    this.drillView = "public";
-    firebase.firestore().collection("/drills")
-      .where("sport", "==", this.user.sport)
-      .where("public", "==", true)
-      .onSnapshot((drillsSnap) => {
-        let drills = [];
-        drillsSnap.forEach(async (drill) => {
-          let d = { ...drill.data() }
-          let coach = await this.getCoach(d.coach);
-          d.coach = coach;
-          drills.push(d)
-        })
-        this.drills = drills;
-        this.filterDrills = drills;
-      })
-  }
-  async getDrillsIntialPrivate() {
-    firebase.firestore().collection("/drills")
-      .where("sport", "==", this.user.sport)
-      .where("coach", "==", this.user.coach)
-      .get().then((drillsSnap) => {
-        let drills = [];
-        drillsSnap.forEach(async (drill) => {
-          let d = { ...drill.data() }
-          let coach = await this.getCoach(d.coach);
-          d.coach = coach;
-          drills.push(d)
-        })
-        this.drills = drills;
-        this.filterDrills = drills;
-      })
-  }
-
-  async getDrillsIntialPublic() {
-    firebase.firestore().collection("/drills")
-      .where("sport", "==", this.user.sport)
-      .where("coach", "==", this.user.coach)
-      .get().then((drillsSnap) => {
-        let drills = [];
-        drillsSnap.forEach(async (drill) => {
-          let d = { ...drill.data() }
-          let coach = await this.getCoach(d.coach);
-          d.coach = coach;
-          drills.push(d)
-        })
-        this.drills = drills;
-        this.filterDrills = drills;
-      })
-  }
   async getUser() {
     this.user = await this.userService.getUser();
   }
-  checkIsHeadCoach() {
+
+  async checkIsHeadCoach() {
     if (this.user.coach == this.user.uid) {
       this.isHeadCoach = true;
     }
   }
 
-  viewDrill(drill) {
-    this.helper.openModal(ViewDrillPage, { drill: drill })
-  }
 
-  async getCoach(uid) {
-    let coach = await this.firebaseService.getDocument("/users/" + uid);
-    return coach;
-  }
-
-
-  editDrill(drill) {
-    this.helper.openModal(EditDrillPage, { drill: drill })
-  }
-
-  onSearchChange(event) {
-    let value = event.detail.value.toLowerCase();
-    this.filterDrills = [];
-    this.drills.forEach(item => {
-      const shouldShow = item.name.toLowerCase().indexOf(value) > -1 ||
-        item.coach.fname.toLowerCase().indexOf(value) > -1 ||
-        item.coach.lname.toLowerCase().indexOf(value) > -1;
-      if (shouldShow) {
-        this.filterDrills.push(item)
-      }
-    });
-  }
-
-  getTrustedVideoUrl(url) {
-    return this.domSanitizer.bypassSecurityTrustResourceUrl(url);
-  }
-
-  getThumbnail(id) {
-    return "http://img.youtube.com/vi/" + id + "/0.jpg";
+  async getDrillsPrivate() {
+    this.drillView = "private";
 
   }
 
-  onHideHeader(event) {
-    this.hideHeader = true;
-    console.log(event)
+
+  async getDrillsPublic() {
+    this.drillView = "public";
   }
+
+  // async ionViewWillEnter() {
+  //   this.loadingTimeout();
+  //   await this.getUser();
+
+  //   await this.checkIsHeadCoach();
+
+  // }
+
+  // loadingTimeout() {
+  //   setTimeout(() => {
+  //     this.showLoading = false;
+  //   }, 1000)
+  // }
+
+  // async getDrillsPrivate() {
+  //   this.drillView = "private";
+  //   this.privateDrills = await this.drillService.getPrivateDrills(this.user);
+
+  // }
+
+
+  // async getDrillsPublic() {
+  //   this.drillView = "public";
+  //   this.publicDrills = await this.drillService.getDrillsPublic(this.user)
+  // }
+
+
+
+
+  // viewDrill(drill) {
+  //   this.helper.openModal(ViewDrillPage, { drill: drill })
+  // }
+
+
+
+
+  // editDrill(drill) {
+  //   this.helper.openModal(EditDrillPage, { drill: drill })
+  // }
+
+
+
+  // getTrustedVideoUrl(url) {
+  //   return this.domSanitizer.bypassSecurityTrustResourceUrl(url);
+  // }
+
+  // getThumbnail(id) {
+  //   return "http://img.youtube.com/vi/" + id + "/0.jpg";
+
+  // }
+
+  // onHideHeader(event) {
+  //   this.hideHeader = true;
+  // }
+
+  // loadData(event) {
+  //   if (this.drillView = "public") {
+  //     this.getPublicVideos(event)
+  //   }
+  //   if (this.drillView = "private") {
+  //     this.getPrivateVideos(event)
+  //   }
+  // }
+
+  // getPrivateVideos(event) {
+  //   if (this.drillService.lastPrivateVisible) {
+  //     setTimeout(() => {
+  //       firebase.firestore().collection("/drills")
+  //         .limit(1)
+  //         .orderBy("name")
+  //         .startAfter(this.drillService.lastPrivateVisible)
+  //         .where("sport", "==", this.user.sport)
+  //         .where("coach", "==", this.user.coach)
+  //         .get().then((drillsSnap) => {
+  //           this.drillService.lastPrivateVisible = drillsSnap.docs[drillsSnap.docs.length - 1];
+  //           drillsSnap.forEach(async (drill) => {
+  //             let d = { ...drill.data() }
+  //             let coach = await this.drillService.getCoach(d.coach);
+  //             d.coach = coach;
+  //             this.privateDrills.push(d)
+  //           })
+  //         })
+
+  //       event.target.complete();
+  //     }, 1000)
+  //   }
+  //   else {
+  //     event.target.complete();
+  //   }
+  // }
+
+  // getPublicVideos(event) {
+  //   if (this.drillService.lastPublicVisible) {
+  //     setTimeout(() => {
+  //       firebase.firestore().collection("/drills")
+  //         .limit(1)
+  //         .orderBy("name")
+  //         .startAfter(this.drillService.lastPrivateVisible)
+  //         .where("sport", "==", this.user.sport)
+  //         .get().then((drillsSnap) => {
+  //           this.drillService.lastPrivateVisible = drillsSnap.docs[drillsSnap.docs.length - 1];
+  //           drillsSnap.forEach(async (drill) => {
+  //             let d = { ...drill.data() }
+  //             let coach = await this.drillService.getCoach(d.coach);
+  //             d.coach = coach;
+  //             this.privateDrills.push(d)
+  //           })
+  //         })
+
+  //       event.target.complete();
+  //     }, 1000)
+  //   }
+  //   else {
+  //     event.target.complete();
+  //   }
+  // }
+
 }
