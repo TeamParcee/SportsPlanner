@@ -1,7 +1,10 @@
 <ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-back-button defaultHref="/tabs/profile"></ion-back-button>
+      <ion-back-button *ngIf="!showClose" defaultHref="/tabs/profile"></ion-back-button>
+      <ion-button *ngIf="showClose" (click)="close()">
+        Close
+      </ion-button>
     </ion-buttons>
     <ion-title>View Followers</ion-title>
   </ion-toolbar>
@@ -14,7 +17,7 @@
   </ion-text>
 
   <ion-list>
-    <ion-item *ngFor="let follower of followers">
+    <ion-item appViewProfile [user]="follower" slot="start" *ngFor="let follower of followers">
       <ion-avatar slot="start">
         <img [src]="follower.photoUrl">
       </ion-avatar>

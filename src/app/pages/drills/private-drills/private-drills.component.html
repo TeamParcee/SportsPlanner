@@ -58,10 +58,10 @@
     <ion-card-content class="ion-no-padding">
       <img (click)="viewDrill(drill)" [src]="getThumbnail(drill.youtubeId)" style=" min-height: 300px; width: 100%;">
       <ion-item style="padding: 5px" lines="none">
-        <ion-avatar slot="start">
+        <ion-avatar  appViewProfile [user]="drill?.coach" slot="start">
           <img [src]="drill.coach.photoUrl">
         </ion-avatar>
-        <ion-label text-wrap>
+        <ion-label  appViewProfile [user]="drill?.coach" text-wrap>
           {{ drill.name }}
           <p> Coach: {{ drill.coach.fname + " " + drill.coach.lname }} </p>
 

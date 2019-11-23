@@ -1,0 +1,59 @@
+<ion-content color="light">
+
+  <app-swipe-down-close backPageTitle="Ddsafsf"></app-swipe-down-close>
+
+  <ion-header>
+    <ion-toolbar>
+      <ion-buttons slot="start">
+        <ion-button (click)="close()">
+          Close
+        </ion-button>
+      </ion-buttons>
+      <ion-title>View Profile</ion-title>
+
+    </ion-toolbar>
+  </ion-header>
+
+
+  <div style="margin: auto; display: table" *ngIf="user">
+    <img id="image" style="width: 150px; padding: 10px" [src]="user?.photoUrl" />
+  </div>
+
+
+
+  <input (change)="readURL($event)" accept="image/*" style="display: none;" id="pic" type="file" />
+  <ion-list margin-top *ngIf="user">
+    <ion-item-divider>My Information</ion-item-divider>
+    <ion-item *ngIf="user">
+      <ion-label>First Name</ion-label>
+      {{ user.fname}}
+    </ion-item>
+    <ion-item *ngIf="user">
+      <ion-label>Last Name</ion-label>
+      {{ user.lname }}
+    </ion-item>
+    <ion-item *ngIf="user">
+      <ion-label position="">Email</ion-label>
+      {{ user.email }}
+    </ion-item>
+
+    <ion-item-divider padding-top>Coach Settings</ion-item-divider>
+
+    <ion-item margin-top *ngIf="coach">
+      <ion-avatar slot="start">
+        <img [src]="coach?.photoUrl">
+      </ion-avatar>
+      <ion-label>
+        <h2> Coach {{ coach?.fname + " " + coach?.lname }}</h2>
+      </ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-label position="">Sport</ion-label>
+      {{ coach?.sport }}
+    </ion-item>
+    <ion-item detail (click)="viewFollowers()">
+      <ion-label>Followers</ion-label>
+      {{ followers }}
+    </ion-item>
+  </ion-list>
+</ion-content>

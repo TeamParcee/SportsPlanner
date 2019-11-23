@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import * as firebase from 'firebase'
 import { UserService } from 'src/app/services/user.service';
+import { HelperService } from 'src/app/services/helper.service';
 
 @Component({
   selector: 'app-view-followers',
@@ -12,10 +13,12 @@ export class ViewFollowersPage implements OnInit {
 
   constructor(
     private userService: UserService,
+    private helper: HelperService,
   ) { }
 
   followers;
   user;
+  showClose;
 
   ngOnInit() {
   }
@@ -38,5 +41,8 @@ export class ViewFollowersPage implements OnInit {
       })
       this.followers = followers;
     })
+  }
+  close() {
+    this.helper.closeModal();
   }
 }

@@ -5,13 +5,12 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { IonicModule } from '@ionic/angular';
 
-import { ViewFollowersPage } from './view-followers.page';
-import { SharedModule } from 'src/app/modules/shared/shared.module';
+import { ViewProfilePage } from './view-profile.page';
 
 const routes: Routes = [
   {
     path: '',
-    component: ViewFollowersPage
+    component: ViewProfilePage
   }
 ];
 
@@ -19,10 +18,9 @@ const routes: Routes = [
   imports: [
     CommonModule,
     FormsModule,
-    SharedModule,
     IonicModule,
     RouterModule.forChild(routes)
   ],
-  declarations: [],
+  declarations: [ViewProfilePage]
 })
-export class ViewFollowersPageModule { }
+export class ViewProfilePageModule {}

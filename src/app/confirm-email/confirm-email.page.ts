@@ -35,7 +35,9 @@ export class ConfirmEmailPage implements OnInit {
   async getUser() {
     this.user = await this.userService.getUser();
   }
-
+  async ionViewWillLeave() {
+    clearInterval(this.authInterval)
+  }
 
   getNewEmail() {
     let inputAlert: AlertInput[] = [{
@@ -80,6 +82,7 @@ export class ConfirmEmailPage implements OnInit {
     this.authInterval = setInterval(() => {
       firebase.auth().currentUser.reload();
       if (firebase.auth().currentUser.emailVerified) {
+        clearInterval(this.authInterval);
         this.navCtrl.navigateForward("/tabs/plan")
       }
     }, 1000)

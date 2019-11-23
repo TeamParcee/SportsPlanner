@@ -9,6 +9,7 @@ import { DrillsPage } from './drills.page';
 import { HideHeaderDirective } from 'src/app/directives/hide-header.directive';
 import { PublicDrillsComponent } from './public-drills/public-drills.component';
 import { PrivateDrillsComponent } from './private-drills/private-drills.component';
+import { SharedModule } from 'src/app/modules/shared/shared.module';
 
 const routes: Routes = [
   {
@@ -21,9 +22,10 @@ const routes: Routes = [
   imports: [
     CommonModule,
     FormsModule,
+    SharedModule,
     IonicModule,
     RouterModule.forChild(routes)
   ],
   declarations: [DrillsPage, HideHeaderDirective, PublicDrillsComponent, PrivateDrillsComponent]
 })
-export class DrillsPageModule {}
+export class DrillsPageModule { }

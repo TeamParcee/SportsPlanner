@@ -27,10 +27,13 @@ import { ImageCropperModule } from 'ngx-image-cropper';
 import { ImageCropperPage } from './pages/image-cropper/image-cropper.page';
 import { PlanOptionsPage } from './pages/plan-options/plan-options.page';
 import { TemplatePage } from './pages/template/template.page';
-import { HideHeaderDirective } from './directives/hide-header.directive';
 
- // Your web app's Firebase configuration
- var firebaseConfig = {
+import { ViewProfilePage } from './pages/view-profile/view-profile.page';
+import { ViewFollowersPage } from './pages/view-followers/view-followers.page';
+import { SharedModule } from './modules/shared/shared.module';
+
+// Your web app's Firebase configuration
+var firebaseConfig = {
   apiKey: "AIzaSyDTFlAGMfPtxMzp3c6jWa96ZnBijIAYG5I",
   authDomain: "parceesportsplanner.firebaseapp.com",
   databaseURL: "https://parceesportsplanner.firebaseio.com",
@@ -55,7 +58,8 @@ firebase.initializeApp(firebaseConfig);
     ImageCropperPage,
     TemplatePage,
     EditDrillPage,
- 
+    ViewProfilePage,
+
   ],
   entryComponents: [
     PlansPage,
@@ -67,14 +71,17 @@ firebase.initializeApp(firebaseConfig);
     ViewDrillPage,
     TemplatePage,
     EditDrillPage,
+    ViewProfilePage,
+    ViewFollowersPage,
   ],
   imports: [
-    BrowserModule, 
-    IonicModule.forRoot(), 
+    BrowserModule,
+    IonicModule.forRoot(),
     QuillModule.forRoot(),
     FormsModule,
     ImageCropperModule,
     ReactiveFormsModule,
+    SharedModule,
     AppRoutingModule],
   providers: [
     FormBuilder,
@@ -89,4 +96,4 @@ firebase.initializeApp(firebaseConfig);
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule {}
+export class AppModule { }
