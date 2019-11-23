@@ -9,9 +9,15 @@
 
 <ion-content padding>
 
-  <h5>A confirmation email has been sent to {{ user?.email }}</h5>
-  <h5>Once you confirm your email, sign out and sign back in</h5>
-  <ion-button fill="clear" (click)="getNewEmail()" expand="full">Change Email</ion-button>
-  <ion-button fill="clear" (click)="resendVerification()" expand="full">Resend Email Verficiation</ion-button>
+  <ion-grid>
+    <ion-row>
+      <ion-col text-center sizeMd="4" pushMd="4">
+        <h5>A confirmation email has been sent to {{ user?.email }}</h5>
+        <ion-button fill="clear" (click)="getNewEmail()" expand="full">Change Email</ion-button>
+        <ion-button fill="clear" (click)="resendVerification()" expand="full">Resend Email Verficiation</ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
 
 </ion-content>

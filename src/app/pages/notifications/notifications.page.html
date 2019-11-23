@@ -14,7 +14,7 @@
   <ion-list *ngIf="newNotifications?.length != 0 && newNotifications">
     <ion-list-header>New</ion-list-header>
     <ion-item *ngFor="let notification of newNotifications">
-      <ion-avatar slot="start">
+      <ion-avatar  slot="start">
         <img [src]="notification.image">
       </ion-avatar>
       <ion-label class="ion-text-wrap">
