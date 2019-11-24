@@ -22,7 +22,6 @@
 <ion-content>
 
 
-
   <ion-card *ngIf="showTimer" (click)="viewCurrentActivity(currentActivity)">
     <ion-card-header>
 
@@ -77,8 +76,15 @@
       </ion-buttons>
     </ion-item>
   </ion-reorder-group>
-
   <ion-button *ngIf="plan && isHeadCoach" (click)="createActivity()" fill="clear">New Activity</ion-button>
+  <ion-item  *ngIf="activities?.length > 0">
+    <ion-label>
+      <p>
+        Total Time: {{ totalTime }} minutes - End Time: {{ endTime }}
+      </p>
+    </ion-label>
+  </ion-item>
+
 
   <span *ngIf="activities?.length > 0">
     <ion-fab vertical="bottom" horizontal="end" slot="fixed">

@@ -49,9 +49,10 @@ export class AddPlanPage implements OnInit {
           firebase.firestore().collection("/users/" + this.user.uid + "/followers").get().then((followersSnap) => {
             followersSnap.forEach((follower) => {
               this.notificationService.newNotification(follower.data().uid, "Coach " + this.user.lname + " has added a new practice", this.user.photoUrl, "").then(() => {
-                this.close();
               })
             })
+          }).then(() => {
+            this.close();
           })
         })
     } else {
@@ -66,10 +67,12 @@ export class AddPlanPage implements OnInit {
             firebase.firestore().collection("/users/" + this.user.uid + "/followers").get().then((followersSnap) => {
               followersSnap.forEach((follower) => {
                 this.notificationService.newNotification(follower.data().uid, "Coach " + this.user.lname + " has added a new practice", this.user.photoUrl, "").then(() => {
-                  this.close();
+
                 })
               })
             })
+          }).then(() => {
+            this.close()
           })
         })
     }

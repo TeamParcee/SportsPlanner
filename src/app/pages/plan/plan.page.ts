@@ -45,6 +45,9 @@ export class PlanPage implements OnInit {
   timerInterval;
   nextActivity;
   isHeadCoach;
+  endTime;
+  totalTime;
+
   async ionViewWillEnter() {
     await this.getUser();
     await this.getCoachFromUid(this.user.coach);
@@ -70,7 +73,6 @@ export class PlanPage implements OnInit {
     await this.getUser();
     await this.getCoachFromUid(this.user.coach);
     await this.getActivePlan();
-    await this.getActivitiesInit();
     await this.checkIsHeadCoach();
   }
 
@@ -109,39 +111,40 @@ export class PlanPage implements OnInit {
     this.firebaseService.updateDocument("/plans/" + this.plan.id, { activities: (activitiesCount + 1) })
     this.getActivities();
   }
-  async getActivitiesInit() {
-
-    if (this.plan) {
-      if (!await this.doesPlanExist()) {
-        this.plan = null;
-        this.planService.currentPlan = null;
-        return;
-      }
-      firebase.firestore().collection("/plans/" + this.plan.id + "/activities")
-        .orderBy("order")
-        .get().then((activitySnap) => {
-          let activities = [];
-          this.orderArray = [];
-          let time = moment(this.plan.date).format("LT");
-          let minutes = 0;
-          let count = 0;
-          activitySnap.forEach((activity) => {
-            count = count + 1;
-            let a = activity.data();
-            a.startTime = this.getTimeOfEvent(time, minutes);
-            a.date = moment(this.date).format("MMM DD, YYYY ") + a.startTime;
-            activities.push(a);
-            this.orderArray.push({ order: count, id: a.id });
-            time = a.startTime;
-            minutes = a.duration;
-          })
-          this.activities = activities;
-          this.planService.activities = activities;
-          this.date = this.plan.date;
-        })
-    } else {
-    }
-  }
+  // async getActivitiesInit() {
+  //   if (this.plan) {
+  //     if (!await this.doesPlanExist()) {
+  //       this.plan = null;
+  //       this.planService.currentPlan = null;
+  //       return;
+  //     }
+  //     firebase.firestore().collection("/plans/" + this.plan.id + "/activities")
+  //       .orderBy("order")
+  //       .get().then((activitySnap) => {
+  //         this.totalTime = 0;
+  //         let activities = [];
+  //         this.orderArray = [];
+  //         let time = moment(this.plan.date).format("LT");
+  //         let minutes = 0;
+  //         let count = 0;
+  //         activitySnap.forEach((activity) => {
+  //           count = count + 1;
+  //           let a = activity.data();
+  //           a.startTime = this.getTimeOfEvent(time, minutes);
+  //           a.date = moment(this.date).format("MMM DD, YYYY ") + a.startTime;
+  //           activities.push(a);
+  //           this.orderArray.push({ order: count, id: a.id });
+  //           time = a.startTime;
+  //           minutes = a.duration;
+  //           this.totalTime = this.totalTime + (minutes * 1);
+  //         })
+  //         this.activities = activities;
+  //         this.planService.activities = activities;
+  //         this.date = this.plan.date;
+  //       })
+  //   } else {
+  //   }
+  // }
   async getActivities() {
 
     if (this.plan) {
@@ -153,6 +156,7 @@ export class PlanPage implements OnInit {
       firebase.firestore().collection("/plans/" + this.plan.id + "/activities")
         .orderBy("order")
         .onSnapshot((activitySnap) => {
+          this.totalTime = 0;
           let activities = [];
           this.orderArray = [];
           let time = moment(this.plan.date).format("LT");
@@ -167,10 +171,13 @@ export class PlanPage implements OnInit {
             this.orderArray.push({ order: count, id: a.id });
             time = a.startTime;
             minutes = a.duration;
+            this.totalTime = this.totalTime + (minutes * 1);
+            this.endTime = this.getTimeOfEvent(time, minutes);
           })
           this.activities = activities;
           this.planService.activities = activities;
           this.date = this.plan.date;
+          console.log(this.activities)
         })
 
     } else {

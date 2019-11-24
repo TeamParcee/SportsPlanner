@@ -6,7 +6,6 @@ import { Routes, RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 
 import { DrillsPage } from './drills.page';
-import { HideHeaderDirective } from 'src/app/directives/hide-header.directive';
 import { PublicDrillsComponent } from './public-drills/public-drills.component';
 import { PrivateDrillsComponent } from './private-drills/private-drills.component';
 import { SharedModule } from 'src/app/modules/shared/shared.module';
@@ -26,6 +25,6 @@ const routes: Routes = [
     IonicModule,
     RouterModule.forChild(routes)
   ],
-  declarations: [DrillsPage, HideHeaderDirective, PublicDrillsComponent, PrivateDrillsComponent]
+  declarations: [DrillsPage, PublicDrillsComponent, PrivateDrillsComponent]
 })
 export class DrillsPageModule { }

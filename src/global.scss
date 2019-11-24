@@ -24,11 +24,9 @@
 @import "~@ionic/angular/css/text-alignment.css";
 @import "~@ionic/angular/css/text-transformation.css";
 @import "~@ionic/angular/css/flex-utils.css";
-@import url('https://fonts.googleapis.com/css?family=Sunflower:300&display=swap');
-*{
-    font-family: 'Sunflower', sans-serif;
-
-
+@import url('https://fonts.googleapis.com/css?family=Anton|Roboto&display=swap');
+h1, h2 h3, h4, h5 {
+    // font-family: 'Anton', sans-serif;
 }
 [contenteditable] {
     -webkit-user-select: text;
