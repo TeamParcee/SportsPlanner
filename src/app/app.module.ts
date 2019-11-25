@@ -31,6 +31,9 @@ import { TemplatePage } from './pages/template/template.page';
 import { ViewProfilePage } from './pages/view-profile/view-profile.page';
 import { ViewFollowersPage } from './pages/view-followers/view-followers.page';
 import { SharedModule } from './modules/shared/shared.module';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { library } from '@fortawesome/fontawesome-svg-core';
+import { far } from '@fortawesome/free-regular-svg-icons';
 
 // Your web app's Firebase configuration
 var firebaseConfig = {
@@ -45,6 +48,9 @@ var firebaseConfig = {
 
 firebase.initializeApp(firebaseConfig);
 // Initialize Firebase
+
+
+library.add(far);
 
 @NgModule({
   declarations: [
@@ -80,6 +86,7 @@ firebase.initializeApp(firebaseConfig);
     QuillModule.forRoot(),
     FormsModule,
     ImageCropperModule,
+    FontAwesomeModule,
     ReactiveFormsModule,
     SharedModule,
     AppRoutingModule],

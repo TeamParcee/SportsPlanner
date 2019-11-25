@@ -7,6 +7,12 @@ import { IonicModule } from '@ionic/angular';
 
 import { PlanPage } from './plan.page';
 import { CalendarModule } from 'ion2-calendar';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { library } from '@fortawesome/fontawesome-svg-core';
+import { far } from '@fortawesome/free-regular-svg-icons';
+import { fas } from '@fortawesome/free-solid-svg-icons';
+
+library.add(far, fas);
 
 const routes: Routes = [
   {
@@ -19,6 +25,7 @@ const routes: Routes = [
   imports: [
     CommonModule,
     FormsModule,
+    FontAwesomeModule,
     IonicModule,
     CalendarModule,
     RouterModule.forChild(routes)

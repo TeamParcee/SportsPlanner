@@ -21,22 +21,26 @@ export class TabsPage implements OnInit {
   user;
   sport;
   newCount;
-
+  volleyball;
   async getSport() {
     this.user = await this.userService.getUser();
     firebase.firestore().doc("/users/" + this.user.uid).onSnapshot((user) => {
       firebase.firestore().doc("/users/" + user.data().coach).get().then((userSnap) => {
         let sport = userSnap.data().sport;
         if (sport == "football") {
+          this.volleyball = false;
           this.sport = "american-football";
         }
         if (sport == "volleyball") {
+          this.volleyball = true;
           this.sport = "football";
         }
         if (sport == "basketball") {
+          this.volleyball = false;
           this.sport = "basketball";
         }
         if (sport == "soccer") {
+          this.volleyball = false;
           this.sport = "football";
         }
       })

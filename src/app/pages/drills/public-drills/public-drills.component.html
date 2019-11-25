@@ -8,11 +8,11 @@
 
 <ion-grid no-padding>
   <ion-row>
-    <ion-col no-padding size="12" sizeMd="3" sizeLg="3" *ngFor="let drill of drills">
+    <ion-col  size="12" sizeMd="3" sizeLg="3" *ngFor="let drill of drills">
 
 
       <ion-card *ngIf="showLoading" no-margin>
-        <ion-card-content no-padding>
+        <ion-card-content >
           <ion-skeleton-text style="height: 300px;"></ion-skeleton-text>
         </ion-card-content>
         <ion-card-header>
@@ -31,7 +31,7 @@
       </ion-card>
 
       <ion-card *ngIf="showLoading" no-margin>
-        <ion-card-content no-padding>
+        <ion-card-content>
           <ion-skeleton-text style="height: 300px;"></ion-skeleton-text>
         </ion-card-content>
         <ion-card-header>

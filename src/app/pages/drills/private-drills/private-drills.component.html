@@ -17,7 +17,7 @@
 
 <ion-grid no-padding>
   <ion-row>
-    <ion-col no-padding size="12" sizeMd="3" sizeLg="3" *ngFor="let drill of drills">
+    <ion-col  size="12" sizeMd="3" sizeLg="3" *ngFor="let drill of drills">
       <ion-card *ngIf="showLoading" no-margin>
         <ion-card-content no-padding>
           <ion-skeleton-text style="height: 300px;"></ion-skeleton-text>
@@ -38,7 +38,7 @@
       </ion-card>
 
       <ion-card *ngIf="showLoading" no-margin>
-        <ion-card-content no-padding>
+        <ion-card-content >
           <ion-skeleton-text style="height: 300px;"></ion-skeleton-text>
         </ion-card-content>
         <ion-card-header>
@@ -64,7 +64,7 @@
             <ion-avatar appViewProfile [user]="drill?.coach" slot="start">
               <img [src]="drill.coach.photoUrl">
             </ion-avatar>
-            <ion-label appViewProfile [user]="drill?.coach" text-wrap>
+            <ion-label appViewProfile [user]="drill?.coach" no-wrap>
               {{ drill.name }}
               <p> Coach: {{ drill.coach.fname + " " + drill.coach.lname }} </p>
 
