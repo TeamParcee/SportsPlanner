@@ -35,7 +35,7 @@ export class MessagesPage implements OnInit {
     this.user = await this.userService.getUser();
   }
   async ionViewWillEnter() {
-   await this.getUser();
+    await this.getUser();
     this.recipients = this.messageService.recipients;
     this.getMessageId();
   }
@@ -49,7 +49,6 @@ export class MessagesPage implements OnInit {
     this.helper.openModalPromise(SelectContactPage, null).then(() => {
       this.getMessageId();
       this.recipients = this.messageService.recipients;
-      console.log(this.recipients, this.messageService.recipients);
     })
   }
   removeUser(user) {
@@ -65,12 +64,26 @@ export class MessagesPage implements OnInit {
     }
   }
 
-  sendMessage() {
-    this.messageService.createMessageList(this.messageId, {
+  async createMessageList() {
+    let messageList = {
       created: new Date().toUTCString(),
       recipients: this.recipients,
       lastMessage: this.text,
-    }, this.recipients).then(() => {
+    };
+
+    let recipientMessageList = {
+      created: new Date().toUTCString(),
+      recipients: [this.user],
+      lastMessage: this.text,
+    };
+    return new Promise((resolve) => {
+      this.messageService.createMessageList(this.user, this.messageId, messageList, recipientMessageList).then(() => {
+        return resolve()
+      })
+    })
+  }
+  sendMessage() {
+    this.createMessageList().then(() => {
       this.messageService.sendMesage(this.messageId, {
         created: new Date().toUTCString(),
         new: true,
@@ -92,19 +105,21 @@ export class MessagesPage implements OnInit {
   async getMessages() {
 
     this.messages = [];
-    await firebase.firestore().collection("/users/" + this.user.uid + "/messageLists/"+ this.messageId + "/messages/").onSnapshot((messagesSnap) => {
-      if (messagesSnap.empty) {
-        this.messages = [];
+    await firebase.firestore().collection("/users/" + this.user.uid + "/messageLists/" + this.messageId + "/messages/")
+      .orderBy("created", "desc")
+      .onSnapshot((messagesSnap) => {
+        if (messagesSnap.empty) {
+          this.messages = [];
 
-      } else {
-        let messages = [];
-        messagesSnap.forEach((message) => {
-          messages.push(message.data())
-        })
-        this.messages = messages;
-      }
+        } else {
+          let messages = [];
+          messagesSnap.forEach((message) => {
+            messages.push(message.data())
+          })
+          this.messages = messages;
+        }
 
-    })
+      })
   }
 
 }

@@ -24,14 +24,14 @@ export class SelectContactPage implements OnInit {
   }
 
 
-  
+
   async ionViewWillEnter() {
     await this.getUser();
     await this.getUsers();
-    
+
   }
 
-  async getUser(){
+  async getUser() {
     this.user = await this.userService.getUser();
   }
   close() {
@@ -54,16 +54,15 @@ export class SelectContactPage implements OnInit {
     this.helper.closeModal();
   }
 
-   checkIfUserAlreadySelected(user) {
-    console.log(user.uid == this.user.uid, "match or no", this.user.uid, user.uid);
-    if(user.uid == this.user.uid){
+  checkIfUserAlreadySelected(user) {
+    if (user.uid == this.user.uid) {
       return true;
     }
-     let index = this.messageService.recipients.findIndex(u => u.uid == user.uid);
-     return (index > -1) ? true : false;
+    let index = this.messageService.recipients.findIndex(u => u.uid == user.uid);
+    return (index > -1) ? true : false;
   }
 
-  write(x){
+  write(x) {
     console.log(x)
   }
 }

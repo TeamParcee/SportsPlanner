@@ -18,16 +18,13 @@ export class MessagesService {
 
 
 
-  createMessageList(messageListId, messageList, recipients: []) {
+  createMessageList(user, messageListId, messageList, recipientMessageList) {
     return new Promise(async (resolve) => {
-      let user: any = await this.userService.getUser();
-      this.firebaseService.setDocument("/users/" + user.uid + "/messageLists/" + messageListId, messageList)
-        .then(() => {
-          recipients.forEach((recipient: any) => {
-            this.firebaseService.setDocument("/users/" + recipient.uid + "/messageLists/" + messageListId, messageList)
-          })
-          return resolve()
-        })
+      this.firebaseService.setDocument("/users/" + user.uid + "/messageLists/" + messageListId, messageList);
+      messageList.recipients.forEach((recipient: any) => {
+        this.firebaseService.setDocument("/users/" + recipient.uid + "/messageLists/" + messageListId, recipientMessageList)
+        return resolve()
+      })
     })
   }
 
@@ -92,4 +89,6 @@ export class MessagesService {
     })
     return recipients;
   }
+
+
 }
