@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ViewChildren } from '@angular/core';
 import * as firebase from 'firebase';
 import { ModalController } from '@ionic/angular';
 import { HelperService } from 'src/app/services/helper.service';
@@ -28,8 +28,10 @@ export class MessagesPage implements OnInit {
   messages;
   user;
   ngOnInit() {
+    this.scrollToBottom();
   }
 
+  @ViewChildren('content') private content: any;
 
   async getUser() {
     this.user = await this.userService.getUser();
@@ -38,6 +40,7 @@ export class MessagesPage implements OnInit {
     await this.getUser();
     this.recipients = this.messageService.recipients;
     this.getMessageId();
+    this.scrollToBottom();
   }
   ionViewWillLeave() {
     this.recipients = this.messageService.recipients = [];
@@ -90,6 +93,7 @@ export class MessagesPage implements OnInit {
         text: this.text,
         createdby: this.user.uid,
       }, this.recipients)
+      this.scrollToBottom();
       this.text = "";
     })
   }
@@ -107,7 +111,7 @@ export class MessagesPage implements OnInit {
 
     this.messages = [];
     await firebase.firestore().collection("/users/" + this.user.uid + "/messageLists/" + this.messageId + "/messages/")
-      .orderBy("created", "desc")
+      .orderBy("created")
       .onSnapshot((messagesSnap) => {
         if (messagesSnap.empty) {
           this.messages = [];
@@ -127,5 +131,13 @@ export class MessagesPage implements OnInit {
 
   async getCreater(uid) {
     return await this.userService.getUserFromUid(uid);
+  }
+
+
+   getContent() {
+    return document.querySelector('ion-content');
+  }
+   scrollToBottom() {
+    this.getContent().scrollToBottom(500);
   }
 }

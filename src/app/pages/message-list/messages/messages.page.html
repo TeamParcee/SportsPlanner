@@ -9,7 +9,7 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content padding>
+<ion-content  [scrollEvents]="true" #content padding>
 
   <ion-item>
     <ion-label text-wrap>To:
@@ -24,10 +24,14 @@
 
   <ion-list>
     <ion-item lines="none" *ngFor="let message of messages">
-      <ion-label [style]="(message?.createdb y == user?.uid) ? 'text-align: right' : 'text-align: left'">
-        <p [class]="(message?.createdby == user?.uid) ? 'userMessage': 'otherMessage'" [innerHTML]="message?.text"></p>
+      <ion-label text-left *ngIf="message?.createdby != user?.uid">
+        <p style="border-radius: 20px; padding: 10px" [class]="(message?.createdby == user?.uid) ? 'userMessage': 'otherMessage'" [innerHTML]="message?.text"></p>
+      </ion-label>
+      <ion-label text-right *ngIf="message?.createdby == user?.uid">
+        <p style="border-radius: 20px; padding: 10px" [class]="(message?.createdby == user?.uid) ? 'userMessage': 'otherMessage'" [innerHTML]="message?.text"></p>
       </ion-label>
     </ion-item>
+
   </ion-list>
 
 

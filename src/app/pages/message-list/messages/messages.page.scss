@@ -23,7 +23,7 @@
     // border-radius: 30%;
     // border: 2px solid green;
     position: relative;
-	background: #00aabb;
+	background: #3880ff;
     border-radius: .10em;
     padding: 10px;
     display: inline-block;
@@ -32,10 +32,15 @@
 
 .otherMessage {
     text-align: left;
-    background: gray;
-    padding: 10px;
+    // background: green;
+    // padding: 10px;
     color: white;
-    border-radius: 30%;
-    border: 2px solid gray;
+    // border-radius: 30%;
+    // border: 2px solid green;
+    position: relative;
+	background: green;
+    border-radius: .10em;
+    padding: 10px;
     display: inline-block;
 }
+
