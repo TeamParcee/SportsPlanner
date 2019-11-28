@@ -21,10 +21,12 @@
       <ion-icon name="add"> </ion-icon>
     </ion-button>
   </ion-item>
-  
+
   <ion-list>
-    <ion-item class="speech-bubble" *ngFor="let message of messages">
-      <pre [innerHTML]="message?.text"></pre>
+    <ion-item lines="none" *ngFor="let message of messages">
+      <ion-label [style]="(message?.createdb y == user?.uid) ? 'text-align: right' : 'text-align: left'">
+        <p [class]="(message?.createdby == user?.uid) ? 'userMessage': 'otherMessage'" [innerHTML]="message?.text"></p>
+      </ion-label>
     </ion-item>
   </ion-list>
 

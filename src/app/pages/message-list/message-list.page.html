@@ -14,7 +14,7 @@
 
 <ion-content>
   <ion-list>
-    <ion-item (click)="viewMessages(messageList.recipients)" *ngFor="let messageList of messageLists">
+    <ion-item  (click)="viewMessages(messageList.recipients)" *ngFor="let messageList of messageLists">
       <ion-avatar slot="start">
         <img [src]="messageList.recipients[0]?.photoUrl">
       </ion-avatar>

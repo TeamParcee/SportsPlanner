@@ -88,6 +88,7 @@ export class MessagesPage implements OnInit {
         created: new Date().toUTCString(),
         new: true,
         text: this.text,
+        createdby: this.user.uid,
       }, this.recipients)
       this.text = "";
     })
@@ -113,7 +114,9 @@ export class MessagesPage implements OnInit {
 
         } else {
           let messages = [];
-          messagesSnap.forEach((message) => {
+          messagesSnap.forEach(async (message: any) => {
+            let user = await this.getCreater(message);
+            message.user = user;
             messages.push(message.data())
           })
           this.messages = messages;
@@ -122,4 +125,7 @@ export class MessagesPage implements OnInit {
       })
   }
 
+  async getCreater(uid) {
+    return await this.userService.getUserFromUid(uid);
+  }
 }
