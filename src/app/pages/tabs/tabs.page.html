@@ -13,6 +13,12 @@
       <ion-label>Drill Library</ion-label>
     </ion-tab-button>
 
+    <ion-tab-button tab="messages">
+      <ion-badge *ngIf="messageCount > 0" color="danger">{{ messageCount }}</ion-badge>
+      <ion-icon name="chatboxes"></ion-icon>
+      <ion-label>Messages</ion-label>
+    </ion-tab-button>
+
     <ion-tab-button tab="notifications">
       <ion-badge *ngIf="newCount > 0" color="danger">{{ newCount }}</ion-badge>
       <ion-icon name="notifications"></ion-icon>

@@ -22,6 +22,9 @@ const routes: Routes = [
       {
         path: 'settings',
         loadChildren: '../settings/settings.module#SettingsPageModule'
+      }, {
+        path: 'messages',
+        loadChildren: '../message-list/message-list.module#MessageListPageModule'
       },
       {
         path: 'profile',

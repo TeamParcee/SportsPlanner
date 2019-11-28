@@ -1,0 +1,28 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Messages</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="newMessage()">
+        <ion-icon name="add" slot="icon-only"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    <ion-item (click)="viewMessages(messageList.recipients)" *ngFor="let messageList of messageLists">
+      <ion-avatar slot="start">
+        <img [src]="messageList.recipients[0]?.photoUrl">
+      </ion-avatar>
+      <ion-label no-wrap>
+        <h5>{{ getRecipientName(messageList.recipients) }}</h5>
+        <p> {{ messageList.lastMessage }}</p>
+      </ion-label>
+      <ion-note slot="end"> {{messageList.created | date: 'shortTime' }}</ion-note>
+    </ion-item>
+  </ion-list>
+</ion-content>

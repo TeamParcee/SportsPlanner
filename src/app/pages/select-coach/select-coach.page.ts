@@ -20,7 +20,6 @@ export class SelectCoachPage implements OnInit {
     private helper: HelperService,
     private firebaseService: FirebaseService,
     private coachService: CoachService,
-    private authService: AuthService,
     private navCtrl: NavController,
   ) { }
 

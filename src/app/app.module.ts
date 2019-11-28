@@ -34,6 +34,8 @@ import { SharedModule } from './modules/shared/shared.module';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { far } from '@fortawesome/free-regular-svg-icons';
+import { MessagesPage } from './pages/message-list/messages/messages.page';
+import { SelectContactPage } from './pages/select-contact/select-contact.page';
 
 // Your web app's Firebase configuration
 var firebaseConfig = {
@@ -59,12 +61,14 @@ library.add(far);
     AddPlanPage,
     EditActivityPage,
     PlanOptionsPage,
+    SelectContactPage,
     ViewActivityPage,
     ViewDrillPage,
     ImageCropperPage,
     TemplatePage,
     EditDrillPage,
     ViewProfilePage,
+    MessagesPage,
 
   ],
   entryComponents: [
@@ -72,6 +76,7 @@ library.add(far);
     AddPlanPage,
     EditActivityPage,
     ImageCropperPage,
+    SelectContactPage,
     PlanOptionsPage,
     ViewActivityPage,
     ViewDrillPage,
@@ -79,6 +84,7 @@ library.add(far);
     EditDrillPage,
     ViewProfilePage,
     ViewFollowersPage,
+    MessagesPage
   ],
   imports: [
     BrowserModule,

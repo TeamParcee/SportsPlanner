@@ -35,6 +35,8 @@ const routes: Routes = [
   { path: 'notifications', loadChildren: './pages/notifications/notifications.module#NotificationsPageModule' },  { path: 'search-drills', loadChildren: './pages/search-drills/search-drills.module#SearchDrillsPageModule' },
   { path: 'view-followers', loadChildren: './pages/view-followers/view-followers.module#ViewFollowersPageModule' },
   { path: 'view-profile', loadChildren: './pages/view-profile/view-profile.module#ViewProfilePageModule' },
+  { path: 'message-list', loadChildren: './pages/message-list/message-list.module#MessageListPageModule' },
+  { path: 'select-contact', loadChildren: './pages/select-contact/select-contact.module#SelectContactPageModule' },
 
 
 

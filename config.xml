@@ -47,10 +47,10 @@
     </platform>
     <platform name="ios">
         <edit-config file="*-Info.plist" mode="merge" target="NSCameraUsageDescription">
-            <string>need camera access to take pictures</string>
+            <string>This access is needed to take pictures for your profile picture</string>
         </edit-config>
         <edit-config file="*-Info.plist" mode="merge" target="NSPhotoLibraryUsageDescription">
-            <string>need photo library access to get pictures from there</string>
+            <string>This access is needed to get pictures from your library for your profile picture</string>
         </edit-config>
         <edit-config file="*-Info.plist" mode="merge" target="UIBackgroundModes">
             <array>
