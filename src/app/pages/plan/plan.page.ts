@@ -109,7 +109,7 @@ export class PlanPage implements OnInit {
     let plan: any = await this.firebaseService.getDocument("/plans/" + this.plan.id);
     let activitiesCount = plan.activities;
     this.firebaseService.updateDocument("/plans/" + this.plan.id, { activities: (activitiesCount + 1) })
-    this.getActivities();
+    // this.getActivities();
   }
   // async getActivitiesInit() {
   //   if (this.plan) {

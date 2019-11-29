@@ -9,10 +9,10 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content  [scrollEvents]="true" #content padding>
+<ion-content [scrollEvents]="true" #content class="ion-padding">
 
   <ion-item>
-    <ion-label text-wrap>To:
+    <ion-label class="ion-text-wrap">To:
       <span class="recipient-bubble" margin-left
         *ngFor="let recipient of recipients">{{  recipient.fname + " " + recipient.lname }} <ion-icon
           (click)="removeUser(recipient)" style="vertical-align:middle" name="close"></ion-icon></span>
@@ -23,12 +23,13 @@
   </ion-item>
 
   <ion-list>
-    <ion-item lines="none" *ngFor="let message of messages">
-      <ion-label text-left *ngIf="message?.createdby != user?.uid">
-        <p style="border-radius: 20px; padding: 10px" [class]="(message?.createdby == user?.uid) ? 'userMessage': 'otherMessage'" [innerHTML]="message?.text"></p>
-      </ion-label>
-      <ion-label text-right *ngIf="message?.createdby == user?.uid">
-        <p style="border-radius: 20px; padding: 10px" [class]="(message?.createdby == user?.uid) ? 'userMessage': 'otherMessage'" [innerHTML]="message?.text"></p>
+    <ion-item class="ion-text-left" lines="none" *ngFor="let message of messages">
+      <ion-avatar [slot]="(message?.createdby == user?.uid)  ? 'end' : 'start'">
+        <img [src]="(message?.createdby == user?.uid) ? user?.photoUrl : message?.user?.photoUrl">
+      </ion-avatar>
+      <ion-label [class]="(message?.createdby == user?.uid) ? 'userMessageList': 'otherMessageList'">
+        <span [class]="(message?.createdby == user?.uid) ? 'userMessageSpan': 'otherMessageSpan'"
+          [innerHTML]="message?.text"></span>
       </ion-label>
     </ion-item>
 

@@ -6,6 +6,7 @@ import { UserService } from 'src/app/services/user.service';
 import { FirebaseService } from 'src/app/services/firebase.service';
 import { SelectContactPage } from 'src/app/pages/select-contact/select-contact.page';
 import { MessagesService } from 'src/app/services/messages.service';
+import { Content } from '@angular/compiler/src/render3/r3_ast';
 
 @Component({
   selector: 'app-messages',
@@ -27,11 +28,12 @@ export class MessagesPage implements OnInit {
   // messagesRef = "/users/" + this.firebaseService.user.uid + "/messageLists/";
   messages;
   user;
+
   ngOnInit() {
-    this.scrollToBottom();
   }
 
-  @ViewChildren('content') private content: any;
+  @ViewChildren('content') content: any;
+
 
   async getUser() {
     this.user = await this.userService.getUser();
@@ -40,7 +42,6 @@ export class MessagesPage implements OnInit {
     await this.getUser();
     this.recipients = this.messageService.recipients;
     this.getMessageId();
-    this.scrollToBottom();
   }
   ionViewWillLeave() {
     this.recipients = this.messageService.recipients = [];
@@ -89,11 +90,11 @@ export class MessagesPage implements OnInit {
     this.createMessageList().then(() => {
       this.messageService.sendMesage(this.messageId, {
         created: new Date().toUTCString(),
+        createdRaw: new Date(),
         new: true,
         text: this.text,
         createdby: this.user.uid,
       }, this.recipients)
-      this.scrollToBottom();
       this.text = "";
     })
   }
@@ -113,31 +114,28 @@ export class MessagesPage implements OnInit {
     await firebase.firestore().collection("/users/" + this.user.uid + "/messageLists/" + this.messageId + "/messages/")
       .orderBy("created")
       .onSnapshot((messagesSnap) => {
-        if (messagesSnap.empty) {
-          this.messages = [];
 
-        } else {
-          let messages = [];
-          messagesSnap.forEach(async (message: any) => {
-            let user = await this.getCreater(message);
-            message.user = user;
-            messages.push(message.data())
-          })
-          this.messages = messages;
-        }
-
+        let messages = [];
+        messagesSnap.forEach(async (message: any) => {
+          let user = await this.getCreater(message.data().createdby);
+          let m = {...message.data()}
+          m.user = user;
+          messages.push(m)
+        })
+        this.messages = messages;
       })
   }
 
   async getCreater(uid) {
+    console.log(uid);
     return await this.userService.getUserFromUid(uid);
   }
 
 
-   getContent() {
-    return document.querySelector('ion-content');
+  getContent() {
+    let x = document.querySelector('ion-content');
+    return x;
   }
-   scrollToBottom() {
-    this.getContent().scrollToBottom(500);
-  }
+
+
 }

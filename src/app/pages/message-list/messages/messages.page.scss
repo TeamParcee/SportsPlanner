@@ -15,32 +15,33 @@
 }
 
 
-.userMessage {
-    text-align: right;
-    // background: green;
-    // padding: 10px;
-    color: white;
-    // border-radius: 30%;
-    // border: 2px solid green;
-    position: relative;
-	background: #3880ff;
-    border-radius: .10em;
+.userMessageSpan {
+
+
     padding: 10px;
     display: inline-block;
 }
 
 
-.otherMessage {
-    text-align: left;
-    // background: green;
-    // padding: 10px;
-    color: white;
-    // border-radius: 30%;
-    // border: 2px solid green;
-    position: relative;
-	background: green;
-    border-radius: .10em;
+.otherMessageSpan {
+
     padding: 10px;
     display: inline-block;
+}
+
+
+.userMessageList{
+    text-align: right;
+   
+    position: relative;
+
+}
+
+
+.otherMessageList {
+    text-align: left;
+    
+    position: relative;
+
 }
 

@@ -89,6 +89,4 @@ export class MessagesService {
     })
     return recipients;
   }
-
-
 }
