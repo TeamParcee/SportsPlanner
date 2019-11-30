@@ -19,9 +19,9 @@
   <ion-list>
     <ion-item appViewProfile [user]="follower" slot="start" *ngFor="let follower of followers">
       <ion-avatar slot="start">
-        <img [src]="follower.photoUrl">
+        <img [src]="follower?.photoUrl">
       </ion-avatar>
-      <ion-label> {{ follower.fname + " " + follower.lname }}</ion-label>
+      <ion-label> {{ follower?.fname + " " + follower?.lname }}</ion-label>
     </ion-item>
   </ion-list>
 </ion-content>

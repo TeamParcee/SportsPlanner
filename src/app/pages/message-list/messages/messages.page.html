@@ -25,7 +25,7 @@
   <ion-list>
     <ion-item class="ion-text-left" lines="none" *ngFor="let message of messages">
       <ion-avatar [slot]="(message?.createdby == user?.uid)  ? 'end' : 'start'">
-        <img [src]="(message?.createdby == user?.uid) ? user?.photoUrl : message?.user?.photoUrl">
+        <img [src]="getMessageSender(message?.createdby)?.photoUrl">
       </ion-avatar>
       <ion-label [class]="(message?.createdby == user?.uid) ? 'userMessageList': 'otherMessageList'">
         <span [class]="(message?.createdby == user?.uid) ? 'userMessageSpan': 'otherMessageSpan'"

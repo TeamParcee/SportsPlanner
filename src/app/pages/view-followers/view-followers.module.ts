@@ -10,7 +10,7 @@ import { SharedModule } from 'src/app/modules/shared/shared.module';
 
 const routes: Routes = [
   {
-    path: '',
+    path: ':id',
     component: ViewFollowersPage
   }
 ];

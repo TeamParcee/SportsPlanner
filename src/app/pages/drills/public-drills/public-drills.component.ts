@@ -56,6 +56,10 @@ export class PublicDrillsComponent implements OnInit {
     this.drills = await this.drillService.getDrillsPublic(this.user);
     if (this.drills.length == 0) {
       this.noDrills = false;
+      console.log(this.drills, this.drills.length)
+      console.log("no drills");
+    } else {
+      console.log(this.drills.length, "dsafsafasdfsa")
     }
   }
 

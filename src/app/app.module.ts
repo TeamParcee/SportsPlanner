@@ -67,7 +67,6 @@ library.add(far);
     ImageCropperPage,
     TemplatePage,
     EditDrillPage,
-    ViewProfilePage,
     MessagesPage,
 
   ],
@@ -82,8 +81,6 @@ library.add(far);
     ViewDrillPage,
     TemplatePage,
     EditDrillPage,
-    ViewProfilePage,
-    ViewFollowersPage,
     MessagesPage
   ],
   imports: [

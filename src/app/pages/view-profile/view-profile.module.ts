@@ -9,7 +9,7 @@ import { ViewProfilePage } from './view-profile.page';
 
 const routes: Routes = [
   {
-    path: '',
+    path: ':id',
     component: ViewProfilePage
   }
 ];
@@ -23,4 +23,4 @@ const routes: Routes = [
   ],
   declarations: [ViewProfilePage]
 })
-export class ViewProfilePageModule {}
+export class ViewProfilePageModule { }

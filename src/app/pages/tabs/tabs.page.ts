@@ -16,12 +16,15 @@ export class TabsPage implements OnInit {
   ngOnInit() {
     this.getSport();
     this.getNotifications();
+    this.getNewMessages()
   }
 
   user;
   sport;
   newCount;
   volleyball;
+  newMessages;
+
   async getSport() {
     this.user = await this.userService.getUser();
     firebase.firestore().doc("/users/" + this.user.uid).onSnapshot((user) => {
@@ -48,11 +51,22 @@ export class TabsPage implements OnInit {
   }
 
   async getNotifications() {
-    let user:any = await this.userService.getUser();
+    let user: any = await this.userService.getUser();
     firebase.firestore().collection("/users/" + user.uid + "/notifications")
       .where("newItem", "==", true)
       .onSnapshot((notificationsSnap) => {
         this.newCount = notificationsSnap.size;
       })
   }
+
+  async getNewMessages() {
+    let user: any = await this.userService.getUser();
+    firebase.firestore().collection("/users/" + user.uid + "/messageLists")
+      .where("new", "==", true)
+      .onSnapshot((messageListsSnap) => {
+        this.newMessages = messageListsSnap.size;
+        console.log(this.newMessages)
+      })
+  }
+
 }

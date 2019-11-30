@@ -4,6 +4,7 @@ import * as firebase from 'firebase';
 import { HelperService } from '../../services/helper.service';
 import { MessagesService } from 'src/app/services/messages.service';
 import { MessagesPage } from './messages/messages.page';
+import { FirebaseService } from 'src/app/services/firebase.service';
 
 
 @Component({
@@ -17,6 +18,7 @@ export class MessageListPage implements OnInit {
     private userService: UserService,
     private helper: HelperService,
     private messagesService: MessagesService,
+    private firebaseService: FirebaseService,
   ) { }
 
   ngOnInit() {
@@ -24,6 +26,7 @@ export class MessageListPage implements OnInit {
 
   user;
   messageLists;
+  newMessages;
 
   async ionViewWillEnter() {
     await this.getUser();
@@ -36,7 +39,7 @@ export class MessageListPage implements OnInit {
     firebase.firestore().collection("/users/" + this.user.uid + "/messageLists").onSnapshot((messageListsSnap) => {
       let messageLists = [];
       messageListsSnap.forEach((messageList) => {
-        let recipientsUids: any = this.messagesService.getRecipientsUids(messageList.data().recipients);  
+        let recipientsUids: any = this.messagesService.getRecipientsUids(messageList.data().recipients);
         let recipients = [];
         recipientsUids.forEach(async (recipient) => {
           let user = await this.getUserFromUid(recipient);
@@ -50,7 +53,8 @@ export class MessageListPage implements OnInit {
       this.messageLists = messageLists;
     })
   }
-  viewMessages(recipients) {
+  viewMessages(recipients, messageList) {
+    this.firebaseService.updateDocument("users/" + this.user.uid + "/messageLists/" + messageList.id, { new: false })
     this.helper.openModal(MessagesPage, null);
     this.messagesService.recipients = [...recipients];
   }
@@ -68,8 +72,9 @@ export class MessageListPage implements OnInit {
     messageList.forEach((x: any) => {
       names.push(x.fname + " " + x.lname);
     })
-   
+
     return names.sort().toString().replace(",", " & ");
 
   }
+
 }

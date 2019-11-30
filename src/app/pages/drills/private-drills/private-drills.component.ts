@@ -32,12 +32,11 @@ export class PrivateDrillsComponent implements OnInit {
     this.loadingTimeout();
     await this.getUser();
     await this.checkIsHeadCoach();
-    this.getDrills();
+    await this.getDrills();
   }
 
 
   async ionViewWillEnter() {
-
 
   }
 
@@ -53,9 +52,13 @@ export class PrivateDrillsComponent implements OnInit {
   }
 
   async getDrills() {
-    this.drills = await this.drillService.getPrivateDrills(this.user);
+    this.drills =  await this.drillService.getPrivateDrills(this.user);
+
     if (this.drills.length == 0) {
+      this.noDrills = true;
+    } else {
       this.noDrills = false;
+      console.log("WTF", this.drills)
     }
   }
 
@@ -63,7 +66,6 @@ export class PrivateDrillsComponent implements OnInit {
   checkIsHeadCoach() {
     if (this.user.coach == this.user.uid) {
       this.isHeadCoach = true;
-      console.log(this.isHeadCoach)
     }
   }
 

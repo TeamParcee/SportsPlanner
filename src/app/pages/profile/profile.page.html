@@ -90,8 +90,8 @@
               color="success" slot="end">save
             </ion-note>
           </ion-item>
-          <ion-item detail routerLink="/view-followers">
-            <ion-label>Followers</ion-label>
+          <ion-item detail [routerLink]="['/view-followers', user.uid]">
+            <ion-label>Coach's Followers</ion-label>
             {{ followers }}
           </ion-item>
         </ion-list>

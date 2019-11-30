@@ -1,13 +1,10 @@
 <ion-content color="light">
 
-  <app-swipe-down-close backPageTitle="Ddsafsf"></app-swipe-down-close>
 
   <ion-header>
     <ion-toolbar>
       <ion-buttons slot="start">
-        <ion-button (click)="close()">
-          Close
-        </ion-button>
+        <ion-back-button defaultHref="tabs/profile"></ion-back-button>
       </ion-buttons>
       <ion-title>View Profile</ion-title>
 
@@ -51,8 +48,8 @@
       <ion-label position="">Sport</ion-label>
       {{ coach?.sport }}
     </ion-item>
-    <ion-item detail (click)="viewFollowers()">
-      <ion-label>Followers</ion-label>
+    <ion-item detail [routerLink]="['/view-followers', user.uid]">
+      <ion-label>Coches Followers</ion-label>
       {{ followers }}
     </ion-item>
   </ion-list>

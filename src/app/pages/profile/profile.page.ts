@@ -118,8 +118,10 @@ export class ProfilePage implements OnInit {
 
 
   getFollowers() {
-    firebase.firestore().collection("/users/" + this.user.coach + "/followers/").onSnapshot((followersSnap) => {
-      this.followers = followersSnap.size;
-    })
+    firebase.firestore().collection("/users/")
+      .where("coach", "==", this.user.coach)
+      .onSnapshot((followersSnap) => {
+        this.followers = followersSnap.size;
+      })
   }
 }

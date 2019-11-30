@@ -25,6 +25,7 @@ export class MessagesPage implements OnInit {
   recipients;
   text;
   messageId;
+  users = [];
   // messagesRef = "/users/" + this.firebaseService.user.uid + "/messageLists/";
   messages;
   user;
@@ -70,15 +71,19 @@ export class MessagesPage implements OnInit {
 
   async createMessageList() {
     let messageList = {
+      id: this.messageId,
       created: new Date().toUTCString(),
       recipients: this.recipients,
       lastMessage: this.text,
+
     };
 
     let recipientMessageList = {
+      id: this.messageId,
       created: new Date().toUTCString(),
       recipients: [this.user],
       lastMessage: this.text,
+      new: true,
     };
     return new Promise((resolve) => {
       this.messageService.createMessageList(this.user, this.messageId, messageList, recipientMessageList).then(() => {
@@ -104,6 +109,7 @@ export class MessagesPage implements OnInit {
     this.messageService.getMessageId(this.messageService.getRecipientsUids(this.recipients)).then((id) => {
       this.messageId = id;
       this.getMessages();
+      this.getChatUsers();
     })
 
   }
@@ -112,14 +118,14 @@ export class MessagesPage implements OnInit {
 
     this.messages = [];
     await firebase.firestore().collection("/users/" + this.user.uid + "/messageLists/" + this.messageId + "/messages/")
-      .orderBy("created")
+      .orderBy("createdRaw")
       .onSnapshot((messagesSnap) => {
 
         let messages = [];
         messagesSnap.forEach(async (message: any) => {
-          let user = await this.getCreater(message.data().createdby);
-          let m = {...message.data()}
-          m.user = user;
+          // let user = await this.getCreater(message.data().createdby);
+          let m = { ...message.data() }
+          // m.user = user;
           messages.push(m)
         })
         this.messages = messages;
@@ -127,7 +133,6 @@ export class MessagesPage implements OnInit {
   }
 
   async getCreater(uid) {
-    console.log(uid);
     return await this.userService.getUserFromUid(uid);
   }
 
@@ -137,5 +142,22 @@ export class MessagesPage implements OnInit {
     return x;
   }
 
+  getChatUsers() {
+    firebase.firestore().doc("/users/" + this.user.uid + "/messageLists/" + this.messageId)
+      .get().then((messageListSnap) => {
+        if (messageListSnap.exists) {
+          let recipients = [...messageListSnap.data().recipients];
+          recipients.push(this.user);
+          recipients.forEach(async (recipient) => {
+            let user = await this.userService.getUserFromUid(recipient.uid);
+            this.users.push(user)
+          })
+        }
+      })
+  }
 
+  getMessageSender(uid) {
+    let index = this.users.findIndex(u => u.uid == uid);
+    return this.users[index]
+  }
 }

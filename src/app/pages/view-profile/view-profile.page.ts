@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { HelperService } from 'src/app/services/helper.service';
 import { UserService } from 'src/app/services/user.service';
-import { NavController } from '@ionic/angular';
 import { ViewFollowersPage } from '../view-followers/view-followers.page';
 import * as firebase from 'firebase';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-view-profile',
@@ -15,6 +15,7 @@ export class ViewProfilePage implements OnInit {
   constructor(
     private helper: HelperService,
     private userService: UserService,
+    private route: ActivatedRoute,
   ) { }
 
 
@@ -27,9 +28,17 @@ export class ViewProfilePage implements OnInit {
   }
 
 
+
+  async getUser() {
+    this.route.paramMap.subscribe(async (map) => {
+      let id = map.get('id');
+      this.user = await this.userService.getUserFromUid(id);
+      this.getCoach();
+      this.getFollowers()
+    })
+  }
   async ionViewWillEnter() {
-    await this.getCoach();
-    await this.getFollowers();
+    this.getUser()
   }
 
   close() {
@@ -42,10 +51,11 @@ export class ViewProfilePage implements OnInit {
   viewFollowers() {
     this.helper.openModal(ViewFollowersPage, { showClose: true })
   }
-
   getFollowers() {
-    firebase.firestore().collection("/users/" + this.user.coach + "/followers/").onSnapshot((followersSnap) => {
-      this.followers = followersSnap.size;
-    })
+    firebase.firestore().collection("/users/")
+      .where("coach", "==", this.user.coach)
+      .onSnapshot((followersSnap) => {
+        this.followers = followersSnap.size;
+      })
   }
 }

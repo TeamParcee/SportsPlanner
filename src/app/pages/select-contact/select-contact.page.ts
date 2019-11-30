@@ -20,6 +20,9 @@ export class SelectContactPage implements OnInit {
 
   users;
   user;
+  recipients;
+  noOtherUsers = false;
+
   ngOnInit() {
   }
 
@@ -28,6 +31,8 @@ export class SelectContactPage implements OnInit {
   async ionViewWillEnter() {
     await this.getUser();
     await this.getUsers();
+    this.recipients = this.messageService.recipients;
+    await console.log(this.users.length, this.recipients.length)
 
   }
 
@@ -37,16 +42,26 @@ export class SelectContactPage implements OnInit {
   close() {
     this.helper.closeModal()
   }
-  getUsers() {
-    firebase.firestore().collection("users").onSnapshot((userSnap) => {
-      let users = [];
-      userSnap.forEach((user) => {
-        if (!this.checkIfUserAlreadySelected(user.data())) {
-          users.push(user.data())
-        }
-      })
-      this.users = users;
+  async getUsers() {
+
+    return new Promise((resolve) => {
+      firebase.firestore().collection("users")
+        .where("coach", "==", this.user.coach)
+        .onSnapshot((userSnap) => {
+          let users = [];
+          userSnap.forEach((user) => {
+            if (!this.checkIfUserAlreadySelected(user.data())) {
+              users.push(user.data())
+            }
+          })
+          this.users = users;
+          if (this.users == 0) [
+            this.noOtherUsers = true,
+          ]
+          return resolve()
+        })
     })
+
   }
 
   selectContact(user) {
@@ -62,7 +77,5 @@ export class SelectContactPage implements OnInit {
     return (index > -1) ? true : false;
   }
 
-  write(x) {
-    console.log(x)
-  }
+
 }
