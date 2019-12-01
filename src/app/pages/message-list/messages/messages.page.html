@@ -28,7 +28,8 @@
         <img [src]="getMessageSender(message?.createdby)?.photoUrl">
       </ion-avatar>
       <ion-label [class]="(message?.createdby == user?.uid) ? 'userMessageList': 'otherMessageList'">
-        <span [class]="(message?.createdby == user?.uid) ? 'userMessageSpan': 'otherMessageSpan'"
+        <span style="white-space: pre-wrap;"
+          [class]="(message?.createdby == user?.uid) ? 'userMessageSpan': 'otherMessageSpan'"
           [innerHTML]="message?.text"></span>
       </ion-label>
     </ion-item>
