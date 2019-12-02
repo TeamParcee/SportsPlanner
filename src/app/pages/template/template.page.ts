@@ -4,6 +4,7 @@ import * as firebase from 'firebase';
 import { UserService } from 'src/app/services/user.service';
 import { ViewActivityPage } from '../view-activity/view-activity.page';
 import { FirebaseService } from 'src/app/services/firebase.service';
+import { getNsPrefix } from '@angular/compiler';
 
 @Component({
   selector: 'app-template',
@@ -28,9 +29,15 @@ export class TemplatePage implements OnInit {
   orderArray;
   activities;
   user
+  refActivities;
+  refPlan;
+  isAdmin;
+  sportsPlannerTemplates;
 
   async ionViewWillEnter() {
+
     await this.getUser();
+    await this.getRef();
     await this.getActivities();
   }
 
@@ -39,22 +46,36 @@ export class TemplatePage implements OnInit {
     this.user = await this.userService.getUser()
   }
 
+  getRef() {
+    return new Promise((resolve) => {
+      if (this.sportsPlannerTemplates) {
+        this.refActivities = "/templates/" + this.plan.id + "/activities";
+        this.refPlan = "/templates/";
+        return resolve();
+      } else {
+        this.refActivities = "/users/" + this.user.uid + "/templates/" + this.plan.id + "/activities";
+        this.refPlan = "/users/" + this.user.uid + "/templates/";
+        return resolve();
+      }
+     
+    })
+  }
   getActivities() {
     if (this.plan) {
-      firebase.firestore().collection("/users/" + this.user.uid + "/templates/" + this.plan.id + "/activities")
+      firebase.firestore().collection(this.refActivities)
         .orderBy("order")
         .onSnapshot((activitySnap) => {
           let activities = [];
           this.orderArray = [];
           let count = 0;
           activitySnap.forEach((activity) => {
-            console.log(activity.data().order);
             count = count + 1;
             let a = activity.data();
             activities.push(a);
             this.orderArray.push({ order: count, id: a.id });
           })
           this.activities = activities;
+          console.log(this.refActivities);
         })
     }
   }
@@ -78,13 +99,14 @@ export class TemplatePage implements OnInit {
   updateOrder() {
 
     this.orderArray.forEach((activity) => {
-      firebase.firestore().doc("/users/" + this.user.uid + "/templates/" + this.plan.id + "/activities/" + activity.id).update({ order: activity.order })
+      firebase.firestore().doc(this.refActivities +  "/" + activity.id).update({ order: activity.order })
     })
     this.getActivities();
   }
 
   viewActivity(activity) {
-    this.helper.openModalPromise(ViewActivityPage, { activity: activity, isTemplate: true })
+    let type = (!this.sportsPlannerTemplates) ? "userTemplate" : "adminTemplate"
+    this.helper.openModalPromise(ViewActivityPage, { activity: activity, activityType: type})
   }
 
   async createActivity() {
@@ -98,11 +120,10 @@ export class TemplatePage implements OnInit {
       planId: this.plan.id,
 
     };
-    console.log(activity.order)
-    this.firebaseService.addDocument("/users/" + this.user.uid + "/templates/" + this.plan.id + "/activities" + activity.id, activity);
-    let plan: any = await this.firebaseService.getDocument("/users/" + this.user.uid + "/templates/" + this.plan.id);
+    this.firebaseService.addDocument(this.refActivities + activity.id, activity);
+    let plan: any = await this.firebaseService.getDocument(this.refPlan + this.plan.id);
     let activitiesCount = plan.activities;
-    this.firebaseService.updateDocument("/users/" + this.user.uid + "/templates/" + this.plan.id, { activities: (activitiesCount + 1) })
+    this.firebaseService.updateDocument(this.refPlan + this.plan.id, { activities: (activitiesCount + 1) })
     this.getActivities();
   }
 }

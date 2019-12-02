@@ -32,11 +32,15 @@ const routes: Routes = [
   { path: 'view-templates', loadChildren: './pages/view-templates/view-templates.module#ViewTemplatesPageModule' },
   { path: 'templates', loadChildren: './pages/templates/templates.module#TemplatesPageModule' },
   { path: 'template', loadChildren: './pages/template/template.module#TemplatePageModule' },
-  { path: 'notifications', loadChildren: './pages/notifications/notifications.module#NotificationsPageModule' },  { path: 'search-drills', loadChildren: './pages/search-drills/search-drills.module#SearchDrillsPageModule' },
+  { path: 'notifications', loadChildren: './pages/notifications/notifications.module#NotificationsPageModule' },
+  { path: 'search-drills', loadChildren: './pages/search-drills/search-drills.module#SearchDrillsPageModule' },
   { path: 'view-followers', loadChildren: './pages/view-followers/view-followers.module#ViewFollowersPageModule' },
   { path: 'view-profile', loadChildren: './pages/view-profile/view-profile.module#ViewProfilePageModule' },
   { path: 'message-list', loadChildren: './pages/message-list/message-list.module#MessageListPageModule' },
   { path: 'select-contact', loadChildren: './pages/select-contact/select-contact.module#SelectContactPageModule' },
+  { path: 'admin', loadChildren: './pages/admin/admin.module#AdminPageModule' },  { path: 'new-admin-template', loadChildren: './pages/new-admin-template/new-admin-template.module#NewAdminTemplatePageModule' },
+  { path: 'sports-planner-templates', loadChildren: './pages/sports-planner-templates/sports-planner-templates.module#SportsPlannerTemplatesPageModule' },
+
 
 
 

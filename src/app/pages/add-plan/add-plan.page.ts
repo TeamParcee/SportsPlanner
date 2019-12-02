@@ -29,6 +29,7 @@ export class AddPlanPage implements OnInit {
   startTime;
   user;
   templates;
+  sptemplates;
   template;
 
   async ionViewWillEnter() {
@@ -74,6 +75,22 @@ export class AddPlanPage implements OnInit {
           }).then(() => {
             this.close()
           })
+
+          firebase.firestore().collection("/templates/" + this.template + "/activities").get().then((activitiesSnap) => {
+            this.firebaseService.updateDocument("/plans/" + id, { activities: activitiesSnap.size });
+            activitiesSnap.forEach((activity) => {
+              this.firebaseService.addDocument("/plans/" + id + "/activities", { ...activity.data() })
+            })
+            firebase.firestore().collection("/users/" + this.user.uid + "/followers").get().then((followersSnap) => {
+              followersSnap.forEach((follower) => {
+                this.notificationService.newNotification(follower.data().uid, "Coach " + this.user.lname + " has added a new practice", this.user.photoUrl, "").then(() => {
+
+                })
+              })
+            })
+          }).then(() => {
+            this.close()
+          })
         })
     }
   }
@@ -86,7 +103,20 @@ export class AddPlanPage implements OnInit {
       })
       this.templates = templates;
     })
+
+    firebase.firestore().collection("/templates/")
+      // .where("sport", "==", this.user.sport)
+      .get().then((templatesSnap) => {
+        let templates = [];
+        templatesSnap.forEach((template) => {
+          templates.push(template.data())
+        })
+        this.sptemplates = templates;
+        console.log(this.user.sport, this.sptemplates,"xxvv")
+      })
   }
+
+
   close() {
     this.helper.closeModal();
   }

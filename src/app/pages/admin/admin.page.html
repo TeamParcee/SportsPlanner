@@ -1,0 +1,18 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>admin</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list-header>Practice Plan Templates</ion-list-header>
+  <ion-button routerLink="/new-admin-template">New Admin Template</ion-button>
+  <ion-list>
+    <ion-item *ngFor="let template of templates">
+      <ion-label>
+        {{ template.name }}
+        <p>Duration: {{ template.duration }}</p>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+</ion-content>

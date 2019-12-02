@@ -1,6 +1,10 @@
 <ion-content>
   <ion-list padding>
-    <ion-item *ngIf="plan" style="margin-bottom: 10px" (click)="createTemplate()">Save this practice as a template</ion-item>
-    <ion-item (click)="viewTemplates()">View saved templates</ion-item>
+    <ion-item *ngIf="plan" style="margin-bottom: 10px" (click)="createTemplate()">Save this practice as a template
+    </ion-item>
+    <ion-item *ngIf="plan && this.user?.admin" style="margin-bottom: 10px" (click)="createAdminTemplate()">Save this practice as a admin template
+    </ion-item>
+    <ion-item style="margin-bottom: 10px" (click)="viewTemplates()">View saved templates</ion-item>
+    <ion-item (click)="viewSportsPlannerTemplates()">View Sports Planner templates</ion-item>
   </ion-list>
 </ion-content>

@@ -1,0 +1,46 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/admin"></ion-back-button>
+    </ion-buttons>
+    <ion-title>new-admin-template</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-list>
+    <ion-item>
+      <ion-label position="floating">Template Name</ion-label>
+      <ion-input [(ngModel)]="name"></ion-input>
+    </ion-item>
+    <ion-text color="primary">Template Sport</ion-text>
+    <ion-item>
+      <ion-select name="sport" [(ngModel)]="sport">
+        <ion-select-option value="football">Football</ion-select-option>
+        <ion-select-option value="volleyball">Volleyball</ion-select-option>
+        <ion-select-option value="basketball">Basketball</ion-select-option>
+        <ion-select-option value="soccer">Soccer</ion-select-option>
+      </ion-select>
+    </ion-item>
+  </ion-list>
+
+  <ion-list>
+    <ion-item *ngFor="let actvity of activities">
+      <ion-label (click)="viewActivity(activity)">
+        {{ activity.name }}
+        <p> {{ activity.duration }} minutes</p>
+      </ion-label>
+    </ion-item>
+    <ion-button *ngIf="plan && isHeadCoach" (click)="createActivity()" fill="clear">New Activity</ion-button>
+    <ion-item *ngIf="activities?.length > 0">
+      <ion-label>
+        <p>
+          Total Time: {{ totalTime }} minutes - End Time: {{ endTime }}
+        </p>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+
+
+</ion-content>

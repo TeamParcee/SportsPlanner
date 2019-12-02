@@ -61,8 +61,48 @@ export class PlanOptionsPage implements OnInit {
     })
   }
 
+  createAdminTemplate() {
+    this.helper.closePopover();
+    let alertInput: AlertInput[] = [{
+      name: "name",
+      type: "text",
+      placeholder: "Name",
+    },{
+      name: "sport",
+      type: "text",
+      placeholder: "Sport"
+    }]
+    this.helper.inputAlert("Admin Template Name", "Please enter a name for this admin template", alertInput).then((result: any) => {
+
+      let planName = result.name;
+      let planSport = result.sport;
+      let plan = { ...this.planService.currentPlan };
+      let originalPlanId = plan.id;
+      plan.name = planName;
+      plan.sport = planSport;
+      this.firebaseService.addDocument("templates", plan).then((id) => {
+
+        firebase.firestore().doc("plans/" + originalPlanId).get().then((planSnap) => {
+          planSnap.ref.collection("activities").get().then((activitesSnap) => {
+            this.firebaseService.updateDocument("/templates/" + id, { activities: activitesSnap.size })
+            activitesSnap.forEach((activity) => {
+              let a: any = { ...activity.data() };
+              a.planId = id;
+              this.firebaseService.addDocument("/templates/" + id + "/activities", a)
+            })
+          })
+        })
+      })
+    })
+  }
+
   viewTemplates() {
     this.helper.closePopover();
     this.navCtrl.navigateForward("/view-templates")
+  }
+
+  viewSportsPlannerTemplates() {
+    this.helper.closePopover();
+    this.navCtrl.navigateForward("/sports-planner-templates")
   }
 }

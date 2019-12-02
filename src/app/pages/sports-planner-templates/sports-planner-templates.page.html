@@ -1,0 +1,27 @@
+<ion-header>
+    <ion-toolbar>
+      <ion-buttons slot="start">
+        <ion-back-button defaultHref="/tabs/plan"></ion-back-button>
+      </ion-buttons>
+      <ion-title> SP Templates</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  
+  <ion-content>
+    <ion-text *ngIf="templates?.length == 0" text-center>
+      <h5>No Templates Created</h5>
+    </ion-text>
+    <ion-list>
+      <ion-item *ngFor="let template of templates">
+        <ion-label (click)="viewTemplate(template)">
+          {{ template.name }}
+          <p>Activities: {{ template.activities }}</p>
+        </ion-label>
+        <ion-buttons slot="end">
+          <ion-button *ngIf="this.user?.admin" (click)="delete(template)" color="danger" fill="clear">
+            delete
+          </ion-button>
+        </ion-buttons>
+      </ion-item>
+    </ion-list>
+  </ion-content>

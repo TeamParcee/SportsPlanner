@@ -2,7 +2,7 @@
   <ion-toolbar>
     <ion-buttons slot="start">
       <ion-button (click)="close()">
-        <ion-icon slot="icon-only" name="close"></ion-icon>
+       Close
       </ion-button>
     </ion-buttons>
     <ion-title>Add Practice</ion-title>
@@ -27,6 +27,8 @@
       <ion-select text-wrap [(ngModel)]="template" placeholder="(Optional) Saved Practice Template">
         <ion-select-option value="none">No Template</ion-select-option>
         <ion-select-option *ngFor="let template of templates" [value]="template.id"> {{ template.name }}
+        </ion-select-option>
+        <ion-select-option *ngFor="let template of sptemplates" [value]="template.id"> {{ template.name }} - SP Template
         </ion-select-option>
       </ion-select>
     </ion-item>

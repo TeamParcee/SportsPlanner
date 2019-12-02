@@ -23,8 +23,8 @@ export class EditActivityPage implements OnInit {
 
   activity;
   itemDelete;
-  isTemplate;
   user;
+  activityType;
 
   async getUser() {
     this.user = await this.userService.getUser()
@@ -37,10 +37,14 @@ export class EditActivityPage implements OnInit {
   }
   ionViewWillLeave() {
     if (!this.itemDelete) {
-      if (this.isTemplate) {
+      if (this.activityType == "userTemplate") {
         this.saveTemplate()
-      } else {
+      }
+      if (this.activityType == "noTemplate") {
         this.save()
+      }
+      if (this.activityType == "adminTemplate") {
+        this.saveAdminTemplate()
       }
     }
   }
@@ -52,6 +56,13 @@ export class EditActivityPage implements OnInit {
   }
   saveTemplate() {
     this.firebaseService.setDocument("users/" + this.user.uid + "/templates/" + this.activity.planId + "/activities/" + this.activity.id, this.activity)
+      .then(() => {
+        this.close()
+      })
+  }
+
+  saveAdminTemplate() {
+    this.firebaseService.setDocument("/templates/" + this.activity.planId + "/activities/" + this.activity.id, this.activity)
       .then(() => {
         this.close()
       })
@@ -71,7 +82,21 @@ export class EditActivityPage implements OnInit {
         }
       })
   }
-
+  deleteAdminTemplate() {
+    this.helper.confirmationAlert("Delete Activity", "Are you sure you want to delete this activity from this admin template", { denyText: "Cancel", confirmText: "Delete" })
+      .then((result) => {
+        if (result) {
+          this.firebaseService.deleteDocument("/templates/" + this.activity.planId + "/activities/" + this.activity.id)
+            .then(async () => {
+              this.itemDelete = true;
+              let plan: any = await this.firebaseService.getDocument("/templates/" + this.activity.planId);
+              let activitiesCount = plan.activities;
+              this.firebaseService.updateDocument("/templates/" + this.activity.planId, { activities: (activitiesCount - 1) });
+              this.close();
+            })
+        }
+      })
+  }
   delete() {
     this.helper.confirmationAlert("Delete Activity", "Are you sure you want to delete this activity", { denyText: "Cancel", confirmText: "Delete" })
       .then((result) => {
@@ -87,5 +112,17 @@ export class EditActivityPage implements OnInit {
             })
         }
       })
+  }
+
+  getTypeForDelete(){
+    if (this.activityType == "userTemplate") {
+      this.deleteTemplate()
+    }
+    if (this.activityType == "noTemplate") {
+      this.delete()
+    }
+    if (this.activityType == "adminTemplate") {
+      this.deleteAdminTemplate()
+    }
   }
 }

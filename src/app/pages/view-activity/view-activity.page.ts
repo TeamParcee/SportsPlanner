@@ -18,13 +18,15 @@ export class ViewActivityPage implements OnInit {
   activity;
   user;
   isHeadCoach;
-  isTemplate;
+  activityType;
+  hideEdit = false;
 
   ngOnInit() {
   }
   async ionViewWillEnter() {
     await this.getUser();
     await this.checkIsHeadCoach();
+    this.showEditActivity();
   }
 
   close() {
@@ -42,7 +44,14 @@ export class ViewActivityPage implements OnInit {
   }
   editActivity() {
     this.helper.closeModal();
-    this.helper.openModal(EditActivityPage, { activity: this.activity, isTemplate: this.isTemplate })
+    this.helper.openModal(EditActivityPage, { activity: this.activity, activityType: this.activityType })
+  }
 
+  showEditActivity() {
+    if (this.activityType == "adminTemplate") {
+      if(!this.user.admin){
+        this.hideEdit = true;
+      }
+    }
   }
 }

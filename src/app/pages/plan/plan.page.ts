@@ -197,7 +197,7 @@ export class PlanPage implements OnInit {
       })
   }
   viewActivity(activity) {
-    this.helper.openModalPromise(ViewActivityPage, { activity: activity, isTemplate: false })
+    this.helper.openModalPromise(ViewActivityPage, { activity: activity, activityType: "noTemplate" })
   }
 
   viewCurrentActivity(activity) {
