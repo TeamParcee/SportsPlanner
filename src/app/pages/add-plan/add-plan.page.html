@@ -28,7 +28,7 @@
         <ion-select-option value="none">No Template</ion-select-option>
         <ion-select-option *ngFor="let template of templates" [value]="template.id"> {{ template.name }}
         </ion-select-option>
-        <ion-select-option *ngFor="let template of sptemplates" [value]="template.id"> {{ template.name }} - SP Template
+        <ion-select-option style="white-space: pre-wrap; margin-bottom: 5px;" *ngFor="let template of sptemplates" [value]="template.id"> {{ template.name }} - SP Template
         </ion-select-option>
       </ion-select>
     </ion-item>
