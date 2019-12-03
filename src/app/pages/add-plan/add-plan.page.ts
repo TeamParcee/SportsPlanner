@@ -105,14 +105,13 @@ export class AddPlanPage implements OnInit {
     })
 
     firebase.firestore().collection("/templates/")
-      // .where("sport", "==", this.user.sport)
+      .where("sport", "==", this.user.sport)
       .get().then((templatesSnap) => {
         let templates = [];
         templatesSnap.forEach((template) => {
           templates.push(template.data())
         })
         this.sptemplates = templates;
-        console.log(this.user.sport, this.sptemplates,"xxvv")
       })
   }
 
