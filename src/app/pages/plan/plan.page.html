@@ -69,7 +69,7 @@
   <ion-reorder-group *ngIf="plan" (ionItemReorder)="reorderItems($event)" disabled="false">
     <ion-item [ngClass]="activity.startTime == currentActivity?.startTime  && showTimer   ? 'activeEvent' : ''"
       *ngFor="let activity of activities">
-      <ion-label (click)="viewActivity(activity)">
+      <ion-label  class="ion-text-wrap" (click)="viewActivity(activity)">
         {{ activity.name }}
         <p> {{ activity.duration }} minutes - {{ (activity.startTime) ? activity.startTime  : "No Start Time"}}</p>
       </ion-label>

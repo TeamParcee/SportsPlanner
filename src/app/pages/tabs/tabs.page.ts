@@ -36,7 +36,7 @@ export class TabsPage implements OnInit {
         }
         if (sport == "volleyball") {
           this.volleyball = true;
-          this.sport = "football";
+          this.sport = "calendar";
         }
         if (sport == "basketball") {
           this.volleyball = false;

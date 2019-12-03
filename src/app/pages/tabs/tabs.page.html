@@ -1,11 +1,8 @@
 <ion-tabs>
   <ion-tab-bar slot="bottom">
-    <ion-tab-button style="margin-top:6px" tab="plan">
-      <ion-icon *ngIf="!volleyball" [name]="sport"></ion-icon>
-      <div *ngIf="volleyball" style="font-size: 12px; ">
-        <fa-icon class="fa-2x" icon="volleyball-ball"></fa-icon>
-      </div>
-      <ion-label class="tabl">Practice Plan</ion-label>
+    <ion-tab-button tab="plan">
+      <ion-icon [name]="sport"></ion-icon>
+      <ion-label >Practice Plan</ion-label>
     </ion-tab-button>
 
     <ion-tab-button tab="drills">
