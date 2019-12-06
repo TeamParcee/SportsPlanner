@@ -10,6 +10,8 @@
 </ion-header>
 
 <ion-content>
+
+
   <ion-text *ngIf="!plans?.length && isHeadCoach">
     <p padding text-center> You do not have any Practice Plans <br>
       <ion-button fill="clear" (click)="addPlan()">Create One</ion-button>

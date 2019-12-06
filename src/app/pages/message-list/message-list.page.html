@@ -4,11 +4,6 @@
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
     <ion-title>Messages</ion-title>
-    <ion-buttons slot="end">
-      <ion-button (click)="newMessage()">
-        <ion-icon name="add" slot="icon-only"></ion-icon>
-      </ion-button>
-    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
@@ -28,3 +23,11 @@
     </ion-item>
   </ion-list>
 </ion-content>
+
+<ion-footer>
+  <ion-fab  horizontal="end" vertical="bottom" slot="fixed">
+    <ion-fab-button (click)="newMessage()">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+</ion-footer>

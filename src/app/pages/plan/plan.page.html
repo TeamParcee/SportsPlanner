@@ -20,13 +20,11 @@
 </ion-header>
 
 <ion-content>
-  
 
-  <!-- <fa-icon [icon]="['fas','fa-volleyball-ball']" slot="end"></fa-icon> -->
-  <fa-icon [icon]="['fas', 'graduation-cap']" slot="end"></fa-icon>
-  <fa-icon slot="start" icon="fa-home"></fa-icon>
 
-  
+
+
+
 
 
   <ion-card *ngIf="showTimer" (click)="viewCurrentActivity(currentActivity)">
@@ -66,12 +64,28 @@
     </ion-datetime>
   </ion-list-header>
 
+  <ion-item *ngIf="activities?.length > 0 && !showLoading">
+    <ion-label>
+      <p>
+        Total Time: {{ totalTime }} minutes - End Time: {{ endTime }}
+      </p>
+    </ion-label>
+  </ion-item>
   <ion-reorder-group *ngIf="plan" (ionItemReorder)="reorderItems($event)" disabled="false">
+
     <ion-item [ngClass]="activity.startTime == currentActivity?.startTime  && showTimer   ? 'activeEvent' : ''"
       *ngFor="let activity of activities">
-      <ion-label  class="ion-text-wrap" (click)="viewActivity(activity)">
-        {{ activity.name }}
-        <p> {{ activity.duration }} minutes - {{ (activity.startTime) ? activity.startTime  : "No Start Time"}}</p>
+      <ion-label class="ion-text-wrap" (click)="viewActivity(activity)">
+        <span *ngIf="!showLoading">
+          {{ activity.name }}
+        </span>
+
+        <ion-skeleton-text animated *ngIf="showLoading"></ion-skeleton-text>
+        <p *ngIf="showLoading">
+          <ion-skeleton-text animated></ion-skeleton-text>
+        </p>
+        <p *ngIf="!showLoading"> {{ activity.duration }} minutes -
+          {{ (activity.startTime) ? activity.startTime  : "No Start Time"}}</p>
       </ion-label>
       <ion-buttons *ngIf="isHeadCoach" slot="end">
         <!-- <ion-button *ngIf="isHeadCoach" (click)="editActivity(activity)">
@@ -83,18 +97,12 @@
       </ion-buttons>
     </ion-item>
   </ion-reorder-group>
-  <ion-button *ngIf="plan && isHeadCoach" (click)="createActivity()" fill="clear">New Activity</ion-button>
-  <ion-item  *ngIf="activities?.length > 0">
-    <ion-label>
-      <p>
-        Total Time: {{ totalTime }} minutes - End Time: {{ endTime }}
-      </p>
-    </ion-label>
-  </ion-item>
+  <ion-button *ngIf="plan && isHeadCoach && !showLoading" (click)="createActivity()" fill="clear">New Activity</ion-button>
 
-
-  <span *ngIf="activities?.length > 0">
-    <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+</ion-content>
+<ion-footer>
+  <span *ngIf="activities?.length > 0 && !showLoading">
+    <ion-fab vertical="bottom" [activated]="showTimer" horizontal="end" slot="fixed">
       <ion-fab-button [color]="(!showTimer) ? 'primary' : 'secondary'"
         (click)="(!showTimer) ? runTimer() : stopTimer()">
         <ion-icon name="timer"></ion-icon>
@@ -102,4 +110,4 @@
     </ion-fab>
   </span>
 
-</ion-content>
+</ion-footer>

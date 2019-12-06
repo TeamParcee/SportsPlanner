@@ -48,8 +48,12 @@ export class PlanPage implements OnInit {
   isHeadCoach;
   endTime;
   totalTime;
+  showLoading = true;
 
   async ionViewWillEnter() {
+    setTimeout(()=>{
+      this.showLoading = false;
+    }, 5000)
     await this.presence.onlineStatus();
     await this.getUser();
     await this.getCoachFromUid(this.user.coach);
