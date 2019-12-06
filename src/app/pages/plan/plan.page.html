@@ -64,7 +64,7 @@
     </ion-datetime>
   </ion-list-header>
 
-  <ion-item *ngIf="activities?.length > 0 && !showLoading">
+  <ion-item *ngIf="activities?.length > 0 && !showLoading && plan">
     <ion-label>
       <p>
         Total Time: {{ totalTime }} minutes - End Time: {{ endTime }}
