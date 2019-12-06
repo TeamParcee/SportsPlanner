@@ -13,6 +13,7 @@ import * as moment from 'moment';
 import { ViewActivityPage } from '../view-activity/view-activity.page';
 import { TimerService } from 'src/app/services/timer.service';
 import { PlanOptionsPage } from '../plan-options/plan-options.page';
+import { PresenceService } from 'src/app/services/presence.service';
 
 @Component({
   selector: 'app-plan',
@@ -28,7 +29,7 @@ export class PlanPage implements OnInit {
     private userService: UserService,
     private firebaseService: FirebaseService,
     private timerService: TimerService,
-
+    private presence: PresenceService,
 
   ) { }
 
@@ -49,11 +50,13 @@ export class PlanPage implements OnInit {
   totalTime;
 
   async ionViewWillEnter() {
+    await this.presence.onlineStatus();
     await this.getUser();
     await this.getCoachFromUid(this.user.coach);
     await this.getActivePlan();
     await this.getActivities();
     await this.checkIsHeadCoach();
+    
 
 
 
