@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import * as firebase from 'firebase';
 import { UserService } from './user.service';
+import * as moment from 'moment';
 
 @Injectable({
   providedIn: 'root'
@@ -27,13 +28,13 @@ var userStatusDatabaseRef = firebase.database().ref('/status/' + uid);
 // or online.
 var isOfflineForDatabase = {
     state: 'offline',
-    last_changed: firebase.database.ServerValue.TIMESTAMP,
+    last_changed: moment().format('MMMM Do YYYY, h:mm:ss a'),
     user: user.fname + " " + user.lname
 };
 
 var isOnlineForDatabase = {
     state: 'online',
-    last_changed: firebase.database.ServerValue.TIMESTAMP,
+    last_changed: moment().format('MMMM Do YYYY, h:mm:ss a'),
     user: user.fname + " " + user.lname,
 
 };
