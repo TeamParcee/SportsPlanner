@@ -40,6 +40,7 @@ const routes: Routes = [
   { path: 'select-contact', loadChildren: './pages/select-contact/select-contact.module#SelectContactPageModule' },
   { path: 'admin', loadChildren: './pages/admin/admin.module#AdminPageModule' },  { path: 'new-admin-template', loadChildren: './pages/new-admin-template/new-admin-template.module#NewAdminTemplatePageModule' },
   { path: 'sports-planner-templates', loadChildren: './pages/sports-planner-templates/sports-planner-templates.module#SportsPlannerTemplatesPageModule' },
+  { path: 'new-activity', loadChildren: './pages/new-activity/new-activity.module#NewActivityPageModule' },
 
 
 

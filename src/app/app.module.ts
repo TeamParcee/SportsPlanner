@@ -36,6 +36,7 @@ import { library } from '@fortawesome/fontawesome-svg-core';
 import { far } from '@fortawesome/free-regular-svg-icons';
 import { MessagesPage } from './pages/message-list/messages/messages.page';
 import { SelectContactPage } from './pages/select-contact/select-contact.page';
+import { NewActivityPage } from './pages/new-activity/new-activity.page';
 
 // Your web app's Firebase configuration
 var firebaseConfig = {
@@ -64,6 +65,7 @@ library.add(far);
     SelectContactPage,
     ViewActivityPage,
     ViewDrillPage,
+    NewActivityPage,
     ImageCropperPage,
     TemplatePage,
     EditDrillPage,
@@ -77,6 +79,7 @@ library.add(far);
     ImageCropperPage,
     SelectContactPage,
     PlanOptionsPage,
+    NewActivityPage,
     ViewActivityPage,
     ViewDrillPage,
     TemplatePage,

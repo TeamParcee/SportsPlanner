@@ -14,6 +14,7 @@ import { ViewActivityPage } from '../view-activity/view-activity.page';
 import { TimerService } from 'src/app/services/timer.service';
 import { PlanOptionsPage } from '../plan-options/plan-options.page';
 import { PresenceService } from 'src/app/services/presence.service';
+import { NewActivityPage } from '../new-activity/new-activity.page';
 
 @Component({
   selector: 'app-plan',
@@ -102,21 +103,8 @@ export class PlanPage implements OnInit {
   }
 
   async createActivity() {
-    let activity: Activity = {
-      name: "New Activity",
-      duration: 0,
-      startTime: "",
-      id: "",
-      notes: "",
-      order: 100 + this.activities.length,
-      planId: this.plan.id,
-
-    };
-    this.firebaseService.addDocument("/plans/" + this.plan.id + "/activities", activity);
-    let plan: any = await this.firebaseService.getDocument("/plans/" + this.plan.id);
-    let activitiesCount = plan.activities;
-    this.firebaseService.updateDocument("/plans/" + this.plan.id, { activities: (activitiesCount + 1) })
     
+    this.helper.openModalPromise(NewActivityPage, { plan: this.plan, activitiesLength: this.activities.length })
   }
 
   async getActivities() {
@@ -180,6 +168,19 @@ export class PlanPage implements OnInit {
     }
   }
 
+  delete(activity) {
+    this.helper.confirmationAlert("Delete Activity", "Are you sure you want to delete this activity", { denyText: "Cancel", confirmText: "Delete" })
+      .then((result) => {
+        if (result) {
+          this.firebaseService.deleteDocument("plans/" + activity.planId + "/activities/" + activity.id)
+            .then(async () => {
+              let plan: any = await this.firebaseService.getDocument("/plans/" + activity.planId);
+              let activitiesCount = plan.activities;
+              this.firebaseService.updateDocument("/plans/" + activity.planId, { activities: (activitiesCount - 1) });
+            })
+        }
+      })
+  }
   updateTime() {
     this.stopTimer();
     this.firebaseService.updateDocument("/plans/" + this.plan.id, { date: moment(this.date).format('llll'), orderDate: moment(this.date).format() });
@@ -216,7 +217,7 @@ export class PlanPage implements OnInit {
     this.orderArray.forEach((activity) => {
       firebase.firestore().doc("/plans/" + this.plan.id + "/activities/" + activity.id).update({ order: activity.order })
     })
-   
+
     this.getActivities();
   }
 
