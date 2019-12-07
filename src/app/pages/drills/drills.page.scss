@@ -1,33 +1,6 @@
 
 
-.header{
-    padding: 15px;
-    font-weight: 700;
-    font-size: 28px;
-}
-
-.container {
-    width: 100px;
-    overflow: hidden; 
-    white-space: nowrap;
-    ::-webkit-scrollbar {
-      display: none;
-    }
-    .scroll {
-      overflow: auto;
-    }
-  }
-
-.solid {
-  border-bottom: 1px solid #3880ff;
-}
-
-.clear {
-  border: none
-}
-
-ion-card{
-  box-shadow: none !important;
-  border-bottom: 2px solid #f5f5f5;
-  border-radius: 0px;
+ion-list-header{
+  font-weight: bold;
+  font-size: 18px;
 }
