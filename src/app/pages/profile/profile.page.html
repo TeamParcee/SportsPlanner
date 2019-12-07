@@ -21,80 +21,85 @@
   <ion-grid>
     <ion-row>
       <ion-col pushMd="4" sizeMd="4">
-        <div style="margin: auto; display: table" *ngIf="user">
-          <img id="image" style="width: 150px; padding: 10px" [src]="user?.photoUrl" />
-          <span>
-            <ion-text style="margin-right: 5px;" color="danger" *ngIf="user?.photoUrl != originalUser?.photoUrl"
-              (click)="cancelPic()">
-              Cancel
-            </ion-text>
-            <ion-text (click)="savePic()" *ngIf="user?.photoUrl != originalUser?.photoUrl" color="success">
-              Save
-            </ion-text>
-            <label ion-button style="margin-top: -30px; margin-left: 10px"
-              *ngIf="user?.photoUrl == originalUser?.photoUrl" for="pic" (click)="savePic()">
-              edit
-            </label>
-          </span>
 
+
+        <div style="max-width: 500px; margin: auto">
+          <div style="margin: auto; display: table" *ngIf="user">
+            <img id="image" style="width: 150px; padding: 10px" [src]="user?.photoUrl" />
+            <span>
+              <ion-text style="margin-right: 5px;" color="danger" *ngIf="user?.photoUrl != originalUser?.photoUrl"
+                (click)="cancelPic()">
+                Cancel
+              </ion-text>
+              <ion-text (click)="savePic()" *ngIf="user?.photoUrl != originalUser?.photoUrl" color="success">
+                Save
+              </ion-text>
+              <label ion-button style="margin-top: -30px; margin-left: 10px"
+                *ngIf="user?.photoUrl == originalUser?.photoUrl" for="pic" (click)="savePic()">
+                edit
+              </label>
+            </span>
+
+          </div>
+
+
+
+          <input (change)="readURL($event)" accept="image/*" style="display: none;" id="pic" type="file" />
+          <ion-list margin-top *ngIf="user && originalUser">
+            <ion-item-divider>My Information</ion-item-divider>
+            <ion-item *ngIf="user">
+              <ion-label>First Name</ion-label>
+              <ion-input text-right [(ngModel)]="user.fname"></ion-input>
+              <ion-note (click)="saveFname()" *ngIf="user.fname != originalUser.fname" color="success" slot="end">save
+              </ion-note>
+            </ion-item>
+            <ion-item *ngIf="user">
+              <ion-label>Last Name</ion-label>
+              <ion-input text-right [(ngModel)]="user.lname"></ion-input>
+              <ion-note (click)="saveLname()" *ngIf="user.lname != originalUser.lname" color="success" slot="end">save
+              </ion-note>
+            </ion-item>
+            <ion-item *ngIf="user">
+              <ion-label position="">Email</ion-label>
+              <ion-input text-right [(ngModel)]="user.email"></ion-input>
+              <ion-note (click)="saveEmail()" *ngIf="user.email != originalUser.email" color="success" slot="end">save
+              </ion-note>
+            </ion-item>
+
+            <ion-item-divider padding-top>Coach Settings</ion-item-divider>
+
+            <ion-item margin-top *ngIf="coach">
+              <ion-avatar slot="start">
+                <img [src]="coach.photoUrl">
+              </ion-avatar>
+              <ion-label>
+                <h2> Coach {{ coach.fname + " " + coach.lname }}</h2>
+              </ion-label>
+              <ion-note routerLink="/select-coach" slot="end">change</ion-note>
+            </ion-item>
+            <ion-item *ngIf="user.uid == user.coach">
+              <ion-label position="">Sport</ion-label>
+              <ion-select text-right okText="Save" name="sport" (ionChange)="saveSport()" [(ngModel)]="user.sport">
+                <ion-select-option value="football">Football</ion-select-option>
+                <ion-select-option value="volleyball">Volleyball</ion-select-option>
+                <ion-select-option value="basketball">Basketball</ion-select-option>
+                <ion-select-option value="soccer">Soccer</ion-select-option>
+              </ion-select>
+            </ion-item>
+            <ion-item *ngIf="user.uid == user.coach">
+              <ion-label position="">Coach Password</ion-label>
+              <ion-input text-right [(ngModel)]="user.coachPassword"></ion-input>
+              <ion-note (click)="saveCoachPassword()" *ngIf="user.coachPassword != originalUser.coachPassword"
+                color="success" slot="end">save
+              </ion-note>
+            </ion-item>
+            <ion-item detail [routerLink]="['/view-followers', user.uid]">
+              <ion-label>Coach's Followers</ion-label>
+              {{ followers }}
+            </ion-item>
+          </ion-list>
         </div>
 
-
-
-        <input (change)="readURL($event)" accept="image/*" style="display: none;" id="pic" type="file" />
-        <ion-list margin-top *ngIf="user && originalUser">
-          <ion-item-divider>My Information</ion-item-divider>
-          <ion-item *ngIf="user">
-            <ion-label>First Name</ion-label>
-            <ion-input text-right [(ngModel)]="user.fname"></ion-input>
-            <ion-note (click)="saveFname()" *ngIf="user.fname != originalUser.fname" color="success" slot="end">save
-            </ion-note>
-          </ion-item>
-          <ion-item *ngIf="user">
-            <ion-label>Last Name</ion-label>
-            <ion-input text-right [(ngModel)]="user.lname"></ion-input>
-            <ion-note (click)="saveLname()" *ngIf="user.lname != originalUser.lname" color="success" slot="end">save
-            </ion-note>
-          </ion-item>
-          <ion-item *ngIf="user">
-            <ion-label position="">Email</ion-label>
-            <ion-input text-right [(ngModel)]="user.email"></ion-input>
-            <ion-note (click)="saveEmail()" *ngIf="user.email != originalUser.email" color="success" slot="end">save
-            </ion-note>
-          </ion-item>
-
-          <ion-item-divider padding-top>Coach Settings</ion-item-divider>
-
-          <ion-item margin-top *ngIf="coach">
-            <ion-avatar slot="start">
-              <img [src]="coach.photoUrl">
-            </ion-avatar>
-            <ion-label>
-              <h2> Coach {{ coach.fname + " " + coach.lname }}</h2>
-            </ion-label>
-            <ion-note routerLink="/select-coach" slot="end">change</ion-note>
-          </ion-item>
-          <ion-item *ngIf="user.uid == user.coach">
-            <ion-label position="">Sport</ion-label>
-            <ion-select text-right okText="Save" name="sport" (ionChange)="saveSport()" [(ngModel)]="user.sport">
-              <ion-select-option value="football">Football</ion-select-option>
-              <ion-select-option value="volleyball">Volleyball</ion-select-option>
-              <ion-select-option value="basketball">Basketball</ion-select-option>
-              <ion-select-option value="soccer">Soccer</ion-select-option>
-            </ion-select>
-          </ion-item>
-          <ion-item *ngIf="user.uid == user.coach">
-            <ion-label position="">Coach Password</ion-label>
-            <ion-input text-right [(ngModel)]="user.coachPassword"></ion-input>
-            <ion-note (click)="saveCoachPassword()" *ngIf="user.coachPassword != originalUser.coachPassword"
-              color="success" slot="end">save
-            </ion-note>
-          </ion-item>
-          <ion-item detail [routerLink]="['/view-followers', user.uid]">
-            <ion-label>Coach's Followers</ion-label>
-            {{ followers }}
-          </ion-item>
-        </ion-list>
       </ion-col>
     </ion-row>
   </ion-grid>

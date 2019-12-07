@@ -9,20 +9,26 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content color="light">
 
 
   <ion-grid class="ion-no-padding">
     <ion-row>
-      <ion-col sizeMd="6">
-        <ion-button (click)="getDrillsPrivate() " fill="clear" [ngClass]="(drillView == 'private' ? 'solid' : 'clear')"
-          expand="full">
-          {{ (isHeadCoach) ? "My Drills" : "Your Coaches Drills" }}</ion-button>
+      <ion-col offset-md="4" size-md="3">
+        <div style="max-width: 200px; float: rigth;">
+          <ion-button (click)="getDrillsPrivate() " fill="clear"
+            [ngClass]="(drillView == 'private' ? 'solid' : 'clear')" expand="full">
+            {{ (isHeadCoach) ? "My Drills" : "Your Coaches Drills" }}</ion-button>
+        </div>
+
       </ion-col>
-      <ion-col sizeMd="6">
-        <ion-button (click)="getDrillsPublic() " fill="clear" [ngClass]="(drillView == 'public' ? 'solid' : 'clear')"
-          expand="full">
-          Public Drills</ion-button>
+      <ion-col sizeMd="4">
+        <div style="max-width: 200px;">
+          <ion-button (click)="getDrillsPublic() " fill="clear" [ngClass]="(drillView == 'public' ? 'solid' : 'clear')"
+            expand="full">
+            Public Drills</ion-button>
+        </div>
+
       </ion-col>
     </ion-row>
     <ion-row class="ion-no-padding">

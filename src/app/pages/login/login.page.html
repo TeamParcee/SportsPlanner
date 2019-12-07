@@ -9,28 +9,32 @@
   <ion-grid>
     <ion-row>
       <ion-col pushMd="4" sizeMd="4">
-        <p text-center>
-          <img style="margin: auto" height="100px" width="100px" src="../../../assets/images/logo.png">
-        </p>
-        <h2 text-center>
-          <ion-text color="primary">Sports Planner</ion-text>
-        </h2>
 
-        <form>
-          <ion-list>
-            <ion-item>
-              <ion-label color="primary" position="floating">Email</ion-label>
-              <ion-input name="email" [(ngModel)]="email" type="email"></ion-input>
-            </ion-item>
-            <ion-item>
-              <ion-label color="primary" position="floating">Password</ion-label>
-              <ion-input name="password" [(ngModel)]="password" type="password"></ion-input>
-            </ion-item>
-          </ion-list>
-          <ion-button color="primary" routerLink="/forgot-password" fill="clear">Forgot Password</ion-button>
-          <ion-button (click)="login()" expand="full">Sign In</ion-button>
-          <ion-button color="primary" routerLink="/register" fill="clear" expand="full">Create Account</ion-button>
-        </form>
+        <div style="max-width: 400px; margin: auto">
+          <p text-center>
+            <img style="margin: auto" height="100px" width="100px" src="../../../assets/images/logo.png">
+          </p>
+          <h2 text-center>
+            <ion-text color="primary">Sports Planner</ion-text>
+          </h2>
+
+          <form>
+            <ion-list>
+              <ion-item>
+                <ion-label color="primary" position="floating">Email</ion-label>
+                <ion-input name="email" [(ngModel)]="email" type="email"></ion-input>
+              </ion-item>
+              <ion-item>
+                <ion-label color="primary" position="floating">Password</ion-label>
+                <ion-input name="password" [(ngModel)]="password" type="password"></ion-input>
+              </ion-item>
+            </ion-list>
+            <ion-button color="primary" routerLink="/forgot-password" fill="clear">Forgot Password</ion-button>
+            <ion-button (click)="login()" expand="full">Sign In</ion-button>
+            <ion-button color="primary" routerLink="/register" fill="clear" expand="full">Create Account</ion-button>
+          </form>
+        </div>
+
       </ion-col>
     </ion-row>
   </ion-grid>
