@@ -51,7 +51,7 @@ export class PlanPage implements OnInit {
   showLoading = true;
 
   async ionViewWillEnter() {
-    setTimeout(()=>{
+    setTimeout(() => {
       this.showLoading = false;
     }, 5000)
     await this.presence.onlineStatus();
@@ -60,7 +60,7 @@ export class PlanPage implements OnInit {
     await this.getActivePlan();
     await this.getActivities();
     await this.checkIsHeadCoach();
-    
+
 
 
 
@@ -116,42 +116,9 @@ export class PlanPage implements OnInit {
     let plan: any = await this.firebaseService.getDocument("/plans/" + this.plan.id);
     let activitiesCount = plan.activities;
     this.firebaseService.updateDocument("/plans/" + this.plan.id, { activities: (activitiesCount + 1) })
-    // this.getActivities();
+    
   }
-  // async getActivitiesInit() {
-  //   if (this.plan) {
-  //     if (!await this.doesPlanExist()) {
-  //       this.plan = null;
-  //       this.planService.currentPlan = null;
-  //       return;
-  //     }
-  //     firebase.firestore().collection("/plans/" + this.plan.id + "/activities")
-  //       .orderBy("order")
-  //       .get().then((activitySnap) => {
-  //         this.totalTime = 0;
-  //         let activities = [];
-  //         this.orderArray = [];
-  //         let time = moment(this.plan.date).format("LT");
-  //         let minutes = 0;
-  //         let count = 0;
-  //         activitySnap.forEach((activity) => {
-  //           count = count + 1;
-  //           let a = activity.data();
-  //           a.startTime = this.getTimeOfEvent(time, minutes);
-  //           a.date = moment(this.date).format("MMM DD, YYYY ") + a.startTime;
-  //           activities.push(a);
-  //           this.orderArray.push({ order: count, id: a.id });
-  //           time = a.startTime;
-  //           minutes = a.duration;
-  //           this.totalTime = this.totalTime + (minutes * 1);
-  //         })
-  //         this.activities = activities;
-  //         this.planService.activities = activities;
-  //         this.date = this.plan.date;
-  //       })
-  //   } else {
-  //   }
-  // }
+
   async getActivities() {
 
     if (this.plan) {
@@ -225,7 +192,9 @@ export class PlanPage implements OnInit {
     let x = moment(time, "hh:mm a").add('minutes', minutes).format('LT');
     return x;
   }
+
   reorderItems(ev) {
+    this.stopTimer();
     let from = ev.detail.from;
     let to = ev.detail.to;
     let draggedItem = this.orderArray.splice(from, 1)[0];
@@ -247,7 +216,7 @@ export class PlanPage implements OnInit {
     this.orderArray.forEach((activity) => {
       firebase.firestore().doc("/plans/" + this.plan.id + "/activities/" + activity.id).update({ order: activity.order })
     })
-    this.stopTimer
+   
     this.getActivities();
   }
 
