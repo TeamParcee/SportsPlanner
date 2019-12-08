@@ -43,19 +43,24 @@
   <ion-grid>
     <ion-row>
       <ion-col size-md="4" offset-md="4">
-        <div style="max-width: 600px; border: 2px solid black; margin: auto">
+        <div style="max-width: 600px; margin: auto">
 
           <ion-list-header>Wide Receiver Drills</ion-list-header>
           <ion-list>
             <ion-item>
               <ion-label>
-                Name: Quick Slant Drill
+                Quick Slant Drill
                 <p>Duration: 10 minutes</p>
-                <p>Position Group: Wide Receivers</p>
+                <p>Catagory: Wide Receivers</p>
               </ion-label>
-              <ion-note slot="end">
-                <ion-icon slot="icon-only" name="home"></ion-icon>
-              </ion-note>
+            </ion-item>
+
+            <ion-item *ngFor="let drill of drills">
+              <ion-label>
+                {{ drill.name }}
+                <p>Duration: {{ drill.duration }} minutes</p>
+                <p>Catagory: {{ drill.catagory }}</p>
+              </ion-label>
             </ion-item>
           </ion-list>
         </div>

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { AlertController, ToastController, LoadingController, PopoverController, ModalController } from '@ionic/angular';
+import { AlertController, ToastController, LoadingController, PopoverController, ModalController, ActionSheetController } from '@ionic/angular';
 import { AlertInput } from '@ionic/core';
 import { componentFactoryName } from '@angular/compiler';
 
@@ -14,6 +14,7 @@ export class HelperService {
     private loadingCtrl: LoadingController,
     private popoverCtrl: PopoverController,
     private modalCtrl: ModalController,
+    private actionSheetController: ActionSheetController,
   ) { }
 
 
@@ -190,4 +191,6 @@ export class HelperService {
       toast.present();
     })
   }
+
+  
 }

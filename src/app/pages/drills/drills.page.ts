@@ -32,6 +32,7 @@ export class DrillsPage implements OnInit {
   showLoading = true;
   hideHeader = false;
   query;
+  drills;
 
   async ngOnInit() {
     this.drillView = "private"
@@ -40,7 +41,8 @@ export class DrillsPage implements OnInit {
 
   async ionViewWillEnter() {
     await this.getUser();
-    await this.checkIsHeadCoach()
+    await this.checkIsHeadCoach();
+    await this.getDrills();
   }
 
   async getUser() {
@@ -64,6 +66,16 @@ export class DrillsPage implements OnInit {
     this.drillView = "public";
   }
 
+
+  async getDrills() {
+    firebase.firestore().collection("drill").onSnapshot((drillsSnap) => {
+      let drills = [];
+      drillsSnap.forEach((drill) => {
+        drills.push(drill.data())
+      })
+      this.drills = drills; 
+    })
+  }
   // async ionViewWillEnter() {
   //   this.loadingTimeout();
   //   await this.getUser();
