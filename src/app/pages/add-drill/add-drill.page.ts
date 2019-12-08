@@ -21,7 +21,7 @@ export class AddDrillPage implements OnInit {
     private navCtrl: NavController,
   ) { }
 
-  drill: { coach?, video?, sport?, youtubeId?} = {};
+  drill: { coach?, video?, sport?, youtubeId?, plansCount?, photoUrl?, fname?, lname?} = {};
   user;
   videoPreview;
   trustedVideoUrl
@@ -39,13 +39,17 @@ export class AddDrillPage implements OnInit {
   addDrill() {
     this.drill.coach = this.user.coach;
     this.drill.sport = this.user.sport;
+    this.drill.photoUrl = this.user.photoUrl;
+    this.drill.fname = this.user.fname;
+    this.drill.lname = this.user.lname;
+    this.drill.plansCount = 0;
     this.firebaseService.addDocument("/drills", this.drill).then(() => {
       this.navCtrl.navigateBack("/tabs/drills")
     })
   }
 
   getSafeUrl(url) {
-    
+
     this.trustedVideoUrl = this.domSanitizer.bypassSecurityTrustResourceUrl(url);
   }
 

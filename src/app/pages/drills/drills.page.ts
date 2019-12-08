@@ -7,6 +7,7 @@ import { ViewDrillPage } from '../view-drill/view-drill.page';
 import { FirebaseService } from 'src/app/services/firebase.service';
 import { EditDrillPage } from '../edit-drill/edit-drill.page';
 import { DrillsService } from 'src/app/services/drills.service';
+import { ViewActivityPage } from '../view-activity/view-activity.page';
 
 @Component({
   selector: 'app-drills',
@@ -68,14 +69,54 @@ export class DrillsPage implements OnInit {
 
 
   async getDrills() {
-    firebase.firestore().collection("drill").onSnapshot((drillsSnap) => {
-      let drills = [];
-      drillsSnap.forEach((drill) => {
-        drills.push(drill.data())
+    firebase.firestore().collection("drills")
+      .orderBy("name")
+      .orderBy("plansCount", "desc")
+      .where("sport", "==", this.user.sport)
+      .onSnapshot((drillsSnap) => {
+        let drills = [];
+        drillsSnap.forEach(async (drill: any) => {
+          let d = { ...drill.data() }
+          drills.push(d);
+        })
+        this.drills = drills;
       })
-      this.drills = drills; 
+  }
+
+
+  myHeaderFn(record, recordIndex, records: []) {
+
+    // let month = moment(record.date).format('MMMM');
+    let catagory = record.catagory;
+
+    if (recordIndex == 0) {
+      return catagory;
+    }
+
+    let lastRecord: any = records[(recordIndex - 1)];
+    // let lastMonth = moment(lastRecord.date).format('MMMM');
+    let lastCatagory = lastRecord.catagory;
+    if (catagory != lastCatagory) {
+      return catagory
+    } else {
+      return null
+    }
+  }
+
+  viewActivity(activity) {
+    this.helper.openModalPromise(ViewActivityPage, { activity: activity, publicDrill: true, activityType: "noTemplate" })
+  }
+
+
+
+
+  editDrill(drill) {
+    this.helper.openModalPromise(EditDrillPage, { drill: drill }).then(() => {
+      this.getDrills()
     })
   }
+
+
   // async ionViewWillEnter() {
   //   this.loadingTimeout();
   //   await this.getUser();

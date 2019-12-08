@@ -41,6 +41,7 @@ const routes: Routes = [
   { path: 'admin', loadChildren: './pages/admin/admin.module#AdminPageModule' },  { path: 'new-admin-template', loadChildren: './pages/new-admin-template/new-admin-template.module#NewAdminTemplatePageModule' },
   { path: 'sports-planner-templates', loadChildren: './pages/sports-planner-templates/sports-planner-templates.module#SportsPlannerTemplatesPageModule' },
   { path: 'new-activity', loadChildren: './pages/new-activity/new-activity.module#NewActivityPageModule' },
+  { path: 'add-to-plan', loadChildren: './pages/add-to-plan/add-to-plan.module#AddToPlanPageModule' },
 
 
 

@@ -1,0 +1,44 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="close()">
+        Close
+      </ion-button>
+    </ion-buttons>
+    <ion-title>Add To Plan</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+
+
+  <ion-text *ngIf="!plans?.length && isHeadCoach">
+    <p padding text-center> You do not have any Practice Plans <br>
+      <ion-button fill="clear" (click)="addPlan()">Create One</ion-button>
+    </p>
+  </ion-text>
+
+  <ion-text *ngIf="!plans?.length && !isHeadCoach">
+    <p padding text-center> Your Coach has not created any practies yet <br>
+      Check back later
+    </p>
+  </ion-text>
+  <ion-virtual-scroll [items]="plans" [headerFn]="myHeaderFn">
+    <ion-item-divider *virtualHeader="let header">
+      {{ header }}
+    </ion-item-divider>
+    <ion-item *virtualItem="let plan">
+      <ion-label (click)="selectPlan(plan)">
+        {{ plan.date }}
+        <p>Activities: {{ plan.activities }}</p>
+      </ion-label>
+      <ion-buttons *ngIf="isHeadCoach" slot="end">
+        <ion-button (click)="delete(plan)">
+          <ion-icon name="close" color="danger"></ion-icon>
+        </ion-button>
+      </ion-buttons>
+    </ion-item>
+  </ion-virtual-scroll>
+
+</ion-content>

@@ -37,7 +37,10 @@ export class EditDrillPage implements OnInit {
     this.user = await this.userService.getUser();
   }
   saveDrill() {
-    this.drill.coach = this.drill.coach.uid;
+    if (this.drill.coach.uid) {
+      this.drill.coach = this.drill.coach.uid;
+    }
+
     this.firebaseService.updateDocument("/drills/" + this.drill.id, this.drill).then(() => {
       this.close();
     })

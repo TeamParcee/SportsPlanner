@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { HelperService } from 'src/app/services/helper.service';
 import { UserService } from 'src/app/services/user.service';
 import { EditActivityPage } from '../edit-activity/edit-activity.page';
+import { AddToPlanPage } from '../add-to-plan/add-to-plan.page';
 
 @Component({
   selector: 'app-view-activity',
@@ -20,6 +21,7 @@ export class ViewActivityPage implements OnInit {
   isHeadCoach;
   activityType;
   hideEdit = false;
+  publicDrill;
 
   ngOnInit() {
   }
@@ -49,9 +51,18 @@ export class ViewActivityPage implements OnInit {
 
   showEditActivity() {
     if (this.activityType == "adminTemplate") {
-      if(!this.user.admin){
+      if (!this.user.admin) {
         this.hideEdit = true;
       }
+
     }
+
+    if (this.publicDrill) {
+      this.hideEdit = true
+    }
+  }
+
+  addToPlan() {
+    this.helper.openModal(AddToPlanPage, { activity: this.activity })
   }
 }

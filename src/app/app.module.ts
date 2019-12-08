@@ -37,6 +37,7 @@ import { far } from '@fortawesome/free-regular-svg-icons';
 import { MessagesPage } from './pages/message-list/messages/messages.page';
 import { SelectContactPage } from './pages/select-contact/select-contact.page';
 import { NewActivityPage } from './pages/new-activity/new-activity.page';
+import { AddToPlanPage } from './pages/add-to-plan/add-to-plan.page';
 
 // Your web app's Firebase configuration
 var firebaseConfig = {
@@ -70,6 +71,7 @@ library.add(far);
     TemplatePage,
     EditDrillPage,
     MessagesPage,
+    AddToPlanPage,
 
   ],
   entryComponents: [
@@ -84,6 +86,7 @@ library.add(far);
     ViewDrillPage,
     TemplatePage,
     EditDrillPage,
+    AddToPlanPage,
     MessagesPage
   ],
   imports: [

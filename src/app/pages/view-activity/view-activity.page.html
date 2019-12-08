@@ -11,14 +11,21 @@
         Edit
       </ion-button>
     </ion-buttons>
+    <ion-buttons *ngIf="isHeadCoach && hideEdit && publicDrill" slot="end">
+      <ion-buttons (click)="addToPlan()">
+        Add To Plan
+      </ion-buttons>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <ion-card *ngIf="activity">
+  <ion-card style="box-shadow: none;" class="ion-no-margin" *ngIf="activity">
     <ion-card-header>
       <ion-card-title> {{  activity.name }}</ion-card-title>
-      <ion-card-subtitle> {{ activity.startTime + "  | " + activity.duration + " minutes" }}</ion-card-subtitle>
+      <ion-card-subtitle *ngIf="!publicDrill"> {{ activity.startTime + "  | " + activity.duration + " minutes" }}
+      </ion-card-subtitle>
+      <ion-card-subtitle *ngIf="publicDrill"> {{ activity.duration + " minutes" }}</ion-card-subtitle>
     </ion-card-header>
     <ion-card-content color="dark">
       <ion-label color="dark" [innerHTML]="activity?.notes ">

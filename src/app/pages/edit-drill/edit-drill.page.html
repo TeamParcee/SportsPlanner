@@ -1,8 +1,8 @@
 <ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-button (click)="close()">
-        Close
+      <ion-button (click)="saveDrill()">
+        Save
       </ion-button>
     </ion-buttons>
     <ion-title>Edit Drill</ion-title>
@@ -14,24 +14,39 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content padding>
+<ion-content>
+  <ion-grid>
+    <ion-row>
+      <ion-col size-md="4" offset-md="4">
 
-  <ion-list>
-    <iframe *ngIf="trustedVideoUrl" width="100%" height="315" [src]="trustedVideoUrl" frameborder="0"
-      allowfullscreen></iframe>
-    <ion-item>
-      <ion-label position="floating">Drill Name</ion-label>
-      <ion-input [(ngModel)]="drill.name"></ion-input>
-    </ion-item>
-    <ion-item>
-      <ion-label position="floating">Video Url</ion-label>
-      <ion-input (ionChange)="checkUrl(drill.video)" [(ngModel)]="drill.video"></ion-input>
-      <ion-text color="danger" *ngIf="!validUrl && drill.video">This is not a valid Youtube URL</ion-text>
-    </ion-item>
-    <ion-item>
-      <ion-label>Public Drill</ion-label>
-      <ion-checkbox [(ngModel)]="drill.public"></ion-checkbox>
-    </ion-item>
-  </ion-list>
-  <ion-button [disabled]="!validUrl || !drill.name" (click)="saveDrill()" expand="full">Save Drill</ion-button>
+
+        <ion-list>
+
+          <ion-item>
+            <ion-label position="floating"> Drill Name</ion-label>
+            <ion-input [(ngModel)]="drill.name" placeholder="" type="text"></ion-input>
+          </ion-item>
+
+          <ion-item>
+            <ion-label position="floating">Duration</ion-label>
+            <ion-input [(ngModel)]="drill.duration" placeholder="" type="number"></ion-input>
+          </ion-item>
+
+          <ion-item>
+            <ion-label position="floating">Catagory</ion-label>
+            <ion-input [(ngModel)]="drill.catagory" placeholder="" type="text"></ion-input>
+          </ion-item>
+
+          <ion-item>
+            <ion-label position="floating">Notes</ion-label>
+          </ion-item>
+
+          <quill-editor [(ngModel)]="drill.notes"></quill-editor>
+        </ion-list>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+
+
 </ion-content>
