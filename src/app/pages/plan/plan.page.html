@@ -75,7 +75,7 @@
             </ion-label>
           </ion-item>
 
-          <app-plan-loading *ngIf="showLoading"></app-plan-loading>
+          <app-plan-loading *ngIf="showLoading && activities?.length > 0"></app-plan-loading>
 
           <ion-reorder-group *ngIf="plan && !showLoading" (ionItemReorder)="reorderItems($event)" disabled="false">
 

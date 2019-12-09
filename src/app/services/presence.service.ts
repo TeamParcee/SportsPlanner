@@ -2,7 +2,9 @@ import { Injectable } from '@angular/core';
 import * as firebase from 'firebase';
 import { UserService } from './user.service';
 // import * as moment from 'moment';
-var moment = require('moment-timezone');
+// var moment = require('moment-timezone');
+
+import * as  moment from 'moment-timezone'
 @Injectable({
   providedIn: 'root'
 })

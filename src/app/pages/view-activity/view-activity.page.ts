@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ElementRef } from '@angular/core';
 import { HelperService } from 'src/app/services/helper.service';
 import { UserService } from 'src/app/services/user.service';
 import { EditActivityPage } from '../edit-activity/edit-activity.page';
 import { AddToPlanPage } from '../add-to-plan/add-to-plan.page';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-view-activity',
@@ -14,6 +15,8 @@ export class ViewActivityPage implements OnInit {
   constructor(
     private helper: HelperService,
     private userService: UserService,
+    private sanitizer: DomSanitizer,
+    private _element: ElementRef,
   ) { }
 
   activity;
@@ -22,12 +25,15 @@ export class ViewActivityPage implements OnInit {
   activityType;
   hideEdit = false;
   publicDrill;
+  _link;
 
   ngOnInit() {
   }
   async ionViewWillEnter() {
     await this.getUser();
     await this.checkIsHeadCoach();
+    await this._enableDynamicHyperlinks();
+    await this.sanitizeURLByPass();
     this.showEditActivity();
   }
 
@@ -65,4 +71,32 @@ export class ViewActivityPage implements OnInit {
   addToPlan() {
     this.helper.openModal(AddToPlanPage, { activity: this.activity })
   }
+
+  sanitizeURLByPass() {
+    this.activity.notes = this.sanitizer.bypassSecurityTrustHtml(this.activity.notes)
+  }
+
+
+  private _enableDynamicHyperlinks(): void {
+    // Provide a minor delay to allow the HTML to be rendered and 'found'
+    // within the view template
+    setTimeout(() => {
+      // Query the DOM to find ALL occurrences of the <a> hyperlink tag
+      const urls: any = this._element.nativeElement.querySelectorAll('a');
+      // Iterate through these
+      urls.forEach((url) => {
+        // Listen for a click event on each hyperlink found
+        url.addEventListener('click', (event) => {
+          // Retrieve the href value from the selected hyperlink
+          event.preventDefault();
+          this._link = event.target.href;
+
+          console.log('Name is: ' + event.target.innerText);
+          console.log('Link is: ' + this._link);
+          window.open(this._link, '_system')
+        }, false);
+      });
+    }, 2000);
+  }
+
 }

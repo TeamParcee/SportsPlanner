@@ -28,7 +28,7 @@
 
           <app-drills-loading *ngIf="showLoading"></app-drills-loading>
 
-          <ion-virtual-scroll [items]="drills" [headerFn]="myHeaderFn">
+          <ion-virtual-scroll  *ngIf="!showLoading" [items]="drills" [headerFn]="myHeaderFn">
             <ion-list-header style="background: #f5f5f5" *virtualHeader="let header">
               {{ header }}
             </ion-list-header>
