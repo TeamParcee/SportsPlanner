@@ -5,6 +5,14 @@
 </ion-header>
 
 <ion-content color="light">
+
+  <ion-text *ngIf="!messageLists || messageLists.length == 0">
+    <p padding text-center> You have no messages <br>
+      <ion-button (click)="newMessage()" fill="clear">Create One</ion-button>
+    </p>
+
+  </ion-text>
+
   <ion-list>
     <ion-item (click)="viewMessages(messageList.recipients, messageList)" *ngFor="let messageList of messageLists">
       <ion-avatar slot="start">
@@ -22,7 +30,7 @@
 </ion-content>
 
 <ion-footer>
-  <ion-fab  horizontal="end" vertical="bottom" slot="fixed">
+  <ion-fab horizontal="end" vertical="bottom" slot="fixed">
     <ion-fab-button (click)="newMessage()">
       <ion-icon name="add"></ion-icon>
     </ion-fab-button>

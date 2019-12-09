@@ -36,7 +36,10 @@ export class DrillsPage implements OnInit {
   drills;
 
   async ngOnInit() {
-    this.drillView = "private"
+    this.drillView = "private";
+    setTimeout(() => {
+      this.showLoading = false
+    }, 3000)
   }
 
 
@@ -70,7 +73,7 @@ export class DrillsPage implements OnInit {
 
   async getDrills() {
     firebase.firestore().collection("drills")
-      .orderBy("name")
+      .orderBy("catagory", "asc")
       .orderBy("plansCount", "desc")
       .where("sport", "==", this.user.sport)
       .onSnapshot((drillsSnap) => {

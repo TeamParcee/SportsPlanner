@@ -75,24 +75,21 @@
             </ion-label>
           </ion-item>
 
-          <ion-reorder-group *ngIf="plan" (ionItemReorder)="reorderItems($event)" disabled="false">
+          <app-plan-loading *ngIf="showLoading"></app-plan-loading>
 
-            <ion-item-sliding   *ngFor="let activity of activities">
+          <ion-reorder-group *ngIf="plan && !showLoading" (ionItemReorder)="reorderItems($event)" disabled="false">
+
+            <ion-item-sliding *ngFor="let activity of activities">
               <ion-item-options side="end">
                 <ion-item-option color="danger" (click)="delete(activity)">Delete</ion-item-option>
               </ion-item-options>
               <ion-item
                 [ngClass]="activity.startTime == currentActivity?.startTime  && showTimer   ? 'activeEvent' : ''">
                 <ion-label class="ion-text-wrap" (click)="viewActivity(activity)">
-                  <span *ngIf="!showLoading">
-                    {{ activity.name }}
-                  </span>
 
-                  <ion-skeleton-text animated *ngIf="showLoading"></ion-skeleton-text>
-                  <p *ngIf="showLoading">
-                    <ion-skeleton-text animated></ion-skeleton-text>
-                  </p>
-                  <p *ngIf="!showLoading"> {{ activity.duration }} minutes -
+
+                  <h2>{{ activity.name }}</h2>
+                  <p> {{ activity.duration }} minutes -
                     {{ (activity.startTime) ? activity.startTime  : "No Start Time"}}</p>
                 </ion-label>
                 <ion-buttons *ngIf="isHeadCoach" slot="end">

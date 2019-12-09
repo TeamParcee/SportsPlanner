@@ -26,6 +26,10 @@
 @import "~@ionic/angular/css/flex-utils.css";
 @import url('https://fonts.googleapis.com/css?family=Anton|Roboto&display=swap');
 
+
+*{
+  font-family: Roboto;
+}
 [contenteditable] {
     -webkit-user-select: text;
     user-select: text;
@@ -39,6 +43,10 @@ ion-card{
     border-radius: 0 !important
 }
 
+ion-list-header{
+  font-weight: bold;
+  font-size: 18px;
+}
 
 
 

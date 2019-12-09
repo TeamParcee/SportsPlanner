@@ -11,42 +11,49 @@
 
 <ion-content color="light">
 
-
+  <ion-text >
+    <h5 style="text-align: center;">New Drills Added Daily</h5>
+  </ion-text>
 
   <ion-grid class="ion-no-padding">
     <ion-row>
+
+
+
       <ion-col class="ion-no-padding" size-md="4" offset-md="4">
+
+
+
         <div style="max-width: 600px; margin: auto">
 
+          <app-drills-loading *ngIf="showLoading"></app-drills-loading>
 
-          <ion-list>
-
-            <ion-virtual-scroll [items]="drills" [headerFn]="myHeaderFn">
-              <ion-list-header style="background: #f5f5f5" *virtualHeader="let header">
-                {{ header }}
-              </ion-list-header>
-              <ion-item *virtualItem="let drill">
-                <ion-avatar slot="start">
-                  <img [src]="drill?.photoUrl">
-                </ion-avatar>
-                <ion-label (click)=" viewActivity(drill)">
-                  {{ drill.name }}
-                  <p>Duration: {{ drill.duration }} minutes</p>
-                  <p>Coach: {{ drill?.fname  + " " + drill.lname}}</p>
-                  <p>added to {{ drill.plansCount }} plans </p>
-                </ion-label>
-                <!-- <ion-note slot="end">plans</ion-note> -->
-                <ion-buttons>
-                  <ion-button *ngIf="drill?.coach == user?.uid" (click)="editDrill(drill) ">
-                    <ion-icon name="more" slot="icon-only"></ion-icon>
-                  </ion-button>
-                </ion-buttons>
-              </ion-item>
-            </ion-virtual-scroll>
-
+          <ion-virtual-scroll [items]="drills" [headerFn]="myHeaderFn">
+            <ion-list-header style="background: #f5f5f5" *virtualHeader="let header">
+              {{ header }}
+            </ion-list-header>
+            <ion-item *virtualItem="let drill">
+              <ion-avatar slot="start">
+                <img [src]="drill?.photoUrl">
+              </ion-avatar>
+              <ion-label (click)=" viewActivity(drill)">
+                {{ drill.name }}
+                <p>Duration: {{ drill.duration }} minutes</p>
+                <p>Coach: {{ drill?.fname  + " " + drill.lname}}</p>
+                <p>added to {{ drill.plansCount }} plans </p>
+              </ion-label>
+              <!-- <ion-note slot="end">plans</ion-note> -->
+              <ion-buttons>
+                <ion-button *ngIf="drill?.coach == user?.uid" (click)="editDrill(drill) ">
+                  <ion-icon name="more" slot="icon-only"></ion-icon>
+                </ion-button>
+              </ion-buttons>
+            </ion-item>
+          </ion-virtual-scroll>
 
 
-          </ion-list>
+
+
         </div>
       </ion-col>
     </ion-row>

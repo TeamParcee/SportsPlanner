@@ -5,6 +5,7 @@ import { HelperService } from 'src/app/services/helper.service';
 import { PlanService } from 'src/app/services/plan.service';
 import * as firebase from 'firebase';
 import { UserService } from 'src/app/services/user.service';
+import { AddPlanPage } from '../add-plan/add-plan.page';
 
 @Component({
   selector: 'app-add-to-plan',
@@ -27,6 +28,7 @@ export class AddToPlanPage implements OnInit {
   user;
   plans;
   activity;
+  isHeadCoach;
 
   async ionViewWillEnter() {
     await this.getUser();
@@ -53,6 +55,9 @@ export class AddToPlanPage implements OnInit {
     } else {
       return null
     }
+  }
+  addPlan() {
+    this.helper.openModal(AddPlanPage, null)
   }
 
 
