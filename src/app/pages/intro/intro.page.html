@@ -1,25 +1,41 @@
 <ion-header no-border>
-  <ion-buttons id="skip-button" routerLink="/login" >
-    <ion-button >
-      SKIP
-    </ion-button>
-  </ion-buttons>
+  <ion-toolbar color="primary">
+    <ion-title>Parcee Sports Planner</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="close()">
+        Close
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+
 </ion-header>
-<ion-content fullscreen padding scroll-y="false">
-  <ion-slides >
+
+<ion-content color="primary" fullscreen padding scroll-y="false">
+  <ion-slides>
     <ion-slide>
-      <h1>PLAN YOUR PRACTICE</h1>
+
+      <h1>TIMER WITH ALARMS FOR DRILLS</h1>
+      <p>Swipe Left</p>
+      <img src="../../../assets/images/intro/TimerAlarm.PNG">
+    </ion-slide>
+
+    <ion-slide>
+      <h1>GET DRILLS FOR THE DRILL LIBRARY</h1>
+      <p>Swipe Left</p>
+      <img src="../../../assets/images/intro/AddToPlan.PNG">
 
     </ion-slide>
+
     <ion-slide>
-      <h1> SHARE YOUR PLANS</h1>
+      <h1>SHARE YOUR PLANS WITH YOUR COACHES</h1>
+      <p>Swipe Left</p>
+      <img src="../../../assets/images/intro/PracticePlans.PNG">
     </ion-slide>
 
     <ion-slide>
-      <h1>SHARE YOUR DRILLS</h1> 
-      <ion-button routerLink="/login"  fill="clear" expand="full">
-        <ion-icon slot="end" name="arrow-forward"></ion-icon>
-        Continue</ion-button>
+      <h1>Updates Daily</h1>
+      <h1>team@parcee.com for issues or new feature requests</h1>
+      <p (click)="close()">Close</p>
     </ion-slide>
 
   </ion-slides>

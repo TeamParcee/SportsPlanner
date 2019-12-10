@@ -26,7 +26,7 @@
 
           <ion-item>
             <ion-label position="floating">Duration (numbers only)</ion-label>
-            <ion-input [(ngModel)]="drill.duration" placeholder="Length of Drill in Minutes" type="number"></ion-input>
+            <ion-input [(ngModel)]="drill.duration" placeholder="Length of Drill in Minutes" input type="text" pattern="[0-9]*"></ion-input>
           </ion-item>
 
           <ion-item>

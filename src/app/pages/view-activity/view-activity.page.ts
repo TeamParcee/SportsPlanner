@@ -33,7 +33,6 @@ export class ViewActivityPage implements OnInit {
     await this.getUser();
     await this.checkIsHeadCoach();
     await this._enableDynamicHyperlinks();
-    await this.sanitizeURLByPass();
     this.showEditActivity();
   }
 
@@ -72,9 +71,7 @@ export class ViewActivityPage implements OnInit {
     this.helper.openModal(AddToPlanPage, { activity: this.activity })
   }
 
-  sanitizeURLByPass() {
-    this.activity.notes = this.sanitizer.bypassSecurityTrustHtml(this.activity.notes)
-  }
+ 
 
 
   private _enableDynamicHyperlinks(): void {

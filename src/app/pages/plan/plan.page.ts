@@ -15,6 +15,7 @@ import { TimerService } from 'src/app/services/timer.service';
 import { PlanOptionsPage } from '../plan-options/plan-options.page';
 import { PresenceService } from 'src/app/services/presence.service';
 import { NewActivityPage } from '../new-activity/new-activity.page';
+import { IntroPage } from '../intro/intro.page';
 
 @Component({
   selector: 'app-plan',
@@ -79,12 +80,19 @@ export class PlanPage implements OnInit {
   }
   async ngOnInit() {
     await this.getUser();
+    await this.showIntro();;
     await this.getCoachFromUid(this.user.coach);
     await this.getActivePlan();
     await this.checkIsHeadCoach();
   }
 
 
+  showIntro() {
+    if (!this.user.showIntro) {
+      this.helper.openModal(IntroPage, null)
+    }
+
+  }
   viewPlans(event) {
     this.helper.openModalPromise(PlansPage, null).then(() => {
       if (this.planService.currentPlan) {
@@ -103,7 +111,7 @@ export class PlanPage implements OnInit {
   }
 
   async createActivity() {
-    
+
     this.helper.openModalPromise(NewActivityPage, { plan: this.plan, activitiesLength: this.activities.length })
   }
 

@@ -60,7 +60,7 @@
           </ion-text>
 
           <ion-list-header *ngIf="plan">
-            <ion-datetime style="color: #000000" [disabled]="!isHeadCoach" (ionChange)="updateTime()"
+            <ion-datetime  style="color: #3880ff" [disabled]="!isHeadCoach" (ionChange)="updateTime()"
               pickerFormat="MMM DD, hh:mm A" displayFormat="DDD, MMM DD, h:mm A" [(ngModel)]="date"
               (click)="updateTime()" fill="clear">
             </ion-datetime>
@@ -88,7 +88,7 @@
                 <ion-label class="ion-text-wrap" (click)="viewActivity(activity)">
 
 
-                  <h2>{{ activity.name }}</h2>
+                  <h2  [ngClass]="activity.startTime == currentActivity?.startTime  && showTimer   ? 'activeEvent' : ''">{{ activity.name }}</h2>
                   <p> {{ activity.duration }} minutes -
                     {{ (activity.startTime) ? activity.startTime  : "No Start Time"}}</p>
                 </ion-label>

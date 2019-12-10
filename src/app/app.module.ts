@@ -38,6 +38,7 @@ import { MessagesPage } from './pages/message-list/messages/messages.page';
 import { SelectContactPage } from './pages/select-contact/select-contact.page';
 import { NewActivityPage } from './pages/new-activity/new-activity.page';
 import { AddToPlanPage } from './pages/add-to-plan/add-to-plan.page';
+import { IntroPage } from './pages/intro/intro.page';
 
 // Your web app's Firebase configuration
 var firebaseConfig = {
@@ -66,6 +67,7 @@ library.add(far);
     SelectContactPage,
     ViewActivityPage,
     ViewDrillPage,
+    IntroPage,
     NewActivityPage,
     ImageCropperPage,
     TemplatePage,
@@ -85,6 +87,7 @@ library.add(far);
     ViewActivityPage,
     ViewDrillPage,
     TemplatePage,
+    IntroPage,
     EditDrillPage,
     AddToPlanPage,
     MessagesPage

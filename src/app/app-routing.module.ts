@@ -4,6 +4,7 @@ import { AuthGuard } from './guard/auth.guard';
 import { ConfirmEmailGuard } from './guard/confirm-email.guard';
 import { SelectCoachGuard } from './guard/select-coach.guard';
 import { CoachInfoGuard } from './guard/coach-info.guard';
+import { SeenIntroGuard } from './guard/seen-intro.guard';
 
 const routes: Routes = [
   { path: '', redirectTo: 'tabs', pathMatch: 'full', canActivate: [AuthGuard, ConfirmEmailGuard, CoachInfoGuard, SelectCoachGuard]},
@@ -38,7 +39,8 @@ const routes: Routes = [
   { path: 'view-profile', loadChildren: './pages/view-profile/view-profile.module#ViewProfilePageModule' },
   { path: 'message-list', loadChildren: './pages/message-list/message-list.module#MessageListPageModule' },
   { path: 'select-contact', loadChildren: './pages/select-contact/select-contact.module#SelectContactPageModule' },
-  { path: 'admin', loadChildren: './pages/admin/admin.module#AdminPageModule' },  { path: 'new-admin-template', loadChildren: './pages/new-admin-template/new-admin-template.module#NewAdminTemplatePageModule' },
+  { path: 'admin', loadChildren: './pages/admin/admin.module#AdminPageModule' },
+  { path: 'new-admin-template', loadChildren: './pages/new-admin-template/new-admin-template.module#NewAdminTemplatePageModule' },
   { path: 'sports-planner-templates', loadChildren: './pages/sports-planner-templates/sports-planner-templates.module#SportsPlannerTemplatesPageModule' },
   { path: 'new-activity', loadChildren: './pages/new-activity/new-activity.module#NewActivityPageModule' },
   { path: 'add-to-plan', loadChildren: './pages/add-to-plan/add-to-plan.module#AddToPlanPageModule' },
