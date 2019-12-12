@@ -13,7 +13,7 @@
 
   </ion-text>
 
-  <ion-list>
+  <ion-list mode="ios" *ngIf="messageLists">
     <ion-item (click)="viewMessages(messageList.recipients, messageList)" *ngFor="let messageList of messageLists">
       <ion-avatar slot="start">
         <img [src]="messageList.recipients[0]?.photoUrl">

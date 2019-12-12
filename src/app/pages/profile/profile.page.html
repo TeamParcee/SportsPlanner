@@ -45,7 +45,7 @@
 
 
           <input (change)="readURL($event)" accept="image/*" style="display: none;" id="pic" type="file" />
-          <ion-list margin-top *ngIf="user && originalUser">
+          <ion-list mode="ios" margin-top *ngIf="user && originalUser">
             <ion-list-header>My Information</ion-list-header>
             <ion-item *ngIf="user">
               <ion-label>First Name</ion-label>
